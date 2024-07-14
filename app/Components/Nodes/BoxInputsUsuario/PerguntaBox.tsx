@@ -2,37 +2,44 @@
 
 import React, { useMemo, useState } from "react";
 import { Handle, Position } from "reactflow";
-import TextIcon from "../../TextUtility/TextIcon";
+import TextIcon from "./../TextUtility/TextIcon";
 import useStore from "../../../Redux/store";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
 
 export interface BoxProps {
   id: string;
+  start?: boolean;
 }
 
-export default function PerguntaBox({ id }: BoxProps) {
+interface DataProps {
+  id: string;
+  data: {
+    label: string;
+    start: boolean;
+    sourceHandles: [];
+    targetHandles: [];
+  };
+}
+
+export default function PerguntaBox({ id, data }: DataProps) {
   const [checkBox, setCheckBox] = useState(false);
-  const removeNode = useStore((state) => state.removeNode);
 
   function ChangeCheckBox() {
     setCheckBox(!checkBox);
   }
 
-  function handleRemoveNode() {
-    removeNode(id);
-  }
-
   return (
     <>
       <ConteinerDragg>
-        <Close id={id}></Close>
+        {data.start ?  "" : <Close id={id} />}
+
         <TextIcon
           icon="svg/messagerec.svg"
           text="Mensagem do Usuairo"
         ></TextIcon>
 
-        {checkBox ? (
+        {data.start ? (
           ""
         ) : (
           <input
@@ -42,18 +49,22 @@ export default function PerguntaBox({ id }: BoxProps) {
           />
         )}
 
-        <div className=" flex items-center ">
-          <input type="checkbox" name="Message" onClick={ChangeCheckBox} />
-          <label
-            htmlFor="Message"
-            className="font-light text-gray-600 text-sm ml-1 dark:font-bold"
-          >
-            Inicio da Conversa
-          </label>
-        </div>
+        {data.start ? (
+          <div className=" flex items-center ">
+            <input type="checkbox" name="Message" checked={true} />
+            <label
+              htmlFor="Message"
+              className="font-light text-gray-600 text-sm ml-1 dark:font-bold"
+            >
+              Inicio da Conversa
+            </label>
+          </div>
+        ) : (
+          ""
+        )}
       </ConteinerDragg>
 
-      {checkBox ? "" : <Handle type="source" position={Position.Left} />}
+      {data.start ? "" : <Handle type="source" position={Position.Left} />}
 
       <Handle type="target" position={Position.Right} />
     </>

@@ -5,6 +5,7 @@ export const initialNodes = [
         type: 'PerguntaUnique',
         data: {
             label: 'Input Node',
+            start:true,
             sourceHandles: [],
             targetHandles: [],
         },

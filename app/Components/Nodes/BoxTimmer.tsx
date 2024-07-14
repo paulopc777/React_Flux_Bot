@@ -1,6 +1,6 @@
 import React from "react";
 import ConteinerDragg from "../Conteiners/BoxDragg/ConteinerDragg";
-import TextIcon from "../TextUtility/TextIcon";
+import TextIcon from "./TextUtility/TextIcon";
 import DroppSelects, { PropsDropMenu } from "../Utilitys/DroppSelects";
 import { Handle, Position } from "reactflow";
 import Close from "./Close/Close";
@@ -14,12 +14,14 @@ const Times: PropsDropMenu[] = [
 
 export default function BoxTimmer({ id }: BoxProps) {
   return (
-    <ConteinerDragg>
-      <Close id={id}></Close>
-      <TextIcon icon="/svg/Clock.svg" text="Esperar" />
-      <DroppSelects OptsMenu={Times}></DroppSelects>
+    <>
+      <ConteinerDragg>
+        <Close id={id}></Close>
+        <TextIcon icon="/svg/Clock.svg" text="Esperar" />
+        <DroppSelects OptsMenu={Times}></DroppSelects>
+      </ConteinerDragg>
       <Handle position={Position.Left} type="source" />
       <Handle position={Position.Right} type="target" />
-    </ConteinerDragg>
+    </>
   );
 }

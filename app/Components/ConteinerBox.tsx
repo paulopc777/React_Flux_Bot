@@ -33,9 +33,13 @@ const selector = (state: any) => ({
 });
 
 export default function ConteinerBox() {
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
-    useShallow(selector)
-  );
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect
+  } = useStore(useShallow(selector));
 
   return (
     <>
