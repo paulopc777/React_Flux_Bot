@@ -24,10 +24,10 @@ const LithoMenu = ({ nome, funcModi, close }: MenuRequireProps) => {
   );
 };
 
-export  function DroppSelectsMenu({ funcModi, close }: MenuRequireProps) {
+export function DroppSelectsMenu({ funcModi, close }: MenuRequireProps) {
 
   const storedMonichat = localStorage.getItem("monichat");
-  let  Monichat;
+  let Monichat;
 
   if (storedMonichat) {
     Monichat = JSON.parse(storedMonichat);
@@ -37,7 +37,7 @@ export  function DroppSelectsMenu({ funcModi, close }: MenuRequireProps) {
 
   return (
     <ul
-      className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+      className=" z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
       tabIndex={-1}
       role="listbox"
       aria-labelledby="listbox-label"

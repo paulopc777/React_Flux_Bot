@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+import { Console } from "console";
 
 interface PayloadAuth {
   username?: "";
@@ -238,18 +239,90 @@ export class MonichatApi {
 
     if (data.data.data) {
       data.data.data.map((DepartamentoItem: any) => {
-        Departamento.push({ nome: DepartamentoItem.name });
+        Departamento.push({ id: DepartamentoItem.id, nome: DepartamentoItem.name });
       });
     }
+
+    //console.log(Departamento)
 
     const serializedMonichat = JSON.stringify(Departamento);
     localStorage.setItem("monichat", serializedMonichat);
 
     return Departamento;
   }
-  
+
+  async InsertDepartamento(NomeDepartamento: string, DescricaoDepartamento: string) {
+
+    const UrlDepartamento = "https://api.monitchat.com/api/v1/department";
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Payload = {
+      "id": "",
+      "name": NomeDepartamento,
+      "description": DescricaoDepartamento,
+      "menu": "",
+      "users": []
+    }
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": TokenSend,
+      }
+    };
+
+    const data = await axios.post(UrlDepartamento, Payload, Header);
+
+    if (data.data.status === 'success') {
+      await this.ListDepartamento();
+    } else {
+      console.log(data.data)
+      return false;
+    }
+
+    return true;
+  }
+
+  async DeleteDepartament(id: string) {
+
+    const UrlDelet = `https://api.monitchat.com/api/v1/department/${id}`;
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      }
+    };
+
+    const data = await axios.delete(UrlDelet, Header);
+
+    if (data.data.status === "success") {
+      this.ListDepartamento();
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+
 }
 
 const Monichat = new MonichatApi();
 Monichat.GetAuthToken();
-Monichat.ListDepartamento();
+//Monichat.AddDepartamento('paulo', 'cesar');
+Monichat.ListDepartamento()
+
+//Monichat.DeleteDepartament('1815').then(res => console.log(res))
+
+//Monichat.ListDepartamento()

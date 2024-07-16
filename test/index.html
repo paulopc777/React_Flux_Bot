@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tocar Som</title>
+</head>
+<body>
+    <button id="play-sound">Tocar Som</button>
+
+    <audio id="audio" src="noti.mp3" preload="auto"></audio>
+
+    <script>
+        const button = document.getElementById('play-sound');
+        const audio = document.getElementById('audio');
+
+        button.addEventListener('click', () => {
+            audio.play().catch(error => {
+                console.error('Erro ao tocar o som:', error);
+            });
+        });
+    </script>
+</body>
+</html>

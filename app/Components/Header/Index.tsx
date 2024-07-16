@@ -7,6 +7,7 @@ import CircleInfo from "../Utilitys/Circle";
 import { useShallow } from "zustand/react/shallow";
 import useStore from "../../Redux/store";
 import { initialNodes } from "../../InitialValue/nodes/nodes";
+import AddMenuMore from "./MoreMenu/AddMenuMore";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -22,9 +23,9 @@ export default function HeaderNav() {
   const { nodes, edges } = useStore(useShallow(selector));
 
   useEffect(() => {
-    if (nodes.length != initialNodes.length ) {
+    if (nodes.length != initialNodes.length) {
       setUpdate(true);
-    } 
+    }
   }, [nodes]);
 
   function Send() {
@@ -34,6 +35,7 @@ export default function HeaderNav() {
 
   return (
     <header className="w-64 h-screen fixed p-2 flex justify-center z-50">
+
       <div className="flex gap-2">
         <ButtonBlakc text="Add" icons={"svg/undo.svg"}></ButtonBlakc>
 
@@ -55,6 +57,13 @@ export default function HeaderNav() {
       </div>
 
       <MenuAddCompo></MenuAddCompo>
+
+
+
+        <AddMenuMore></AddMenuMore>
+
+
+
     </header>
   );
 }
