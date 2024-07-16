@@ -1,5 +1,4 @@
 import axios from "axios";
-import { headers } from "next/headers";
 
 interface PayloadAuth {
   username?: "";
@@ -8,26 +7,16 @@ interface PayloadAuth {
   email: string;
 }
 
-interface PayloadIntencao {
-  intents: [{ description: string; final_intent: false; use_button: false }];
-  replies: [
-    {
-      description: string;
-      weight?: string;
-    }
-  ];
-}
-
-class MonichatApi {
-  Email: string = "";
-  Pass: string = "";
+export class MonichatApi {
+  Email: string;
+  Pass: string;
   UrlAuth: string;
   Token: string;
   UrlIntencao: string;
 
-  constructor(Email: string, Pass: string) {
-    this.Email = Email;
-    this.Pass = Pass;
+  constructor() {
+    this.Email = 'adm@empresa.com.br';
+    this.Pass = "123456";
     this.UrlAuth = "https://api.monitchat.com/api/v1/auth/login";
     this.UrlIntencao = "https://api.monitchat.com/api/v1/trigger";
     this.Token = "";
@@ -153,17 +142,14 @@ class MonichatApi {
 
     const cc = await this.extractData(data.data.data);
     console.log(cc);
-    cc.forEach((context:any) => {
+    cc.forEach((context: any) => {
+      console.log(context);
 
-        console.log(context);
-
-        context.intents.forEach((intent:any) => {
-            console.log(`- ${intent.trigger}`);
-            console.log(intent.replies);
-          });
-  
-      
+      context.intents.forEach((intent: any) => {
+        console.log(`- ${intent.trigger}`);
+        console.log(intent.replies);
       });
+    });
   }
 
   async InsertContexto(
@@ -226,8 +212,44 @@ class MonichatApi {
       },
     };
   }
+
+  async ListDepartamento() {
+    const UrlDepartamento =
+      "https://api.monitchat.com/api/v1/department?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=name&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=menu&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=description&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1721080419798";
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const data = await axios.get(UrlDepartamento, Header);
+
+    //console.log(data.data.data)
+
+    let Departamento: any = [];
+
+    if (data.data.data) {
+      data.data.data.map((DepartamentoItem: any) => {
+        Departamento.push({ nome: DepartamentoItem.name });
+      });
+    }
+
+    const serializedMonichat = JSON.stringify(Departamento);
+    localStorage.setItem("monichat", serializedMonichat);
+
+    return Departamento;
+  }
+  
 }
 
-const Monichat = new MonichatApi("adm@empresa.com.br", "123456");
+const Monichat = new MonichatApi();
 Monichat.GetAuthToken();
-Monichat.ListContext();
+Monichat.ListDepartamento();

@@ -1,65 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { DroppSelectsMenu } from "./MenuDrop";
 
 export interface PropsDropMenu {
   nome: string;
 }
 
-
-
 interface OpsMenu {
   OptsMenu: PropsDropMenu[];
 }
 
-interface MenuRequireProps extends Partial<OpsMenu> {
-  nome?: string;
-  funcModi: (nome: string) => void;
-  close: () => void;
-}
-
-const LithoMenu = ({ nome, funcModi, close }: MenuRequireProps) => {
-  return (
-    <li
-      className="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900"
-      onClick={() => {
-        funcModi(nome ? nome : '');
-        close();
-      }}
-    >
-      <div className="flex items-center">
-        <span className="ml-3 block truncate font-normal">{nome}</span>
-      </div>
-    </li>
-  );
-};
-
-function DroppSelectsMenu({ funcModi, close, OptsMenu }: MenuRequireProps) {
-  if (OptsMenu == undefined) {
-    OptsMenu = [];
-  }
-
-  return (
-    <ul
-      className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-      tabIndex={-1}
-      role="listbox"
-      aria-labelledby="listbox-label"
-      aria-activedescendant="listbox-option-3"
-    >
-      {OptsMenu.map((opt, index) => (
-        <LithoMenu
-          key={index}
-          nome={opt.nome}
-          funcModi={funcModi}
-          close={close}
-        />
-      ))}
-    </ul>
-  );
-}
-
-export default function DroppSelects({ OptsMenu }: OpsMenu) {
+export default function DroppSelects() {
   const [dropMenu, setDropMenu] = useState(false);
   const [menuOption, setMenuOption] = useState("Select");
 
@@ -103,11 +55,7 @@ export default function DroppSelects({ OptsMenu }: OpsMenu) {
           </button>
 
           {dropMenu ? (
-            <DroppSelectsMenu
-              funcModi={setMenuOpt}
-              close={setMenu}
-              OptsMenu={OptsMenu}
-            />
+            <DroppSelectsMenu funcModi={setMenuOpt} close={setMenu} />
           ) : (
             ""
           )}

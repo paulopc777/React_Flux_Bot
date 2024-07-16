@@ -38,7 +38,7 @@ export default function DepartamentoBox({ id }: BoxProps) {
         />
 
         <div className="">
-          <DroppSelects OptsMenu={OptMenu}></DroppSelects>
+          <DroppSelects ></DroppSelects>
         </div>
       </ConteinerDragg>
       <Handle type="source" position={Position.Left} />

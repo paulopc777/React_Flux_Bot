@@ -1,9 +1,13 @@
-import ReactFlow, {
+import {
   Background,
   BackgroundVariant,
+  MiniMap,
   ReactFlowProvider,
   SmoothStepEdge,
 } from "reactflow";
+
+import { ReactFlow } from "reactflow";
+
 import "reactflow/dist/style.css";
 import PerguntaBox from "./Nodes/BoxInputsUsuario/PerguntaBox";
 import RespostaBox from "./Nodes/RespostaBox";
@@ -20,6 +24,19 @@ const NodeType = {
   Timmer: BoxTimmer,
 };
 
+function nodeColor(node: any) {
+  switch (node.type) {
+    case "PerguntaUnique":
+      return "#6ede87";
+    case "Resposta":
+      return "#048cfc";
+    case "Departamento":
+      return "#faa204";
+    default:
+      return "#ff0072";
+  }
+}
+
 const edgeTypes = {
   Padrao: SmoothStepEdge,
 };
@@ -33,13 +50,9 @@ const selector = (state: any) => ({
 });
 
 export default function ConteinerBox() {
-  const {
-    nodes,
-    edges,
-    onNodesChange,
-    onEdgesChange,
-    onConnect
-  } = useStore(useShallow(selector));
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
+    useShallow(selector)
+  );
 
   return (
     <>
@@ -48,13 +61,6 @@ export default function ConteinerBox() {
 
         <div className="h-screen bg-white dark:bg-zinc-800">
           <ReactFlowProvider>
-            <Background
-              color="bg-zinc-800"
-              variant={BackgroundVariant.Dots}
-              size={2}
-              className="opacity-80"
-              gap={50}
-            />
             <ReactFlow
               nodes={nodes}
               edges={edges}
@@ -66,7 +72,18 @@ export default function ConteinerBox() {
               defaultEdgeOptions={{
                 type: "Padrao",
               }}
-            />
+            >
+              <Background
+                color="bg-zinc-800"
+                variant={BackgroundVariant.Dots}
+                size={2}
+                className="opacity-80"
+                gap={50}
+              />
+
+              <MiniMap nodeStrokeWidth={3} nodeColor={nodeColor} />
+
+            </ReactFlow>
           </ReactFlowProvider>
         </div>
       </div>
