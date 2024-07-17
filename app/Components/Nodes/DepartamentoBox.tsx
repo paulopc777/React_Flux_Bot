@@ -23,12 +23,14 @@ const OptMenu: PropsDropMenu[] = [
   },
 ];
 
+
 export default function DepartamentoBox({ id }: BoxProps) {
   const removeNode = useStore((state) => state.removeNode);
 
   function handleRemoveNode() {
     removeNode(id);
   }
+
 
   return (
     <>

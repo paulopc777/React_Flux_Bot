@@ -13,11 +13,18 @@ interface OpsMenu {
   OptsMenu: PropsDropMenu[];
 }
 
+const selector = (state: any) => ({
+  deleteValue: state.deleteValue,
+  addValue: state.addValue,
+  formValues: state.formValues,
+});
 
 
 export default function DroppSelects({ id }: any) {
   const [dropMenu, setDropMenu] = useState(false);
   const [menuOption, setMenuOption] = useState("Select");
+
+  const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
 
 
   function setMenu() {
@@ -26,9 +33,9 @@ export default function DroppSelects({ id }: any) {
 
   function setMenuOpt(Select: string) {
     setMenuOption(Select);
-
-    
-
+    console.log("Save");
+    deleteValue(id);
+    addValue({ id: id, text: Select });
   }
 
   return (

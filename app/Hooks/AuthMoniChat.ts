@@ -152,24 +152,30 @@ export class MonichatApi {
       });
     });
   }
-
+  /**
+   * 
+   * @param NomeContexto 
+   * @param RespostaDoContexto 
+   * @param RespostaContexto 
+   * @param ReplyReposta 
+   */
   async InsertContexto(
     NomeContexto: string,
-    Indentificador: string,
+    RespostaDoContexto: string,
     RespostaContexto: string,
     ReplyReposta: string
   ) {
     const PayloadContexto = {
       context: {
         trigger: "",
-        identifier: Indentificador,
+        identifier: NomeContexto,
         buttons: [],
         use_button: false,
         button_header: "",
         button_body: "",
         button_footer: "",
         inherits: "",
-        description: "Ola.",
+        description: RespostaDoContexto,
         name: NomeContexto,
         intents: [
           {

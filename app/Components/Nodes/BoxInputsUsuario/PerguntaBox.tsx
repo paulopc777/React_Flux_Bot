@@ -40,12 +40,10 @@ export default function PerguntaBox({ id, data }: DataProps) {
     deleteValue(id);
     addValue({ id: id, text: InputValue });
   }
-  
+
   function ChangeCheckBox() {
     setCheckBox(!checkBox);
   }
-
-
 
   return (
     <>
