@@ -8,19 +8,18 @@ import { useShallow } from "zustand/react/shallow";
 import useStore from "../../Redux/store";
 import { initialNodes } from "../../InitialValue/nodes/nodes";
 import AddMenuMore from "./MoreMenu/AddMenuMore";
+import { ValidThoSend } from "app/Hooks/SendValidy";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
   edges: state.edges,
+  formValues: state.formValues,
 });
 
 export default function HeaderNav() {
-
   const [Uptate, setUpdate] = useState(false);
 
-
-
-  const { nodes, edges } = useStore(useShallow(selector));
+  const { nodes, edges, formValues } = useStore(useShallow(selector));
 
   useEffect(() => {
     if (nodes.length != initialNodes.length) {
@@ -31,11 +30,12 @@ export default function HeaderNav() {
   function Send() {
     console.log(nodes);
     console.log(edges);
+    console.log(formValues);
+    
   }
 
   return (
     <header className="w-64 h-screen fixed p-2 flex justify-center z-50">
-
       <div className="flex gap-2">
         <ButtonBlakc text="Add" icons={"svg/undo.svg"}></ButtonBlakc>
 
@@ -58,12 +58,7 @@ export default function HeaderNav() {
 
       <MenuAddCompo></MenuAddCompo>
 
-
-
-        <AddMenuMore></AddMenuMore>
-
-
-
+      <AddMenuMore></AddMenuMore>
     </header>
   );
 }

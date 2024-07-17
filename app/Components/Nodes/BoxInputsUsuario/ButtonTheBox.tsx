@@ -25,13 +25,6 @@ export default function RepostaButton() {
     console.log(InputsSetes);
   }, [InputsSetes]);
 
-
-
-
-  useEffect(() => {
-    console.log(InputsSetes);
-  }, [InputsSetes]);
-
   return (
     <div className="min-h-16 h-fit  bg-white border-2 rounded-md border-gray-200  dark:bg-zinc-900 dark:text-white dark:border-zinc-900">
       <div id="Inputs">

@@ -9,28 +9,30 @@ import { BoxProps } from "./BoxInputsUsuario/PerguntaBox";
 import Close from "./Close/Close";
 import { useTransition, animated } from "@react-spring/web";
 import useStore from "app/Redux/store";
+import { useShallow } from "zustand/react/shallow";
+
+const selector = (state: any) => ({
+  deleteValue: state.deleteValue,
+  addValue: state.addValue,
+  formValues: state.formValues,
+});
 
 export default function RespostaBox({ id }: BoxProps) {
   const [Btn, setBtn] = useState(false);
-  const [textArea, setTextearea] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { removeEdgesByNodeId } = useStore();
+  const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
+
+  function AutoSaveInput() {
+    console.log("Save");
+    deleteValue(id);
+    addValue({ id: id, text: inputValue });
+  }
 
   function ChangeBtn() {
     setBtn(!Btn);
+    deleteValue(id);
   }
-
-  const transitions = useTransition(Btn, {
-    from: { transform: "translateY(0%)", opacity: 0 },
-    enter: { transform: "translateY(0%)", opacity: 1 },
-    leave: {
-      transform: "translateY(-100%)",
-      opacity: 0,
-      display: "none",
-      position: "absolute",
-    },
-    config: { duration: 300 },
-  });
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -39,7 +41,7 @@ export default function RespostaBox({ id }: BoxProps) {
       textarea.style.height = "auto"; // Reset height
       textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on scroll height
     }
-  }, [textArea]);
+  }, [inputValue]);
 
   return (
     <>
@@ -57,8 +59,11 @@ export default function RespostaBox({ id }: BoxProps) {
             ref={textareaRef}
             placeholder="Mensagem"
             className="shadow-inner p-1 my-4 overflow-hidden dark:bg-neutral-800 w-full box-border resize-none h-auto "
-            value={textArea}
-            onChange={(e) => setTextearea(e.target.value)}
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
+            onBlur={AutoSaveInput}
           />
         )}
 

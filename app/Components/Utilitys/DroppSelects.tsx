@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { DroppSelectsMenu } from "./MenuDrop";
+import useStore from "../../Redux/store";
+import { useShallow } from "zustand/react/shallow";
 
 export interface PropsDropMenu {
   nome: string;
@@ -11,9 +13,12 @@ interface OpsMenu {
   OptsMenu: PropsDropMenu[];
 }
 
-export default function DroppSelects() {
+
+
+export default function DroppSelects({ id }: any) {
   const [dropMenu, setDropMenu] = useState(false);
   const [menuOption, setMenuOption] = useState("Select");
+
 
   function setMenu() {
     setDropMenu(!dropMenu);
@@ -21,6 +26,9 @@ export default function DroppSelects() {
 
   function setMenuOpt(Select: string) {
     setMenuOption(Select);
+
+    
+
   }
 
   return (

@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Handle, Position } from "reactflow";
 import TextIcon from "./../TextUtility/TextIcon";
 import useStore from "../../../Redux/store";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
+import { useShallow } from "zustand/react/shallow";
+import { Input } from "postcss";
 
 export interface BoxProps {
   id: string;
@@ -22,17 +24,33 @@ interface DataProps {
   };
 }
 
+const selector = (state: any) => ({
+  deleteValue: state.deleteValue,
+  addValue: state.addValue,
+  formValues: state.formValues,
+});
+
 export default function PerguntaBox({ id, data }: DataProps) {
   const [checkBox, setCheckBox] = useState(false);
+  const [InputValue, setInputValue] = useState("");
+  const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
 
+  function AutoSaveInput() {
+    console.log("Save");
+    deleteValue(id);
+    addValue({ id: id, text: InputValue });
+  }
+  
   function ChangeCheckBox() {
     setCheckBox(!checkBox);
   }
 
+
+
   return (
     <>
       <ConteinerDragg>
-        {data.start ?  "" : <Close id={id} />}
+        {data.start ? "" : <Close id={id} />}
 
         <TextIcon
           icon="svg/messagerec.svg"
@@ -46,12 +64,17 @@ export default function PerguntaBox({ id, data }: DataProps) {
             type="text"
             placeholder="Mensagem"
             className="p-1 shadow-inner my-4 dark:bg-neutral-800 w-full"
+            value={InputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
+            onBlur={AutoSaveInput}
           />
         )}
 
         {data.start ? (
           <div className=" flex items-center ">
-            <input type="checkbox" name="Message" checked={true} />
+            <input type="checkbox" name="Message" checked={true} id={id} />
             <label
               htmlFor="Message"
               className="font-light text-gray-600 text-sm ml-1 dark:font-bold"

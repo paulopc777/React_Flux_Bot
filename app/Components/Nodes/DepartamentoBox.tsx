@@ -6,6 +6,7 @@ import { Handle, Position } from "reactflow";
 import DroppSelects, { PropsDropMenu } from "../Utilitys/DroppSelects";
 import { BoxProps } from "./BoxInputsUsuario/PerguntaBox";
 import Close from "./Close/Close";
+import { useShallow } from "zustand/react/shallow";
 
 const OptMenu: PropsDropMenu[] = [
   {
@@ -24,6 +25,7 @@ const OptMenu: PropsDropMenu[] = [
 
 export default function DepartamentoBox({ id }: BoxProps) {
   const removeNode = useStore((state) => state.removeNode);
+
   function handleRemoveNode() {
     removeNode(id);
   }
@@ -38,7 +40,7 @@ export default function DepartamentoBox({ id }: BoxProps) {
         />
 
         <div className="">
-          <DroppSelects ></DroppSelects>
+          <DroppSelects id={id}></DroppSelects>
         </div>
       </ConteinerDragg>
       <Handle type="source" position={Position.Left} />

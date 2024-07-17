@@ -2,10 +2,22 @@ import { create } from "zustand";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { initialNodes } from "../InitialValue/nodes/nodes";
 import { initialEdges } from "../InitialValue/nodes/edges";
+import { Varela } from "next/font/google";
+
+interface ValuesInsert {
+  id: string;
+  text: string;
+}
+interface Value {
+  id: string;
+  text?: string;
+  Departamento?: string;
+}
 
 const useStore = create((set: any, get: any) => ({
   nodes: initialNodes,
   edges: initialEdges,
+  formValues: [],
   // Mudança de Nodes / Movimentação
   onNodesChange: (changes: any) => {
     set({
@@ -54,6 +66,14 @@ const useStore = create((set: any, get: any) => ({
       ),
     }));
   },
+  addValue: (value: Value) =>
+    set((state: any) => ({
+      formValues: [...state.formValues, value],
+    })),
+  deleteValue: (id: string) =>
+    set((state: any) => ({
+      formValues: state.formValues.filter((value: any) => value.id !== id),
+    })),
 }));
 
 export default useStore;

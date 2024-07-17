@@ -4,11 +4,18 @@ interface PropsClose {
   id: string;
 }
 
+const selector = (state: any) => ({
+  removeNode: state.removeNode,
+  deleteValue: state.deleteValue,
+});
+
 export default function Close({ id }: PropsClose) {
-  const removeNode = useStore((state) => state.removeNode);
+  const { removeNode, deleteValue } = useStore(selector);
 
   function handleRemoveNode() {
+    console.log("delete")
     removeNode(id);
+    deleteValue(id);
   }
 
   return (
