@@ -7,7 +7,7 @@ import useStore from "../../../Redux/store";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
 import { useShallow } from "zustand/react/shallow";
-import { Input } from "postcss";
+
 
 export interface BoxProps {
   id: string;

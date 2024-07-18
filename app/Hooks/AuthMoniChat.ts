@@ -220,6 +220,71 @@ export class MonichatApi {
     };
   }
 
+  async InsertContextoButton(
+    NomeContexto: string,
+    RespostaDoContexto: string,
+    RespostaContexto: string,
+    ReplyReposta: string,
+    Buttons: string[],
+    Button_header: string,
+    Button_body: string,
+    Button_footer: string
+  ) {
+    const PayloadContexto = {
+      context: {
+        trigger: "",
+        identifier: NomeContexto,
+        buttons: [],
+        use_button: false,
+        button_header: "",
+        button_body: "",
+        button_footer: "",
+        inherits: "",
+        description: RespostaDoContexto,
+        name: NomeContexto,
+        intents: [
+          {
+            description: RespostaContexto,
+            trigger: RespostaContexto,
+            final_intent: false,
+            buttons: Buttons,
+            use_button: false,
+            button_header: Button_header,
+            button_body: Button_body,
+            button_footer: Button_footer,
+            action: {
+              action_type: "",
+              message: "",
+              user_id: "",
+              department_id: "",
+              ticket_status_id: "",
+              get_url: "",
+              file_name: "",
+              file_data: "",
+              get_fields: "",
+              get_results: "",
+              post_url: "",
+              auth_url: "",
+              json_data_request: "",
+              token_field_name: "",
+              post_fields: "",
+              headers: "",
+              headers_value: "",
+            },
+            replies: [
+              {
+                description: ReplyReposta,
+                weight: "",
+                final_intent: false,
+              },
+            ],
+          },
+        ],
+        accounts: [],
+      },
+    };
+  }
+
   async ListDepartamento() {
     const UrlDepartamento =
       "https://api.monitchat.com/api/v1/department?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=name&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=menu&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=description&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1721080419798";
@@ -320,7 +385,6 @@ export class MonichatApi {
     }
 
   }
-
 
 }
 
