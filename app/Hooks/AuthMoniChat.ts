@@ -16,7 +16,7 @@ export class MonichatApi {
   UrlIntencao: string;
 
   constructor() {
-    this.Email = 'adm@empresa.com.br';
+    this.Email = "adm@empresa.com.br";
     this.Pass = "123456";
     this.UrlAuth = "https://api.monitchat.com/api/v1/auth/login";
     this.UrlIntencao = "https://api.monitchat.com/api/v1/trigger";
@@ -47,7 +47,12 @@ export class MonichatApi {
     }
   }
 
-  async InsertIntencao(Intencao: string, Reply: string) {
+  /**
+   *
+   * @param Intencao Frasse dod Usuario que inica o Contexto
+   * @param Reply Resposta do Intenção pode ser @topic intencao
+   */
+  async InsertIntencao(Intencao: string, Reply: string, Departamento?: string) {
     if (this.Token.length == 0) {
       await this.GetAuthToken();
     }
@@ -61,11 +66,20 @@ export class MonichatApi {
       },
     };
 
+    let action_type: any = "";
+    let final_intent = false;
+    if (Departamento) {
+      action_type = 0;
+      final_intent = true;
+    }
+
+    console.log(Departamento ? Departamento : "note Departamento");
+
     const NewPayload = {
       intents: [
         {
           description: Intencao,
-          final_intent: false,
+          final_intent: final_intent,
           use_button: false,
           button_body: "",
           button_footer: "",
@@ -73,10 +87,10 @@ export class MonichatApi {
           buttons: [],
           accounts: [],
           action: {
-            action_type: "",
+            action_type: action_type,
             message: "",
             user_id: "",
-            department_id: "",
+            department_id: Departamento ? Departamento : "",
             ticket_status_id: "",
             get_url: "",
             file_name: "",
@@ -153,17 +167,18 @@ export class MonichatApi {
     });
   }
   /**
-   * 
-   * @param NomeContexto 
-   * @param RespostaDoContexto 
-   * @param RespostaContexto 
-   * @param ReplyReposta 
+   *
+   * @param NomeContexto
+   * @param RespostaDoContexto
+   * @param RespostaContexto
+   * @param ReplyReposta
    */
   async InsertContexto(
     NomeContexto: string,
     RespostaDoContexto: string,
     RespostaContexto: string,
-    ReplyReposta: string
+    ReplyReposta: string,
+    Departamento?: string
   ) {
     const PayloadContexto = {
       context: {
@@ -218,6 +233,25 @@ export class MonichatApi {
         accounts: [],
       },
     };
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const UrlApi = "https://api.monitchat.com/api/v1/bot-context";
+
+    const data = await axios.post(UrlApi, PayloadContexto, Header);
+
+    console.log(data.data);
   }
 
   async InsertContextoButton(
@@ -310,7 +344,10 @@ export class MonichatApi {
 
     if (data.data.data) {
       data.data.data.map((DepartamentoItem: any) => {
-        Departamento.push({ id: DepartamentoItem.id, nome: DepartamentoItem.name });
+        Departamento.push({
+          id: DepartamentoItem.id,
+          nome: DepartamentoItem.name,
+        });
       });
     }
 
@@ -322,8 +359,10 @@ export class MonichatApi {
     return Departamento;
   }
 
-  async InsertDepartamento(NomeDepartamento: string, DescricaoDepartamento: string) {
-
+  async InsertDepartamento(
+    NomeDepartamento: string,
+    DescricaoDepartamento: string
+  ) {
     const UrlDepartamento = "https://api.monitchat.com/api/v1/department";
 
     if (this.Token.length == 0) {
@@ -333,26 +372,26 @@ export class MonichatApi {
     const TokenSend = `Bearer ${this.Token}`;
 
     const Payload = {
-      "id": "",
-      "name": NomeDepartamento,
-      "description": DescricaoDepartamento,
-      "menu": "",
-      "users": []
-    }
+      id: "",
+      name: NomeDepartamento,
+      description: DescricaoDepartamento,
+      menu: "",
+      users: [],
+    };
 
     const Header = {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": TokenSend,
-      }
+        Authorization: TokenSend,
+      },
     };
 
     const data = await axios.post(UrlDepartamento, Payload, Header);
 
-    if (data.data.status === 'success') {
+    if (data.data.status === "success") {
       await this.ListDepartamento();
     } else {
-      console.log(data.data)
+      console.log(data.data);
       return false;
     }
 
@@ -360,7 +399,6 @@ export class MonichatApi {
   }
 
   async DeleteDepartament(id: string) {
-
     const UrlDelet = `https://api.monitchat.com/api/v1/department/${id}`;
 
     if (this.Token.length == 0) {
@@ -372,7 +410,7 @@ export class MonichatApi {
       headers: {
         "Content-Type": "application/json",
         Authorization: TokenSend,
-      }
+      },
     };
 
     const data = await axios.delete(UrlDelet, Header);
@@ -383,15 +421,13 @@ export class MonichatApi {
     } else {
       return false;
     }
-
   }
-
 }
 
 const Monichat = new MonichatApi();
 Monichat.GetAuthToken();
 //Monichat.AddDepartamento('paulo', 'cesar');
-Monichat.ListDepartamento()
+Monichat.ListDepartamento();
 
 //Monichat.DeleteDepartament('1815').then(res => console.log(res))
 

@@ -28,9 +28,6 @@ export default function HeaderNav() {
   }, [nodes]);
 
   function Send() {
-    //console.log(nodes);
-    //console.log(edges);
-    //console.log(formValues);
     ValidThoSend({ nodes: nodes, edges: edges, form: formValues })
   }
 

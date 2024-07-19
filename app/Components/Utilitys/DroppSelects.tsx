@@ -35,7 +35,7 @@ export default function DroppSelects({ id }: any) {
     setMenuOption(Select);
     console.log("Save");
     deleteValue(id);
-    addValue({ id: id, text: Select });
+    addValue({ id: id, Departamento: Select });
   }
 
   return (
