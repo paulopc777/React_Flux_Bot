@@ -1,9 +1,11 @@
-import useStore from "app/Redux/store";
-import { useShallow } from "zustand/react/shallow";
 import { MonichatApi } from "./AuthMoniChat";
 
 const monichat = new MonichatApi();
 
+/**
+ * Cria um Intenção Linkada a um Contexto
+ * @param props Array com Textos do Formulario e Linhas de Links
+ */
 async function CreateIntencaoContext(props: any) {
   props.edges.map((linhas: any) => {
     if (linhas.target === "1") {
@@ -19,6 +21,43 @@ async function CreateIntencaoContext(props: any) {
   });
 }
 
+async function CreateContexts(prosps: any) {
+  prosps.edges.map((linha: any) => {
+    if (linha.target === "1") {
+      prosps.edges.map((linha2: any) => {
+        if (linha2.target === linha.source) {
+          prosps.edges.map((linha3: any) => {
+            if (linha2.source === linha3.target) {
+              prosps.edges.map((Departamento: any) => {
+                if (Departamento.target === linha3.source) {
+                  prosps.form.map((textResposta: any) => {
+                    if (textResposta.id === linha3.target) {
+                      prosps.form.map((textDepartmento: any) => {
+                        if (textDepartmento.id === Departamento.target) {
+                          monichat.InsertContexto(
+                            textResposta,
+                            textResposta.text,
+                            `@sys.array_must(sair,exit) @sys.opt`,
+                            "@topic random"
+                          );
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+}
+
+/**
+ * Cria um Intenção sem contexto qual Termina na mesma intenção
+ * @param props Array com Textos do Formulario e Linhas de Links
+ */
 async function CreateIntencaoNotContext(props: any) {
   props.edges.map((linhas: any) => {
     if (linhas.target === "1") {
@@ -39,12 +78,7 @@ async function CreateIntencaoNotContext(props: any) {
                             if (Dp.nome === Departamento.Departamento) {
                               monichat.InsertIntencao(
                                 formPergunta.text,
-                                formResposta.text,
-                                Dp.id
-                              );
-                              console.log(
-                                formPergunta.text,
-                                formResposta.text,
+                                `${formResposta.text} @topic random`,
                                 Dp.id
                               );
                             }
@@ -63,6 +97,12 @@ async function CreateIntencaoNotContext(props: any) {
   });
 }
 
+/**
+ *
+ * @param {string} id  ID do Link o qual acontece a verificação Exemplo: "2"
+ * @param props Array com Textos do Formulario e Linhas de Links
+ * @returns {boolean} Retorna False se o Link não precissa de Contexto e True casso precisse
+ */
 async function ItentificaSePrecissaDeContexto(id: string, props: any) {
   let Confirm: boolean = true;
 
@@ -74,6 +114,12 @@ async function ItentificaSePrecissaDeContexto(id: string, props: any) {
         if (linhas.source === linhas2.target) {
           console.log("linhas2.target");
           props.form.map((formText: any) => {
+            props.edges.map((linhas3: any) => {
+              if (linhas2.source === linhas3.target) {
+                console.log("linhas3.source");
+                Confirm = true;
+              }
+            });
             if (linhas2.source === formText.id) {
               console.log("linhas2.source");
               Confirm = false;
@@ -87,48 +133,51 @@ async function ItentificaSePrecissaDeContexto(id: string, props: any) {
   return Confirm;
 }
 
-async function StartIntencao(props: any) {
-  let Intencao: any[] = [];
+/**
+ *
+ * @param {string} Dartamento - Nome do Departamento para achar o id
+ * @returns {number} ID - Retorna o id do Departamento
+ */
+async function FindIdDepartamento(Dartamento: string) {
+  let DepartamentoID = 0;
 
-  const response = await ItentificaSePrecissaDeContexto("2", props);
+  const data = await monichat.ListDepartamento();
 
-  if (!response) {
-    CreateIntencaoNotContext(props);
-  }
-  console.log(response);
+  data.map((FindDepartamento: any) => {
+    if (FindDepartamento.nome === Dartamento) {
+      DepartamentoID = FindDepartamento.id;
+    }
+  });
 
-  return;
+  return DepartamentoID;
 }
 
-async function CreateContexts(prosp: any) {
-  prosp.edges.map((linhas: any) => {
-    if (linhas.target != "1") {
-      prosp.form.map((formtext: any) => {
-        if (formtext.id === linhas.source) {
-          EncaminharDepartamento(linhas.target, prosp).then((data) => {
-            if (data) {
-              monichat.ListDepartamento().then((data) => {
-                data.map((Departamentoitem: any) => {
-                  if (Departamentoitem.nome === data) {
-                    monichat.InsertContexto(
-                      `I-${linhas.target}`,
-                      formtext.text,
-                      "@sys.input",
-                      `@topic I-${linhas.target} @intent inicio`,
-                      Departamentoitem.id
-                    );
+function objetoExisteNoArray(intencoesArray: any, de: string, para: string) {
+  for (let i = 0; i < intencoesArray.length; i++) {
+    if (intencoesArray[i].de === de && intencoesArray[i].para === para) {
+      return true;
+    }
+  }
+  return false;
+}
 
-                    console.log(Departamentoitem.nome);
-                  }
-                });
+async function FormatePropsData(props: any) {
+  let FormData: any = {
+    Intencoes: [],
+    Contexto: [],
+  };
+
+  await props.edges.map((linha: any) => {
+    if (linha.target === "1") {
+      props.edges.map((linhas2: any) => {
+        if (linha.source === linhas2.target) {
+          props.form.map((textForm: any) => {
+            if (textForm.id === linhas2.target) {
+              FormData.Intencoes.push({
+                de: linha.target,
+                para: linhas2.target,
+                text: textForm.text,
               });
-            } else {
-              monichat.InsertContexto(
-                `I-${linhas.target}`,
-                formtext.text,
-                "@sys.input",
-                `@topic I-${linhas.target} @intent inicio`
-              );
             }
           });
         }
@@ -136,26 +185,42 @@ async function CreateContexts(prosp: any) {
     }
   });
 
-  console.log("Final CreateContexts");
-  return;
-}
+  await props.edges.map((linha: any) => {
+    if (linha.target != "1") {
+      props.edges.map((linha2: any) => {
 
-async function EncaminharDepartamento(id: string, prosp: any) {
-  let Departamento = "";
+        let departamento = "";
 
-  prosp.edges.map((linhas: any) => {
-    if (linhas.target == id) {
-      prosp.form.map((Departamentos: any) => {
-        if (Departamentos.id == linhas.source) {
-          if (Departamentos) {
-            Departamento = Departamentos.Departamento;
-          }
+        if (linha.source === linha2.target) {
+          console.log(linha.source);
+          props.form.map((textForm:any) =>{
+
+          } )
         }
+
+        if(linha.source != linha2.target){
+          
+        }
+
       });
     }
   });
 
-  return Departamento;
+  return FormData;
+}
+
+/**
+ * Starta o Envio dos dados para API
+ * @param props
+ * @returns {void}
+ */
+async function StartIntencao(props: any) {
+  //const response = await ItentificaSePrecissaDeContexto("2", props);
+  console.log(props);
+  let data = await FormatePropsData(props);
+  console.log(data);
+
+  return;
 }
 
 export async function ValidThoSend(props: any) {

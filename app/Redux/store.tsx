@@ -74,7 +74,7 @@ const useStore = create((set: any, get: any) => ({
     set((state: any) => ({
       formValues: state.formValues.filter((value: any) => value.id !== id),
     })),
-  updateValue: (id: string, button:string[]) =>
+  updateValue: (id: string, button: string[]) =>
     set((state: any) => ({
       formValues: state.formValues.map((item: any) => {
         if (item.id === id) {
