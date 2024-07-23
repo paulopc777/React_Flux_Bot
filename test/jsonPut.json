@@ -1,21 +1,21 @@
 {
   "context": {
-    "name": "Buttons",
+    "name": "com1",
     "accounts": [],
     "inherits": "",
-    "identifier": "Buttons",
-    "buttons": ["BTn1", "BTn2"],
-    "use_button": true,
-    "button_header": "Hedaer",
-    "button_body": "Body",
-    "button_footer": "foorter",
-    "description": "",
+    "identifier": "com1",
+    "buttons": [],
+    "use_button": false,
+    "button_header": "",
+    "button_body": "",
+    "button_footer": "",
+    "description": "com1",
     "bot_trigger_id": null,
     "trigger": "",
     "intents": [
       {
-        "id": 118031,
-        "trigger": "@sys.start_topic Buttons",
+        "id": 118846,
+        "trigger": "@sys.start_topic com1",
         "accounts": [],
         "buttons": [""],
         "button_header": "",
@@ -26,11 +26,11 @@
         "final_intent": null,
         "action": [],
         "initial_intent": null,
-        "stream": "> topic buttons<br>",
+        "stream": "> topic com1<br>",
         "replies": []
       },
       {
-        "id": 118032,
+        "id": 118847,
         "trigger": "ticket_finish",
         "accounts": [],
         "buttons": [""],
@@ -39,15 +39,22 @@
         "button_footer": "",
         "use_button": false,
         "company_id": 478,
-        "final_intent": 0,
+        "final_intent": null,
         "action": [],
-        "initial_intent": 0,
-        "stream": "+ ticket_finish<br>",
-        "replies": []
+        "initial_intent": null,
+        "stream": "+ ticket_finish<br>- {topic=random}<br>",
+        "replies": [
+          {
+            "description": "{topic=random}",
+            "weight": null,
+            "final_intent": null,
+            "id": 96473
+          }
+        ]
       },
       {
-        "id": 118033,
-        "trigger": "@sys.opt @sys.array_must(btnRe) @sys.opt",
+        "id": 118848,
+        "trigger": "inicio",
         "accounts": [],
         "buttons": [""],
         "button_header": "",
@@ -55,15 +62,45 @@
         "button_footer": "",
         "use_button": false,
         "company_id": 478,
-        "final_intent": 0,
+        "final_intent": null,
         "action": [],
-        "initial_intent": 0,
-        "stream": "+ [*] (btnre) [*]<br>",
-        "replies": []
+        "initial_intent": 1,
+        "stream": "+ inicio<br>- com1<br>",
+        "replies": [
+          {
+            "description": "com1",
+            "weight": null,
+            "final_intent": null,
+            "id": 96474
+          }
+        ]
       },
       {
-        "id": 118034,
-        "trigger": "@sys.opt @sys.array_must(btnRe) @sys.opt",
+        "id": 118849,
+        "trigger": "@sys.input",
+        "accounts": [],
+        "buttons": [""],
+        "button_header": "",
+        "button_body": "",
+        "button_footer": "",
+        "use_button": true,
+        "company_id": 478,
+        "final_intent": 0,
+        "action": [],
+        "initial_intent": null,
+        "stream": "+ *<br>- ok ! {topic=random}<br>",
+        "replies": [
+          {
+            "description": "ok ! @topic random",
+            "weight": null,
+            "final_intent": null,
+            "id": 96475
+          }
+        ]
+      },
+      {
+        "id": 118850,
+        "trigger": "@sys.end_topic",
         "accounts": [],
         "buttons": [""],
         "button_header": "",
@@ -71,48 +108,26 @@
         "button_footer": "",
         "use_button": false,
         "company_id": 478,
-        "final_intent": 1,
-        "action": {
-          "action_type": 0,
-          "message": "",
-          "bot_trigger_id": 118034,
-          "department_id": 1784,
-          "ticket_status_id": "",
-          "file_name": "",
-          "file_data": "",
-          "mime_type": "",
-          "get_fields": "",
-          "get_results": "",
-          "get_url": "",
-          "headers": "",
-          "headers_value": "",
-          "post_fields": "",
-          "id": 40460,
-          "post_results": "",
-          "post_url": "",
-          "auth_url": "",
-          "json_data_request": "",
-          "token_field_name": "",
-          "user_id": ""
-        },
-        "initial_intent": 0,
-        "stream": "",
+        "final_intent": null,
+        "action": [],
+        "initial_intent": null,
+        "stream": "< topic<br>",
         "replies": []
       },
       {
-        "description": "@sys.opt @sys.array_must(Btn2) @sys.opt ",
-        "trigger": "@sys.opt @sys.array_must(Btn2) @sys.opt ",
-        "final_intent": true,
+        "description": "@sys.opt @sys.array_must(data) @sys.opt ",
+        "trigger": "@sys.opt @sys.array_must(data) @sys.opt ",
+        "final_intent": false,
         "buttons": [],
         "use_button": false,
         "button_header": "",
         "button_body": "",
         "button_footer": "",
         "action": {
-          "action_type": 0,
+          "action_type": "",
           "message": "",
           "user_id": "",
-          "department_id": 1787,
+          "department_id": "",
           "ticket_status_id": "",
           "get_url": "",
           "file_name": "",
@@ -129,9 +144,9 @@
         },
         "replies": [
           {
-            "description": "ok ! @topic random",
+            "description": "data ! @topic random ",
             "weight": "",
-            "final_intent": true,
+            "final_intent": null,
             "id": null
           }
         ]

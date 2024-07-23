@@ -350,33 +350,7 @@ export class MonichatApi {
   }
 
   async GetAllContext(NomeDoContexto: string) {
-    const UrlThoGet =
-      "https://api.monitchat.com/api/v1/bot-context?draw=3&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1721394904875";
-
-    if (this.Token.length == 0) {
-      await this.GetAuthToken();
-    }
-
-    const TokenSend = `Bearer ${this.Token}`;
-
-    const Header = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: TokenSend,
-      },
-    };
-
-    const response = await axios.get(UrlThoGet, Header);
-
-    let Contexto;
-
-    response.data.data.map((ContextAll: any) => {
-      if (ContextAll.name === NomeDoContexto) {
-        Contexto = ContextAll;
-      }
-    });
-
-    return Contexto;
+    //return Contexto;
   }
 
   /**
@@ -390,42 +364,69 @@ export class MonichatApi {
     NomeDoContexto: string,
     Trigger: string,
     RespostaReplay: string,
-    Departamento: number
+    Departamento?: number
   ) {
-    let payload: any = await this.GetAllContext(NomeDoContexto);
-
     if (this.Token.length == 0) {
       await this.GetAuthToken();
     }
 
     const TokenSend = `Bearer ${this.Token}`;
-
     const Header = {
       headers: {
-        "Content-Type": "application/json;",
+        "Content-Type": "application/json;charset=UTF-8",
         Authorization: TokenSend,
       },
     };
 
-    const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${payload.id}`;
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
 
-    let action_type: any = 0;
-    let final_intent = true;
+    const UrlThoGet =
+      "https://api.monitchat.com/api/v1/bot-context?draw=3&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1721394904875";
+
+    const response = await axios.get(UrlThoGet, Header);
+
+    let Contexto: any;
+
+    await response.data.data.map((ContextAll: any) => {
+      if (ContextAll.name === NomeDoContexto) {
+        Contexto = ContextAll;
+      }
+    });
+
+    let Initial = {
+      context: {
+        name: Contexto.name,
+        accounts: [],
+        inherits: "",
+        identifier: Contexto.identifier,
+        buttons: [],
+        use_button: false,
+        button_header: "",
+        button_body: "",
+        button_footer: "",
+        description: Contexto.description,
+        bot_trigger_id: null,
+        trigger: "",
+        intents: Contexto.intents,
+      },
+    };
 
     const addPayload = {
-      description: `${Trigger}`,
-      trigger: `${Trigger}`,
-      final_intent: true,
+      description: Trigger,
+      trigger: Trigger,
+      final_intent: false,
       buttons: [],
       use_button: false,
       button_header: "",
       button_body: "",
       button_footer: "",
       action: {
-        action_type: 0,
+        action_type: "",
         message: "",
         user_id: "",
-        department_id: Departamento,
+        department_id: "",
         ticket_status_id: "",
         get_url: "",
         file_name: "",
@@ -442,22 +443,27 @@ export class MonichatApi {
       },
       replies: [
         {
-          description: `${RespostaReplay} @topic random`,
+          description: RespostaReplay,
           weight: "",
-          final_intent: true,
+          final_intent: null,
           id: null,
         },
       ],
     };
 
-    payload.intents.push(addPayload);
+    Initial.context.intents.push(addPayload);
 
-    console.log(payload);
+    console.log(Initial.context.intents);
 
-    try {
-      await axios.put(UrlUpdate, { context: payload }, Header);
-    } catch (Err) {
-      console.log("Err");
+    if (Initial) {
+      const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${Contexto.id}`;
+
+      axios
+          .put(UrlUpdate, Initial, Header)
+         .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    } else {
+      console.log("Erro r");
     }
   }
 
@@ -576,13 +582,3 @@ Monichat.GetAuthToken();
 //Monichat.ListDepartamento();
 
 // id 1784
-
-
-
-
-Monichat.UpdataContext(
-  "Buttons",
-  "@sys.opt @sys.array_must(asdasd) @sys.opt",
-  "asdasd",
-  1784
-);

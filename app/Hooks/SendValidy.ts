@@ -134,10 +134,18 @@ async function CreateContexto(props: any) {
 }
 
 export async function ValidThoSend(props: any) {
-  console.log(props);
+  //console.log(props);
 
   //await CreateIntention(props);
-  await CreateContexto(props);
-  await CreateReply(props);
+  //await CreateContexto(props);
+  setTimeout(async () => {
+    //await CreateReply(props);
+  }, 2000);
   return;
 }
+
+monichat.UpdataContext(
+  "com1",
+  "@sys.opt @sys.array_must(ccc) @sys.opt",
+  "ccc ! @topic random"
+);

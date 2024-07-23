@@ -1,53 +1,62 @@
 {
-  "context": {
-    "trigger": "",
-    "identifier": "IDentifi",
-    "buttons": ["BTn1", "BTn2", "Btn3"],
-    "use_button": true,
-    "button_header": "Cave",
-    "button_body": "MenssageBtn",
-    "button_footer": "Rodape",
-    "inherits": "",
-    "description": "",
-    "name": "NOme",
-    "intents": [
-      {
-        "description": "@sys.input ",
-        "trigger": "@sys.input ",
-        "final_intent": false,
-        "buttons": [],
-        "use_button": false,
-        "button_header": "",
-        "button_body": "",
-        "button_footer": "",
-        "action": {
-          "action_type": "",
-          "message": "",
-          "user_id": "",
-          "department_id": "",
-          "ticket_status_id": "",
-          "get_url": "",
-          "file_name": "",
-          "file_data": "",
-          "get_fields": "",
-          "get_results": "",
-          "post_url": "",
-          "auth_url": "",
-          "json_data_request": "",
-          "token_field_name": "",
-          "post_fields": "",
-          "headers": "",
-          "headers_value": ""
-        },
-        "replies": [
-          {
-            "description": "@topic IDentifi @intent inicio",
-            "weight": "",
-            "final_intent": false
-          }
-        ]
-      }
-    ],
-    "accounts": []
-  }
+  id: 589612,
+  name: 'com1',
+  identifier: 'com1',
+  inherits: '',
+  trigger: '',
+  buttons: [],
+  button_header: '',
+  button_body: '',
+  button_footer: '',
+  use_button: false,
+  company_id: 478,
+  bot_trigger_id: null,
+  description: 'com1',
+  accounts: [],
+  intents: [
+    {
+      id: 118851,
+      trigger: '@sys.start_topic com1',
+      accounts: [],
+      buttons: [Array],
+      button_header: '',
+      button_body: '',
+      button_footer: '',
+      use_button: false,
+      company_id: 478,
+      final_intent: null,
+      action: [],
+      initial_intent: null,
+      stream: '> topic com1<br>',
+      replies: []
+    },
+    {
+      id: 118852,
+      trigger: 'ticket_finish',
+      accounts: [],
+      buttons: [Array],
+      button_header: '',
+      button_body: '',
+      button_footer: '',
+      use_button: false,
+      company_id: 478,
+      final_intent: 0,
+      action: [],
+      initial_intent: 0,
+      stream: '',
+      replies: []
+    },
+    {
+      description: '@sys.opt @sys.array_must(aaa) @sys.opt',
+      trigger: '@sys.opt @sys.array_must(aaa) @sys.opt',
+      final_intent: false,
+      buttons: [],
+      use_button: false,
+      button_header: '',
+      button_body: '',
+      button_footer: '',
+      action: [Object],
+      replies: [Array]
+    }
+  ]
 }
