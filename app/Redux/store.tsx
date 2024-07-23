@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { initialNodes } from "../InitialValue/nodes/nodes";
 import { initialEdges } from "../InitialValue/nodes/edges";
-import { Varela } from "next/font/google";
+;
 
 interface ValuesInsert {
   id: string;

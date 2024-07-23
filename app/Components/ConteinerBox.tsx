@@ -74,7 +74,7 @@ export default function ConteinerBox() {
               }}
             >
               <Background
-                color="bg-zinc-800"
+                color="bg-white"
                 variant={BackgroundVariant.Dots}
                 size={2}
                 className="opacity-80"
@@ -82,7 +82,6 @@ export default function ConteinerBox() {
               />
 
               <MiniMap nodeStrokeWidth={3} nodeColor={nodeColor} />
-
             </ReactFlow>
           </ReactFlowProvider>
         </div>

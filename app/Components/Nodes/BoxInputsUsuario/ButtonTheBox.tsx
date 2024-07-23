@@ -61,7 +61,7 @@ export default function RepostaButton({ id }: idGetProps) {
               onBlur={DispachRedux}
             />
 
-            <Handle id={`L-${index}`} type="source" position={Position.Left} />
+           
             <Handle id={`R-${index}`} type="target" position={Position.Right} />
           </div>
         ))}

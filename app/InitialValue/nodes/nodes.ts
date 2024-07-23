@@ -47,14 +47,14 @@ export const initialNodes = [
       label: "Node 3",
     },
     position: {
-      x: 848.6468592201065,
+      x: 849.9663671308793,
       y: 82.5,
     },
     width: 224,
     height: 187,
     selected: false,
     positionAbsolute: {
-      x: 848.6468592201065,
+      x: 849.9663671308793,
       y: 82.5,
     },
     dragging: false,
@@ -67,14 +67,14 @@ export const initialNodes = [
     },
     position: {
       x: 1178.464486413894,
-      y: 97.25466909012451,
+      y: 95.93516117935161,
     },
     width: 224,
     height: 148,
     selected: false,
     positionAbsolute: {
       x: 1178.464486413894,
-      y: 97.25466909012451,
+      y: 95.93516117935161,
     },
     dragging: false,
   },
@@ -90,7 +90,7 @@ export const initialNodes = [
     },
     width: 224,
     height: 128,
-    selected: true,
+    selected: false,
     positionAbsolute: {
       x: 1509.28961265304,
       y: 104.1468592201067,

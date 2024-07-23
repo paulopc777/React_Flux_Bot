@@ -30,12 +30,12 @@ export default function MenuAddCompo() {
   return (
     <div
       className={
-        "w-5/6 h-fit p-2 absolute z-20 shadow-lg bg-white rounded-md  dark:bg-zinc-900 top-20"
+        "w-5/6 h-fit p-2 absolute z-20 shadow-lg  rounded-md  dark:bg-zinc-900 top-20 bg-zinc-100 "
       }
     >
-      <ul className="w-full flex flex-col gap-y-2 dark:text-white">
+      <ul className="w-full flex flex-col gap-y-2 text-black dark:text-white">
         <li
-          className=" rounded-md hover:bg-slate-50 p-4 shadow-sm cursor-pointer  dark:bg-zinc-800 dark:hover:bg-zinc-700"
+          className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer  dark:bg-zinc-800 dark:hover:bg-zinc-700"
           onClick={() => {
             handleAddNode("PerguntaUnique");
           }}
@@ -47,7 +47,7 @@ export default function MenuAddCompo() {
         </li>
 
         <li
-          className=" rounded-md hover:bg-slate-50 p-4 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
+          className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
           onClick={() => {
             handleAddNode("Resposta");
           }}
@@ -56,7 +56,7 @@ export default function MenuAddCompo() {
         </li>
 
         <li
-          className=" rounded-md hover:bg-slate-50 p-4 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
+          className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
           onClick={() => {
             handleAddNode("Departamento");
           }}
@@ -68,7 +68,7 @@ export default function MenuAddCompo() {
         </li>
 
         <li
-          className=" rounded-md hover:bg-slate-50 p-4 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
+          className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0  py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
           onClick={() => {
             handleAddNode("Timmer");
           }}

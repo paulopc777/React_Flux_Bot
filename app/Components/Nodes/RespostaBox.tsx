@@ -9,6 +9,7 @@ import { BoxProps } from "./BoxInputsUsuario/PerguntaBox";
 import Close from "./Close/Close";
 import useStore from "app/Redux/store";
 import { useShallow } from "zustand/react/shallow";
+import InputPad from "../inputs/InputPad";
 
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,
@@ -64,34 +65,33 @@ export default function RespostaBox({ id }: BoxProps) {
         ></TextIcon>
         <hr className="my-2 bg-black text-black dark:border-zinc-500" />
         {Btn ? (
-          <input
-            type="text"
-            className="shadow-inner p-1 mb-2 overflow-hidden dark:bg-neutral-800 w-full box-border resize-none h-auto "
-            placeholder="Mensagem do botão"
-            maxLength={20}
-            value={Body}
-            onChange={(e) => {
-              setBody(e.target.value);
-            }}
-            onBlur={AutoSaveInput}
-          />
+         
+          <InputPad
+          placeholder="Mensagem do botão"
+          value={Body}
+          onChange={(e) => {
+            setBody(e.target.value);
+          }}
+          onBlur={AutoSaveInput}
+          maxLength={20}
+        ></InputPad>
+
         ) : (
           ""
         )}
 
         {Btn ? (
           <>
-            <input
-              type="text"
-              className="shadow-inner p-1  overflow-hidden dark:bg-neutral-800 w-full box-border resize-none h-auto "
+            
+            <InputPad
               placeholder="Rodape do botão"
-              maxLength={20}
               value={Footer}
               onChange={(e) => {
                 setFoorter(e.target.value);
               }}
               onBlur={AutoSaveInput}
-            />
+            ></InputPad>
+
             <hr className="my-2 bg-black text-black dark:border-zinc-500" />
           </>
         ) : (
@@ -120,7 +120,7 @@ export default function RespostaBox({ id }: BoxProps) {
       </ConteinerDragg>
 
       {Btn ? (
-        ""
+        <Handle type="source" position={Position.Left} />
       ) : (
         <>
           <Handle type="source" position={Position.Left} />

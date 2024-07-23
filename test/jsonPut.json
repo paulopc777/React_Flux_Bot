@@ -1,194 +1,141 @@
-[
-  {
-    "draw": "1",
-    "recordsTotal": 1,
-    "recordsFiltered": 1,
-    "data": [
+{
+  "context": {
+    "name": "Buttons",
+    "accounts": [],
+    "inherits": "",
+    "identifier": "Buttons",
+    "buttons": ["BTn1", "BTn2"],
+    "use_button": true,
+    "button_header": "Hedaer",
+    "button_body": "Body",
+    "button_footer": "foorter",
+    "description": "",
+    "bot_trigger_id": null,
+    "trigger": "",
+    "intents": [
       {
-        "id": 581933,
-        "name": "Context_1",
-        "identifier": "cont_1",
-        "inherits": "",
-        "trigger": "",
-        "buttons": [],
+        "id": 118031,
+        "trigger": "@sys.start_topic Buttons",
+        "accounts": [],
+        "buttons": [""],
         "button_header": "",
         "button_body": "",
         "button_footer": "",
         "use_button": false,
         "company_id": 478,
-        "bot_trigger_id": null,
-        "description": "Ola.",
+        "final_intent": null,
+        "action": [],
+        "initial_intent": null,
+        "stream": "> topic buttons<br>",
+        "replies": []
+      },
+      {
+        "id": 118032,
+        "trigger": "ticket_finish",
         "accounts": [],
-        "intents": [
+        "buttons": [""],
+        "button_header": "",
+        "button_body": "",
+        "button_footer": "",
+        "use_button": false,
+        "company_id": 478,
+        "final_intent": 0,
+        "action": [],
+        "initial_intent": 0,
+        "stream": "+ ticket_finish<br>",
+        "replies": []
+      },
+      {
+        "id": 118033,
+        "trigger": "@sys.opt @sys.array_must(btnRe) @sys.opt",
+        "accounts": [],
+        "buttons": [""],
+        "button_header": "",
+        "button_body": "",
+        "button_footer": "",
+        "use_button": false,
+        "company_id": 478,
+        "final_intent": 0,
+        "action": [],
+        "initial_intent": 0,
+        "stream": "+ [*] (btnre) [*]<br>",
+        "replies": []
+      },
+      {
+        "id": 118034,
+        "trigger": "@sys.opt @sys.array_must(btnRe) @sys.opt",
+        "accounts": [],
+        "buttons": [""],
+        "button_header": "",
+        "button_body": "",
+        "button_footer": "",
+        "use_button": false,
+        "company_id": 478,
+        "final_intent": 1,
+        "action": {
+          "action_type": 0,
+          "message": "",
+          "bot_trigger_id": 118034,
+          "department_id": 1784,
+          "ticket_status_id": "",
+          "file_name": "",
+          "file_data": "",
+          "mime_type": "",
+          "get_fields": "",
+          "get_results": "",
+          "get_url": "",
+          "headers": "",
+          "headers_value": "",
+          "post_fields": "",
+          "id": 40460,
+          "post_results": "",
+          "post_url": "",
+          "auth_url": "",
+          "json_data_request": "",
+          "token_field_name": "",
+          "user_id": ""
+        },
+        "initial_intent": 0,
+        "stream": "",
+        "replies": []
+      },
+      {
+        "description": "@sys.opt @sys.array_must(Btn2) @sys.opt ",
+        "trigger": "@sys.opt @sys.array_must(Btn2) @sys.opt ",
+        "final_intent": true,
+        "buttons": [],
+        "use_button": false,
+        "button_header": "",
+        "button_body": "",
+        "button_footer": "",
+        "action": {
+          "action_type": 0,
+          "message": "",
+          "user_id": "",
+          "department_id": 1787,
+          "ticket_status_id": "",
+          "get_url": "",
+          "file_name": "",
+          "file_data": "",
+          "get_fields": "",
+          "get_results": "",
+          "post_url": "",
+          "auth_url": "",
+          "json_data_request": "",
+          "token_field_name": "",
+          "post_fields": "",
+          "headers": "",
+          "headers_value": ""
+        },
+        "replies": [
           {
-            "id": 115616,
-            "trigger": "@sys.start_topic cont_1",
-            "accounts": [],
-            "buttons": [
-              ""
-            ],
-            "button_header": "",
-            "button_body": "",
-            "button_footer": "",
-            "use_button": false,
-            "company_id": 478,
-            "final_intent": null,
-            "action": [],
-            "initial_intent": null,
-            "stream": "> topic cont_1<br>",
-            "replies": []
-          },
-          {
-            "id": 115617,
-            "trigger": "ticket_finish",
-            "accounts": [],
-            "buttons": [
-              ""
-            ],
-            "button_header": "",
-            "button_body": "",
-            "button_footer": "",
-            "use_button": false,
-            "company_id": 478,
-            "final_intent": null,
-            "action": [],
-            "initial_intent": null,
-            "stream": "+ ticket_finish<br>- {topic=random}<br>",
-            "replies": [
-              {
-                "id": 95533,
-                "bot_trigger_id": 115617,
-                "reply": "{topic=random}",
-                "final_intent": 0,
-                "weight": null
-              }
-            ]
-          },
-          {
-            "id": 115618,
-            "trigger": "inicio",
-            "accounts": [],
-            "buttons": [
-              ""
-            ],
-            "button_header": "",
-            "button_body": "",
-            "button_footer": "",
-            "use_button": false,
-            "company_id": 478,
-            "final_intent": null,
-            "action": [],
-            "initial_intent": 1,
-            "stream": "+ inicio<br>- Ola.<br>",
-            "replies": [
-              {
-                "id": 95534,
-                "bot_trigger_id": 115618,
-                "reply": "Ola.",
-                "final_intent": 0,
-                "weight": null
-              }
-            ]
-          },
-          {
-            "id": 115619,
-            "trigger": "@sys.input",
-            "accounts": [],
-            "buttons": [
-              ""
-            ],
-            "button_header": "",
-            "button_body": "",
-            "button_footer": "",
-            "use_button": true,
-            "company_id": 478,
-            "final_intent": 0,
-            "action": [],
-            "initial_intent": null,
-            "stream": "+ *<br>- ok ! @topic  random<br>",
-            "replies": [
-              {
-                "id": 95535,
-                "bot_trigger_id": 115619,
-                "reply": "ok ! @topic  random",
-                "final_intent": 0,
-                "weight": null
-              }
-            ]
-          },
-          {
-            "id": 115620,
-            "trigger": "@sys.end_topic",
-            "accounts": [],
-            "buttons": [
-              ""
-            ],
-            "button_header": "",
-            "button_body": "",
-            "button_footer": "",
-            "use_button": false,
-            "company_id": 478,
-            "final_intent": null,
-            "action": [],
-            "initial_intent": null,
-            "stream": "< topic<br>",
-            "replies": []
+            "description": "ok ! @topic random",
+            "weight": "",
+            "final_intent": true,
+            "id": null
           }
         ]
       }
     ]
-  },
-  {
-    "context": {
-      "trigger": "",
-      "identifier": "1",
-      "buttons": [],
-      "use_button": false,
-      "button_header": "",
-      "button_body": "",
-      "button_footer": "",
-      "inherits": "",
-      "description": "asd",
-      "name": "1",
-      "intents": [
-        {
-          "description": "@sys.input ",
-          "trigger": "@sys.input ",
-          "final_intent": false,
-          "buttons": [],
-          "use_button": false,
-          "button_header": "",
-          "button_body": "",
-          "button_footer": "",
-          "action": {
-            "action_type": "",
-            "message": "",
-            "user_id": "",
-            "department_id": "",
-            "ticket_status_id": "",
-            "get_url": "",
-            "file_name": "",
-            "file_data": "",
-            "get_fields": "",
-            "get_results": "",
-            "post_url": "",
-            "auth_url": "",
-            "json_data_request": "",
-            "token_field_name": "",
-            "post_fields": "",
-            "headers": "",
-            "headers_value": ""
-          },
-          "replies": [
-            {
-              "description": "@topic 1 @intent inicio ",
-              "weight": "",
-              "final_intent": false
-            }
-          ]
-        }
-      ],
-      "accounts": []
-    }
   }
-]
+}

@@ -7,7 +7,7 @@ import useStore from "../../../Redux/store";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
 import { useShallow } from "zustand/react/shallow";
-
+import InputPad from "../../inputs/InputPad";
 
 export interface BoxProps {
   id: string;
@@ -58,16 +58,14 @@ export default function PerguntaBox({ id, data }: DataProps) {
         {data.start ? (
           ""
         ) : (
-          <input
-            type="text"
+          <InputPad
             placeholder="Mensagem"
-            className="p-1 shadow-inner my-4 dark:bg-neutral-800 w-full"
             value={InputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
             }}
             onBlur={AutoSaveInput}
-          />
+          ></InputPad>
         )}
 
         {data.start ? (

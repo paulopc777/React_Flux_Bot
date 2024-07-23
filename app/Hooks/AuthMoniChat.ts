@@ -157,15 +157,17 @@ export class MonichatApi {
 
     const cc = await this.extractData(data.data.data);
     console.log(cc);
+
     cc.forEach((context: any) => {
-      console.log(context);
+      //console.log(context);
 
       context.intents.forEach((intent: any) => {
-        console.log(`- ${intent.trigger}`);
-        console.log(intent.replies);
+        // console.log(`- ${intent.trigger}`);
+        // console.log(intent.replies);
       });
     });
   }
+
   /**
    *
    * @param NomeContexto
@@ -176,9 +178,10 @@ export class MonichatApi {
   async InsertContexto(
     NomeContexto: string,
     RespostaDoContexto: string,
-    RespostaContexto: string,
+    ReplyPergunta: string,
     ReplyReposta: string,
-    Departamento?: string
+    Departamento?: string,
+    Status?: string
   ) {
     const PayloadContexto = {
       context: {
@@ -194,8 +197,8 @@ export class MonichatApi {
         name: NomeContexto,
         intents: [
           {
-            description: RespostaContexto,
-            trigger: RespostaContexto,
+            description: ReplyPergunta,
+            trigger: ReplyPergunta,
             final_intent: false,
             buttons: [],
             use_button: false,
@@ -249,14 +252,23 @@ export class MonichatApi {
 
     const UrlApi = "https://api.monitchat.com/api/v1/bot-context";
 
-    const data = await axios.post(UrlApi, PayloadContexto, Header);
-
-    console.log(data.data);
+    const data = await axios
+      .post(UrlApi, PayloadContexto, Header)
+      .then((res) => console.log(res.data));
   }
-
+  /**
+   *
+   * @param NomeContexto
+   * @param RespostaDoContexto
+   * @param RespostaContexto
+   * @param ReplyReposta
+   * @param Buttons
+   * @param Button_header
+   * @param Button_body
+   * @param Button_footer
+   */
   async InsertContextoButton(
     NomeContexto: string,
-    RespostaDoContexto: string,
     RespostaContexto: string,
     ReplyReposta: string,
     Buttons: string[],
@@ -268,20 +280,20 @@ export class MonichatApi {
       context: {
         trigger: "",
         identifier: NomeContexto,
-        buttons: [],
-        use_button: false,
-        button_header: "",
-        button_body: "",
-        button_footer: "",
+        buttons: Buttons,
+        use_button: true,
+        button_header: Button_header,
+        button_body: Button_body,
+        button_footer: Button_footer,
         inherits: "",
-        description: RespostaDoContexto,
+        description: "",
         name: NomeContexto,
         intents: [
           {
             description: RespostaContexto,
             trigger: RespostaContexto,
             final_intent: false,
-            buttons: Buttons,
+            buttons: [],
             use_button: false,
             button_header: Button_header,
             button_body: Button_body,
@@ -317,6 +329,24 @@ export class MonichatApi {
         accounts: [],
       },
     };
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+    const UrlApi = "https://api.monitchat.com/api/v1/bot-context";
+
+    axios
+      .post(UrlApi, PayloadContexto, Header)
+      .then((res) => console.log(res.data.data));
   }
 
   async GetAllContext(NomeDoContexto: string) {
@@ -338,36 +368,31 @@ export class MonichatApi {
 
     const response = await axios.get(UrlThoGet, Header);
 
-    let ContextoSave;
+    let Contexto;
 
-    await response.data.data.map((Contexto: any) => {
-      if (Contexto.name === NomeDoContexto) {
-        ContextoSave = Contexto;
+    response.data.data.map((ContextAll: any) => {
+      if (ContextAll.name === NomeDoContexto) {
+        Contexto = ContextAll;
       }
     });
 
-    console.log(ContextoSave);
-
-    return ContextoSave;
+    return Contexto;
   }
 
+  /**
+   *
+   * @param NomeDoContexto Nome do contexto a ser modificado
+   * @param Trigger Comando sys.input etc...
+   * @param RespostaReplay Resposta do trigger
+   * @param Departamento Casso emcaminhe o nome do Departamento
+   */
   async UpdataContext(
     NomeDoContexto: string,
     Trigger: string,
     RespostaReplay: string,
-    Departamento?: string
+    Departamento: number
   ) {
-    const UrlUpdate = "https://api.monitchat.com/api/v1/bot-context/586550";
-
-    const payload: any = await this.GetAllContext(NomeDoContexto);
-
-    let action_type: any = "";
-    let final_intent = false;
-
-    if (Departamento) {
-      action_type = 0;
-      final_intent = true;
-    }
+    let payload: any = await this.GetAllContext(NomeDoContexto);
 
     if (this.Token.length == 0) {
       await this.GetAuthToken();
@@ -377,21 +402,27 @@ export class MonichatApi {
 
     const Header = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;",
         Authorization: TokenSend,
       },
     };
+
+    const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${payload.id}`;
+
+    let action_type: any = 0;
+    let final_intent = true;
+
     const addPayload = {
-      description: Trigger,
-      trigger: Trigger,
-      final_intent: final_intent,
+      description: `${Trigger}`,
+      trigger: `${Trigger}`,
+      final_intent: true,
       buttons: [],
       use_button: false,
       button_header: "",
       button_body: "",
       button_footer: "",
       action: {
-        action_type: action_type,
+        action_type: 0,
         message: "",
         user_id: "",
         department_id: Departamento,
@@ -411,9 +442,9 @@ export class MonichatApi {
       },
       replies: [
         {
-          description: RespostaReplay,
+          description: `${RespostaReplay} @topic random`,
           weight: "",
-          final_intent: final_intent,
+          final_intent: true,
           id: null,
         },
       ],
@@ -421,8 +452,13 @@ export class MonichatApi {
 
     payload.intents.push(addPayload);
 
-    const data = await axios.put(UrlUpdate, payload, Header);
-    console.log(data.data.data);
+    console.log(payload);
+
+    try {
+      await axios.put(UrlUpdate, { context: payload }, Header);
+    } catch (Err) {
+      console.log("Err");
+    }
   }
 
   /**
@@ -537,4 +573,16 @@ export class MonichatApi {
 const Monichat = new MonichatApi();
 
 Monichat.GetAuthToken();
-Monichat.ListDepartamento();
+//Monichat.ListDepartamento();
+
+// id 1784
+
+
+
+
+Monichat.UpdataContext(
+  "Buttons",
+  "@sys.opt @sys.array_must(asdasd) @sys.opt",
+  "asdasd",
+  1784
+);

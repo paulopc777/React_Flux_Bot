@@ -1,0 +1,53 @@
+{
+  "context": {
+    "trigger": "",
+    "identifier": "IDentifi",
+    "buttons": ["BTn1", "BTn2", "Btn3"],
+    "use_button": true,
+    "button_header": "Cave",
+    "button_body": "MenssageBtn",
+    "button_footer": "Rodape",
+    "inherits": "",
+    "description": "",
+    "name": "NOme",
+    "intents": [
+      {
+        "description": "@sys.input ",
+        "trigger": "@sys.input ",
+        "final_intent": false,
+        "buttons": [],
+        "use_button": false,
+        "button_header": "",
+        "button_body": "",
+        "button_footer": "",
+        "action": {
+          "action_type": "",
+          "message": "",
+          "user_id": "",
+          "department_id": "",
+          "ticket_status_id": "",
+          "get_url": "",
+          "file_name": "",
+          "file_data": "",
+          "get_fields": "",
+          "get_results": "",
+          "post_url": "",
+          "auth_url": "",
+          "json_data_request": "",
+          "token_field_name": "",
+          "post_fields": "",
+          "headers": "",
+          "headers_value": ""
+        },
+        "replies": [
+          {
+            "description": "@topic IDentifi @intent inicio",
+            "weight": "",
+            "final_intent": false
+          }
+        ]
+      }
+    ],
+    "accounts": []
+  }
+}
