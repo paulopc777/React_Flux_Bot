@@ -1,156 +1,122 @@
-{
-  "context": {
-    "name": "com1",
+[
+  {
+    "id": 119110,
+    "trigger": "@sys.start_topic com1",
     "accounts": [],
-    "inherits": "",
-    "identifier": "com1",
-    "buttons": [],
-    "use_button": false,
+    "buttons": [""],
     "button_header": "",
     "button_body": "",
     "button_footer": "",
-    "description": "com1",
-    "bot_trigger_id": null,
-    "trigger": "",
-    "intents": [
+    "use_button": false,
+    "company_id": 478,
+    "final_intent": null,
+    "action": [],
+    "initial_intent": null,
+    "stream": "> topic com1<br>",
+    "replies": []
+  },
+  {
+    "id": 119111,
+    "trigger": "ticket_finish",
+    "accounts": [],
+    "buttons": [""],
+    "button_header": "",
+    "button_body": "",
+    "button_footer": "",
+    "use_button": false,
+    "company_id": 478,
+    "final_intent": 0,
+    "action": [],
+    "initial_intent": 0,
+    "stream": "+ ticket_finish<br>",
+    "replies": []
+  },
+  {
+    "id": 119112,
+    "trigger": "@sys.opt @sys.array_must(aaa) @sys.opt",
+    "accounts": [],
+    "buttons": [""],
+    "button_header": "",
+    "button_body": "",
+    "button_footer": "",
+    "use_button": false,
+    "company_id": 478,
+    "final_intent": 0,
+    "action": [],
+    "initial_intent": 0,
+    "stream": "+ [*] (aaa) [*]<br>- aaa ! {topic=random}<br>",
+    "replies": [
       {
-        "id": 118846,
-        "trigger": "@sys.start_topic com1",
-        "accounts": [],
-        "buttons": [""],
-        "button_header": "",
-        "button_body": "",
-        "button_footer": "",
-        "use_button": false,
-        "company_id": 478,
-        "final_intent": null,
-        "action": [],
-        "initial_intent": null,
-        "stream": "> topic com1<br>",
-        "replies": []
-      },
-      {
-        "id": 118847,
-        "trigger": "ticket_finish",
-        "accounts": [],
-        "buttons": [""],
-        "button_header": "",
-        "button_body": "",
-        "button_footer": "",
-        "use_button": false,
-        "company_id": 478,
-        "final_intent": null,
-        "action": [],
-        "initial_intent": null,
-        "stream": "+ ticket_finish<br>- {topic=random}<br>",
-        "replies": [
-          {
-            "description": "{topic=random}",
-            "weight": null,
-            "final_intent": null,
-            "id": 96473
-          }
-        ]
-      },
-      {
-        "id": 118848,
-        "trigger": "inicio",
-        "accounts": [],
-        "buttons": [""],
-        "button_header": "",
-        "button_body": "",
-        "button_footer": "",
-        "use_button": false,
-        "company_id": 478,
-        "final_intent": null,
-        "action": [],
-        "initial_intent": 1,
-        "stream": "+ inicio<br>- com1<br>",
-        "replies": [
-          {
-            "description": "com1",
-            "weight": null,
-            "final_intent": null,
-            "id": 96474
-          }
-        ]
-      },
-      {
-        "id": 118849,
-        "trigger": "@sys.input",
-        "accounts": [],
-        "buttons": [""],
-        "button_header": "",
-        "button_body": "",
-        "button_footer": "",
-        "use_button": true,
-        "company_id": 478,
+        "id": 96532,
+        "bot_trigger_id": 119112,
+        "reply": "aaa ! @topic random",
         "final_intent": 0,
-        "action": [],
-        "initial_intent": null,
-        "stream": "+ *<br>- ok ! {topic=random}<br>",
-        "replies": [
-          {
-            "description": "ok ! @topic random",
-            "weight": null,
-            "final_intent": null,
-            "id": 96475
-          }
-        ]
-      },
-      {
-        "id": 118850,
-        "trigger": "@sys.end_topic",
-        "accounts": [],
-        "buttons": [""],
-        "button_header": "",
-        "button_body": "",
-        "button_footer": "",
-        "use_button": false,
-        "company_id": 478,
-        "final_intent": null,
-        "action": [],
-        "initial_intent": null,
-        "stream": "< topic<br>",
-        "replies": []
-      },
-      {
-        "description": "@sys.opt @sys.array_must(data) @sys.opt ",
-        "trigger": "@sys.opt @sys.array_must(data) @sys.opt ",
-        "final_intent": false,
-        "buttons": [],
-        "use_button": false,
-        "button_header": "",
-        "button_body": "",
-        "button_footer": "",
-        "action": {
-          "action_type": "",
-          "message": "",
-          "user_id": "",
-          "department_id": "",
-          "ticket_status_id": "",
-          "get_url": "",
-          "file_name": "",
-          "file_data": "",
-          "get_fields": "",
-          "get_results": "",
-          "post_url": "",
-          "auth_url": "",
-          "json_data_request": "",
-          "token_field_name": "",
-          "post_fields": "",
-          "headers": "",
-          "headers_value": ""
-        },
-        "replies": [
-          {
-            "description": "data ! @topic random ",
-            "weight": "",
-            "final_intent": null,
-            "id": null
-          }
-        ]
+        "weight": null
       }
     ]
+  },
+  {
+    "id": 119113,
+    "trigger": "@sys.opt @sys.array_must(asd) @sys.opt",
+    "accounts": [],
+    "buttons": [""],
+    "button_header": "",
+    "button_body": "",
+    "button_footer": "",
+    "use_button": false,
+    "company_id": 478,
+    "final_intent": 0,
+    "action": [],
+    "initial_intent": 0,
+    "stream": "+ [*] (asd) [*]<br>- kok {topic=random}<br>",
+    "replies": [
+      {
+        "id": 96533,
+        "bot_trigger_id": 119113,
+        "reply": "kok @topic random",
+        "final_intent": 0,
+        "weight": null
+      }
+    ]
+  },
+  {
+    "id": 119114,
+    "trigger": "@sys.opt @sys.array_must(ddd) @sys.opt",
+    "accounts": [],
+    "buttons": [""],
+    "button_header": "",
+    "button_body": "",
+    "button_footer": "",
+    "use_button": false,
+    "company_id": 478,
+    "final_intent": 0,
+    "action": [],
+    "initial_intent": 0,
+    "stream": "+ [*] (ddd) [*]<br>- ok {topic=random}<br>",
+    "replies": [
+      {
+        "id": 96534,
+        "bot_trigger_id": 119114,
+        "reply": "ok @topic random",
+        "final_intent": 0,
+        "weight": null
+      }
+    ]
+  },
+  {
+    "id": 119115,
+    "trigger": "@sys.end_topic",
+    "accounts": [],
+    "buttons": [""],
+    "button_header": "",
+    "button_body": "",
+    "button_footer": "",
+    "use_button": false,
+    "company_id": 478,
+    "final_intent": null,
+    "action": [],
+    "initial_intent": null,
+    "stream": "< topic<br>",
+    "replies": []
   }
-}
+]

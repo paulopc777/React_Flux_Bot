@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { MonichatApi } from "./AuthMoniChat";
 
 const monichat = new MonichatApi();
@@ -14,7 +15,7 @@ async function CreateIntention(props: any) {
               //console.log("linahs2");
               monichat.InsertIntencao(
                 text.text,
-                `@topic com-${linahs2.source} @intent inicio`
+                `@topic com${linahs2.source} @intent inicio`
               );
             }
           });
@@ -62,9 +63,9 @@ async function CreateReply(props: any) {
                         idDepartamento
                       );
                       monichat.UpdataContext(
-                        `com-${linhas3.source}`,
+                        `com${linhas3.source}`,
                         `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
-                        `CreateReply @topic random`,
+                        `Estou te emcaminhando para departamemto @topic random`,
                         idDepartamento
                       );
                     }
@@ -93,23 +94,27 @@ async function CreateContexto(props: any) {
                   if (linha2.source === Dep.id) {
                     if (Dep.text) {
                       console.log(
-                        `Um contexto de com-${linha.source} texto ${form.text} `
+                        `Um contexto de com${linha.source} texto ${form.text} `
                       );
 
+                      setInterval(() => {
+                        return resolve;
+                      }, 3000);
+
                       monichat.InsertContexto(
-                        `com-${linha.source}`,
+                        `com${linha.source}`,
                         form.text,
                         `@sys.input `,
-                        `> Digite um valor valido @topic com-${linha.source} @intent inicio`
+                        `> Digite um valor valido @topic com${linha.source} @intent inicio`
                       );
                     } else {
                       console.log(
-                        `Um contexto de com-${linha.target} reply ${linha2.target} text ${form.text} Departamento ${Dep.Departamento} `
+                        `Um contexto de com${linha.target} reply ${linha2.target} text ${form.text} Departamento ${Dep.Departamento} `
                       );
 
                       /*
                       monichat.UpdataContext(
-                        `com-${linha.target}`,
+                        `com${linha.target}`,
                         `@sys.opt @sys.array_must(${form.text}) @sys.opt `,
                         "CreateReply @topic random",
                          getIdByNome(`${Dep.Departamento}`)
@@ -134,18 +139,22 @@ async function CreateContexto(props: any) {
 }
 
 export async function ValidThoSend(props: any) {
-  //console.log(props);
+  console.log(props);
 
-  //await CreateIntention(props);
-  //await CreateContexto(props);
+  await CreateIntention(props);
+  await CreateContexto(props);
+
   setTimeout(async () => {
-    //await CreateReply(props);
+    await CreateReply(props);
   }, 2000);
   return;
 }
 
+/*
 monichat.UpdataContext(
   "com1",
   "@sys.opt @sys.array_must(ccc) @sys.opt",
   "ccc ! @topic random"
-);
+);*/
+
+// monichat.ListContext();

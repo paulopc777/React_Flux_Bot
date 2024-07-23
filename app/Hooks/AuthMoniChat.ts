@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { Console } from "console";
+import { replaceReplyWithDescription } from "./Transform/Reply";
 
 interface PayloadAuth {
   username?: "";
@@ -156,16 +157,18 @@ export class MonichatApi {
     const data = await axios.get(UrlGetContext, Header);
 
     const cc = await this.extractData(data.data.data);
-    console.log(cc);
+    //console.log(cc[0].intents);
 
     cc.forEach((context: any) => {
-      //console.log(context);
+      console.log(context);
 
       context.intents.forEach((intent: any) => {
-        // console.log(`- ${intent.trigger}`);
-        // console.log(intent.replies);
+        console.log(`- ${intent.trigger}`);
+        console.log(intent.replies);
       });
     });
+
+    return cc;
   }
 
   /**
@@ -383,7 +386,7 @@ export class MonichatApi {
     }
 
     const UrlThoGet =
-      "https://api.monitchat.com/api/v1/bot-context?draw=3&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1721394904875";
+      "https://api.monitchat.com/api/v1/bot-context?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D";
 
     const response = await axios.get(UrlThoGet, Header);
 
@@ -394,6 +397,10 @@ export class MonichatApi {
         Contexto = ContextAll;
       }
     });
+
+    
+
+    const result: any = await replaceReplyWithDescription(Contexto.intents);
 
     let Initial = {
       context: {
@@ -409,24 +416,36 @@ export class MonichatApi {
         description: Contexto.description,
         bot_trigger_id: null,
         trigger: "",
-        intents: Contexto.intents,
+        intents: result,
       },
     };
+
+    let Departamentoasd: any = "";
+    let action_type: any = "";
+    let final_intent: any = null;
+    let final_intent1: any = false;
+
+    if (Departamento) {
+      Departamentoasd = Departamento;
+      action_type = 0;
+      final_intent = true;
+      final_intent1 = true;
+    }
 
     const addPayload = {
       description: Trigger,
       trigger: Trigger,
-      final_intent: false,
+      final_intent: final_intent1,
       buttons: [],
       use_button: false,
       button_header: "",
       button_body: "",
       button_footer: "",
       action: {
-        action_type: "",
+        action_type: action_type,
         message: "",
         user_id: "",
-        department_id: "",
+        department_id: Departamentoasd,
         ticket_status_id: "",
         get_url: "",
         file_name: "",
@@ -445,7 +464,7 @@ export class MonichatApi {
         {
           description: RespostaReplay,
           weight: "",
-          final_intent: null,
+          final_intent: final_intent,
           id: null,
         },
       ],
@@ -453,15 +472,10 @@ export class MonichatApi {
 
     Initial.context.intents.push(addPayload);
 
-    console.log(Initial.context.intents);
-
     if (Initial) {
       const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${Contexto.id}`;
 
-      axios
-          .put(UrlUpdate, Initial, Header)
-         .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      axios.put(UrlUpdate, Initial, Header).catch((err) => console.log(err));
     } else {
       console.log("Erro r");
     }
