@@ -44,7 +44,9 @@ function getIdByNome(nome: any) {
 }
 
 async function CreateReply(props: any) {
-  props.form.map((form: any) => {
+  let allForms: any = [];
+
+  await props.form.map((form: any) => {
     if (form.Departamento) {
       props.edges.map((linhas: any) => {
         if (form.id === linhas.source) {
@@ -52,8 +54,6 @@ async function CreateReply(props: any) {
             if (linhas2.source === linhas.target) {
               props.edges.map((linhas3: any) => {
                 if (linhas2.target === linhas3.source) {
-                  let allForms = [];
-
                   props.form.map((TextLInha2: any) => {
                     if (TextLInha2.id === linhas2.source) {
                       const idDepartamento: number = getIdByNome(
@@ -65,15 +65,12 @@ async function CreateReply(props: any) {
                         TextLInha2.text,
                         idDepartamento
                       );
-                
-                      setTimeout(async () => {
-                        await monichat.UpdataContext(
-                          `com${linhas3.source}`,
-                          `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
-                          `Estou te emcaminhando para departamemto @topic random`,
-                          idDepartamento
-                        );
-                      }, 2000);
+                      allForms.push({
+                        name: `com${linhas3.source}`,
+                        p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
+                        p2: `Estou te emcaminhando para departamemto @topic random`,
+                        p3: idDepartamento,
+                      });
                     }
                   });
                 }
@@ -84,6 +81,12 @@ async function CreateReply(props: any) {
       });
     }
   });
+
+  for (let index = 0; index < allForms.length; index++) {
+    const data = allForms[index];
+    console.log(data);
+    await monichat.UpdataContext(data.name, data.p1, data.p2, data.p3);
+  }
 }
 
 async function AddDefoltContex() {}
@@ -162,7 +165,7 @@ async function CreateContextButton(prosp: any) {
               `@topic com${linhas.source} @intent inicio`,
               "Escolha uma opção abaixo: ",
               BtnArray,
-              form.Body,
+              "",
               form.Body,
               form.Footer
             );
@@ -171,6 +174,10 @@ async function CreateContextButton(prosp: any) {
       });
     }
   });
+}
+
+async function CreateContexContext(props: any) {
+  
 }
 
 export async function ValidThoSend(props: any) {
@@ -182,7 +189,7 @@ export async function ValidThoSend(props: any) {
   await CreateContextButton(props);
 
   setTimeout(async () => {
-     await CreateReply(props);
+    await CreateReply(props);
   }, 4000);
 
   return;

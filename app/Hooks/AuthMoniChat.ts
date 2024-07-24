@@ -280,7 +280,6 @@ export class MonichatApi {
     Button_body: string,
     Button_footer: string
   ) {
-
     const PayloadContexto = {
       context: {
         trigger: "",
@@ -483,9 +482,12 @@ export class MonichatApi {
     if (Initial) {
       const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${Contexto.id}`;
 
-      axios.put(UrlUpdate, Initial, Header).catch((err) => console.log(err));
+      await axios.put(UrlUpdate, Initial, Header).catch((err) => console.log(err));
+
+      return true;
     } else {
       console.log("Erro r");
+      return false;
     }
   }
 
