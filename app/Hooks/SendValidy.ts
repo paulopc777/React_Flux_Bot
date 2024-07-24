@@ -52,22 +52,28 @@ async function CreateReply(props: any) {
             if (linhas2.source === linhas.target) {
               props.edges.map((linhas3: any) => {
                 if (linhas2.target === linhas3.source) {
+                  let allForms = [];
+
                   props.form.map((TextLInha2: any) => {
                     if (TextLInha2.id === linhas2.source) {
                       const idDepartamento: number = getIdByNome(
                         `${form.Departamento}`
                       );
+
                       console.log(
                         linhas3.source,
                         TextLInha2.text,
                         idDepartamento
                       );
-                      monichat.UpdataContext(
-                        `com${linhas3.source}`,
-                        `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
-                        `Estou te emcaminhando para departamemto @topic random`,
-                        idDepartamento
-                      );
+                
+                      setTimeout(async () => {
+                        await monichat.UpdataContext(
+                          `com${linhas3.source}`,
+                          `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
+                          `Estou te emcaminhando para departamemto @topic random`,
+                          idDepartamento
+                        );
+                      }, 2000);
                     }
                   });
                 }
@@ -82,7 +88,7 @@ async function CreateReply(props: any) {
 
 async function AddDefoltContex() {}
 
-async function CreateContexto(props: any) {
+async function CreateContextoText(props: any) {
   props.edges.map((linha: any) => {
     if (linha.target != "1") {
       props.form.map((form: any) => {
@@ -93,9 +99,10 @@ async function CreateContexto(props: any) {
                 props.form.map((Dep: any) => {
                   if (linha2.source === Dep.id) {
                     if (Dep.text) {
+                      /*
                       console.log(
                         `Um contexto de com${linha.source} texto ${form.text} `
-                      );
+                      );*/
 
                       setInterval(() => {
                         return resolve;
@@ -108,10 +115,10 @@ async function CreateContexto(props: any) {
                         `> Digite um valor valido @topic com${linha.source} @intent inicio`
                       );
                     } else {
+                      /*
                       console.log(
                         `Um contexto de com${linha.target} reply ${linha2.target} text ${form.text} Departamento ${Dep.Departamento} `
-                      );
-
+                      );*/
                       /*
                       monichat.UpdataContext(
                         `com${linha.target}`,
@@ -124,13 +131,41 @@ async function CreateContexto(props: any) {
                 });
               }
             });
-          } else if (form.button) {
-            console.log(form, "linhe:", linha.source);
-            props.edges.map((linha2: any) => {
-              if (linha.source === linha2.target) {
-                console.log(linha2);
+          }
+        }
+      });
+    }
+  });
+}
+
+async function CreateContextButton(prosp: any) {
+  prosp.edges.map((linhas: any) => {
+    if (linhas.target != "1") {
+      prosp.form.map((form: any) => {
+        if (form.button) {
+          if (form.id === linhas.source) {
+            console.log("Buttion check", form);
+
+            let BtnArray: any = [];
+
+            form.button.map((item: any) => {
+              if (item.text) {
+                BtnArray.push(item.text);
               }
             });
+
+            console.log(BtnArray);
+
+            monichat.InsertContextoButton(
+              `com${linhas.source}`,
+              "@sys.input ",
+              `@topic com${linhas.source} @intent inicio`,
+              "Escolha uma opção abaixo: ",
+              BtnArray,
+              form.Body,
+              form.Body,
+              form.Footer
+            );
           }
         }
       });
@@ -142,11 +177,14 @@ export async function ValidThoSend(props: any) {
   console.log(props);
 
   await CreateIntention(props);
-  await CreateContexto(props);
+
+  await CreateContextoText(props);
+  await CreateContextButton(props);
 
   setTimeout(async () => {
-    await CreateReply(props);
-  }, 2000);
+     await CreateReply(props);
+  }, 4000);
+
   return;
 }
 

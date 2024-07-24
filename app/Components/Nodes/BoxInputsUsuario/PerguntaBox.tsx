@@ -36,7 +36,7 @@ export default function PerguntaBox({ id, data }: DataProps) {
   const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
 
   function AutoSaveInput() {
-    console.log("Save");
+    //console.log("Save");
     deleteValue(id);
     addValue({ id: id, text: InputValue });
   }

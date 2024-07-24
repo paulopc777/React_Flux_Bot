@@ -27,10 +27,10 @@ export default function RespostaBox({ id }: BoxProps) {
   const [Footer, setFoorter] = useState("");
 
   function AutoSaveInput() {
-    console.log("Save");
+    //console.log("Save");
 
     if (Btn) {
-      console.log("Update Butoon");
+      //console.log("Update Butoon");
       deleteValue(id);
       addValue({ id: id, Body: Body, Footer: Footer });
     } else {
@@ -65,24 +65,21 @@ export default function RespostaBox({ id }: BoxProps) {
         ></TextIcon>
         <hr className="my-2 bg-black text-black dark:border-zinc-500" />
         {Btn ? (
-         
           <InputPad
-          placeholder="Mensagem do botão"
-          value={Body}
-          onChange={(e) => {
-            setBody(e.target.value);
-          }}
-          onBlur={AutoSaveInput}
-          maxLength={20}
-        ></InputPad>
-
+            placeholder="Mensagem do botão"
+            value={Body}
+            onChange={(e) => {
+              setBody(e.target.value);
+            }}
+            onBlur={AutoSaveInput}
+            maxLength={20}
+          ></InputPad>
         ) : (
           ""
         )}
 
         {Btn ? (
           <>
-            
             <InputPad
               placeholder="Rodape do botão"
               value={Footer}

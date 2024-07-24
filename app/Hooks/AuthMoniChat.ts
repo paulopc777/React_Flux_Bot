@@ -271,36 +271,38 @@ export class MonichatApi {
    * @param Button_footer
    */
   async InsertContextoButton(
-    NomeContexto: string,
-    RespostaContexto: string,
+    Indentificador: string,
+    ReplyContexto: string,
     ReplyReposta: string,
+    descriptionCont: string,
     Buttons: string[],
     Button_header: string,
     Button_body: string,
     Button_footer: string
   ) {
+
     const PayloadContexto = {
       context: {
         trigger: "",
-        identifier: NomeContexto,
+        identifier: Indentificador,
         buttons: Buttons,
         use_button: true,
         button_header: Button_header,
         button_body: Button_body,
         button_footer: Button_footer,
         inherits: "",
-        description: "",
-        name: NomeContexto,
+        description: descriptionCont,
+        name: Indentificador,
         intents: [
           {
-            description: RespostaContexto,
-            trigger: RespostaContexto,
+            description: ReplyContexto,
+            trigger: ReplyContexto,
             final_intent: false,
             buttons: [],
             use_button: false,
-            button_header: Button_header,
-            button_body: Button_body,
-            button_footer: Button_footer,
+            button_header: "",
+            button_body: "",
+            button_footer: "",
             action: {
               action_type: "",
               message: "",
@@ -393,14 +395,20 @@ export class MonichatApi {
     let Contexto: any;
 
     await response.data.data.map((ContextAll: any) => {
-      if (ContextAll.name === NomeDoContexto) {
+      if (ContextAll.identifier === NomeDoContexto) {
         Contexto = ContextAll;
       }
     });
 
-    
+    let result: any = "";
 
-    const result: any = await replaceReplyWithDescription(Contexto.intents);
+    console.log(Contexto);
+
+    if (Contexto.intents) {
+      result = await replaceReplyWithDescription(Contexto.intents);
+    } else {
+      console.log("Contexto.intents == not");
+    }
 
     let Initial = {
       context: {
@@ -408,11 +416,11 @@ export class MonichatApi {
         accounts: [],
         inherits: "",
         identifier: Contexto.identifier,
-        buttons: [],
-        use_button: false,
-        button_header: "",
-        button_body: "",
-        button_footer: "",
+        buttons: Contexto.buttons,
+        use_button: Contexto.use_button,
+        button_header: Contexto.button_header,
+        button_body: Contexto.button_body,
+        button_footer: Contexto.button_footer,
         description: Contexto.description,
         bot_trigger_id: null,
         trigger: "",
