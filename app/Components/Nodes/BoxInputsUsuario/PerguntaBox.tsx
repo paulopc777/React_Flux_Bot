@@ -8,7 +8,6 @@ import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
 import { useShallow } from "zustand/react/shallow";
 import InputPad from "../../inputs/InputPad";
-import AutocompleteInput from "app/Components/inputs/AutoCompleet";
 
 export interface BoxProps {
   id: string;
@@ -60,16 +59,18 @@ export default function PerguntaBox({ id, data }: DataProps) {
           ""
         ) : (
           <>
-          <div className="text-white mt-4">
-
-     
-              <AutocompleteInput
+            <div className="text-white mt-4">
+              <InputPad
                 placeholder="Mensagem esoperada"
-                onBlur={() => {}}
-                onChange={() => {}}
-                value=""
-              ></AutocompleteInput>
-             </div>
+                onBlur={() => {
+                  AutoSaveInput();
+                }}
+                onChange={(e) => {
+                  setInputValue(e.target.value)
+                }}
+                value={InputValue}
+              ></InputPad>
+            </div>
           </>
         )}
 

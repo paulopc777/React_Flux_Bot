@@ -75,28 +75,34 @@ async function CreateReply(props: any) {
   await props.form.map((form: any) => {
     if (form.Departamento) {
       props.edges.map((linhas: any) => {
+        // linhas.source = id do departamento
         if (form.id === linhas.source) {
           props.edges.map((linhas2: any) => {
+            // linhas2.source = if texto para ir para departamento
             if (linhas2.source === linhas.target) {
               props.edges.map((linhas3: any) => {
                 if (linhas2.target === linhas3.source) {
+                  // linhas3.source = box de botes de resposta
                   props.form.map((TextLInha2: any) => {
                     if (TextLInha2.id === linhas2.source) {
-                      const idDepartamento: number = getIdByNome(
-                        `${form.Departamento}`
-                      );
+                      if (TextLInha2.text) {
+                        const idDepartamento: number = getIdByNome(
+                          `${form.Departamento}`
+                        );
 
-                      // console.log(
-                      //   linhas3.source,
-                      //   TextLInha2.text,
-                      //   idDepartamento
-                      // );
-                      allForms.push({
-                        name: `com${linhas3.source}`,
-                        p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
-                        p2: `Estou te emcaminhando para departamemto @topic random`,
-                        p3: idDepartamento,
-                      });
+                        console.log(
+                          linhas3.source,
+                          TextLInha2.text,
+                          idDepartamento
+                        );
+
+                        allForms.push({
+                          name: `com${linhas3.source}`,
+                          p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
+                          p2: `Estou te emcaminhando para departamemto @topic random`,
+                          p3: idDepartamento,
+                        });
+                      }
                     }
                   });
                 }
@@ -121,7 +127,9 @@ async function CreateReply(props: any) {
                         `${form.Usuario}`
                       );
 
-                      console.log(`reply ${idUsuario}, de contexto ${linhas3.source}`)
+                      console.log(
+                        `reply ${idUsuario}, de contexto ${linhas3.source}`
+                      );
 
                       allForms.push({
                         name: `com${linhas3.source}`,
@@ -143,7 +151,8 @@ async function CreateReply(props: any) {
 
   for (let index = 0; index < allForms.length; index++) {
     const data = allForms[index];
-    // console.log(data);
+    console.log(data);
+
     await monichat.UpdataContext(data.name, data.p1, data.p2, data.p3, data.p4);
   }
 }
@@ -253,7 +262,10 @@ async function CreateContexContext(props: any) {
                     if (linhas2.target === linhas.source) {
                       props.nodes.map((nodeType3: any) => {
                         if (linhas2.source === nodeType3.id) {
-                          if (nodeType3.type != "Departamento" && nodeType3.type != "Usuario") {
+                          if (
+                            nodeType3.type != "Departamento" &&
+                            nodeType3.type != "Usuario"
+                          ) {
                             props.form.map((textForm: any) => {
                               if (textForm.id === linhas.source) {
                                 // console.log(
@@ -290,20 +302,21 @@ export async function ValidThoSend(props: any) {
   console.log(props);
 
   await CreateIntention(props);
-  // console.log("complete 1 ");
+  console.log("complete 1 ");
   await CreateContextoText(props);
-  // console.log("complete 2");
+  console.log("complete 2");
   await CreateContextButton(props);
-  // console.log("complete 3");
-
-  setTimeout(async () => {
-    await CreateContexContext(props);
-    // console.log("complete 4");
-  }, 6000);
+  console.log("complete 3");
 
   setTimeout(async () => {
     await CreateReply(props);
+    console.log("complete 4");
   }, 4000);
+
+  setTimeout(async () => {
+    await CreateContexContext(props);
+    console.log("complete 5");
+  }, 6000);
 
   return true;
 }
