@@ -16,12 +16,14 @@ import useStore from "../Redux/store";
 import { useShallow } from "zustand/react/shallow";
 import DepartamentoBox from "./Nodes/DepartamentoBox";
 import BoxTimmer from "./Nodes/BoxTimmer";
+import UsuarioBox from "./Nodes/UsuariosBox";
 
 const NodeType = {
   PerguntaUnique: PerguntaBox,
   Resposta: RespostaBox,
   Departamento: DepartamentoBox,
   Timmer: BoxTimmer,
+  Usuario: UsuarioBox,
 };
 
 function nodeColor(node: any) {

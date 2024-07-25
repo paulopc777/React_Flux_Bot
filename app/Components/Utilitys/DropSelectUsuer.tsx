@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { DroppSelectsMenu } from "./MenuDropDepartamento";
+import { DroppSelectsMenu } from "./MenuDropUsuario";
 import useStore from "../../Redux/store";
 import { useShallow } from "zustand/react/shallow";
 
@@ -33,7 +33,7 @@ export default function DroppSelects({ id }: any) {
     setMenuOption(Select);
     console.log("Save");
     deleteValue(id);
-    addValue({ id: id, Departamento: Select });
+    addValue({ id: id, Usuario: Select });
   }
 
   return (

@@ -68,6 +68,20 @@ export default function MenuAddCompo() {
         </li>
 
         <li
+          className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
+          onClick={() => {
+            handleAddNode("Usuario");
+          }}
+        >
+          <TextIcon
+            text="Transferir para Usuario"
+            icon="svg/user.svg"
+          ></TextIcon>
+        </li>
+
+
+
+        <li
           className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0  py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
           onClick={() => {
             handleAddNode("Timmer");

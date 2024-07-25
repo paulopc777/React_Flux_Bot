@@ -24,6 +24,10 @@ async function CreateIntention(props: any) {
     }
   });
 }
+interface Usuario {
+  id: number;
+  email: string;
+}
 
 function getIdByNome(nome: any) {
   // Ler a lista do localStorage
@@ -41,6 +45,28 @@ function getIdByNome(nome: any) {
   }
   // Retornar null se não houver lista no localStorage
   return null;
+}
+function obterUsuariosDoLocalStorage(): Usuario[] {
+  const usuariosString = localStorage.getItem("Usuarios");
+  if (usuariosString) {
+    try {
+      const usuarios: Usuario[] = JSON.parse(usuariosString);
+      return usuarios;
+    } catch (error) {
+      console.error("Erro ao fazer parse dos dados do localStorage:", error);
+      return [];
+    }
+  } else {
+    console.warn(
+      'Nenhum dado encontrado no localStorage com a chave "Usuarios".'
+    );
+    return [];
+  }
+}
+
+function encontrarIdPeloNome(usuarios: Usuario[], nome: string): number | null {
+  const usuarioEncontrado = usuarios.find((usuario) => usuario.email === nome);
+  return usuarioEncontrado ? usuarioEncontrado.id : null;
 }
 
 async function CreateReply(props: any) {
@@ -60,7 +86,6 @@ async function CreateReply(props: any) {
                         `${form.Departamento}`
                       );
 
-                      
                       // console.log(
                       //   linhas3.source,
                       //   TextLInha2.text,
@@ -80,13 +105,46 @@ async function CreateReply(props: any) {
           });
         }
       });
+    } else if (form.Usuario) {
+      props.edges.map((linhas: any) => {
+        if (form.id === linhas.source) {
+          props.edges.map((linhas2: any) => {
+            if (linhas2.source === linhas.target) {
+              props.edges.map((linhas3: any) => {
+                if (linhas2.target === linhas3.source) {
+                  props.form.map((TextLInha2: any) => {
+                    if (TextLInha2.id === linhas2.source) {
+                      const data = obterUsuariosDoLocalStorage();
+
+                      const idUsuario: any = encontrarIdPeloNome(
+                        data,
+                        `${form.Usuario}`
+                      );
+
+                      console.log(`reply ${idUsuario}, de contexto ${linhas3.source}`)
+
+                      allForms.push({
+                        name: `com${linhas3.source}`,
+                        p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
+                        p2: `Estou te emcaminhando para o Colaborador. @topic random`,
+                        p3: null,
+                        p4: idUsuario,
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
     }
   });
 
   for (let index = 0; index < allForms.length; index++) {
     const data = allForms[index];
     // console.log(data);
-    await monichat.UpdataContext(data.name, data.p1, data.p2, data.p3);
+    await monichat.UpdataContext(data.name, data.p1, data.p2, data.p3, data.p4);
   }
 }
 
@@ -195,7 +253,7 @@ async function CreateContexContext(props: any) {
                     if (linhas2.target === linhas.source) {
                       props.nodes.map((nodeType3: any) => {
                         if (linhas2.source === nodeType3.id) {
-                          if (nodeType3.type != "Departamento") {
+                          if (nodeType3.type != "Departamento" && nodeType3.type != "Usuario") {
                             props.form.map((textForm: any) => {
                               if (textForm.id === linhas.source) {
                                 // console.log(
@@ -238,8 +296,6 @@ export async function ValidThoSend(props: any) {
   await CreateContextButton(props);
   // console.log("complete 3");
 
-
-
   setTimeout(async () => {
     await CreateContexContext(props);
     // console.log("complete 4");
@@ -248,7 +304,6 @@ export async function ValidThoSend(props: any) {
   setTimeout(async () => {
     await CreateReply(props);
   }, 4000);
-
 
   return true;
 }

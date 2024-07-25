@@ -2,7 +2,7 @@
 
 import ConteinerDragg from 'app/Components/Conteiners/BoxDragg/ConteinerDragg'
 import TextIcon from 'app/Components/Nodes/TextUtility/TextIcon'
-import { DroppSelectsMenu } from 'app/Components/Utilitys/MenuDrop'
+import { DroppSelectsMenu } from 'app/Components/Utilitys/MenuDropDepartamento'
 import { MonichatApi } from 'app/Hooks/AuthMoniChat'
 import React, { useEffect, useState } from 'react'
 import { MenuDepartaement } from './MenuDepartament'
@@ -27,9 +27,6 @@ export default function InsertDepartamento() {
         }
     }
 
-    useEffect(() => {
-        setUpdate(!Update)
-    }, [AddNewDepartament])
 
     return (
         <ConteinerDragg w={"w-72"}>
@@ -55,7 +52,7 @@ export default function InsertDepartamento() {
                 onChange={(e) => { setDescricao(e.target.value) }}
             />
 
-            <button className='bg-zinc-500 rounded-full px-3 py-1 mt-2 hover:bg-zinc-700 transition-all' onClick={AddNewDepartament}>Inserir</button>
+            <button className='dark:bg-zinc-500 bg-slate-300 rounded-full px-3 py-1 mt-2 hover:bg-zinc-700 transition-all' onClick={AddNewDepartament}>Inserir</button>
 
         </ConteinerDragg>
     )

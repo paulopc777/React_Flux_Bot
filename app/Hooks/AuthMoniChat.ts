@@ -171,6 +171,44 @@ export class MonichatApi {
     return cc;
   }
 
+  async ListUsers() {
+    const GetUsersUrl =
+      "https://api.monitchat.com/api/v1/user?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=name&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=email&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=phone_number&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=additional_info&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=active&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=false&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false";
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const data = await axios.get(GetUsersUrl, Header);
+
+    let Usuarios: any = [];
+
+    if (data.data.data) {
+      data.data.data.map((DepartamentoItem: any) => {
+        Usuarios.push({
+          id: DepartamentoItem.id,
+          email: DepartamentoItem.name,
+        });
+      });
+    }
+
+    // console.log(Usuarios);
+
+    const serializedMonichat = JSON.stringify(Usuarios);
+    localStorage.setItem("Usuarios", serializedMonichat);
+
+    return Usuarios;
+  }
+
   /**
    *
    * @param NomeContexto
@@ -259,7 +297,7 @@ export class MonichatApi {
       .post(UrlApi, PayloadContexto, Header)
       .then((res) => console.log(res.data));
 
-      return true;
+    return true;
   }
   /**
    *
@@ -354,7 +392,7 @@ export class MonichatApi {
         .post(UrlApi, PayloadContexto, Header)
         .then((res) => console.log(res.data.data));
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return true;
     }
   }
@@ -374,7 +412,8 @@ export class MonichatApi {
     NomeDoContexto: string,
     Trigger: string,
     RespostaReplay: string,
-    Departamento?: number
+    Departamento?: number,
+    UsuarioMoni?: number
   ) {
     if (this.Token.length == 0) {
       await this.GetAuthToken();
@@ -446,6 +485,15 @@ export class MonichatApi {
       final_intent1 = true;
     }
 
+    let UsuerRedirect: any = "";
+
+    if (UsuarioMoni) {
+      UsuerRedirect = UsuarioMoni;
+      action_type = 1;
+      final_intent = true;
+      final_intent1 = true;
+    }
+
     const addPayload = {
       description: Trigger,
       trigger: Trigger,
@@ -458,7 +506,7 @@ export class MonichatApi {
       action: {
         action_type: action_type,
         message: "",
-        user_id: "",
+        user_id: UsuerRedirect,
         department_id: Departamentoasd,
         ticket_status_id: "",
         get_url: "",
@@ -614,6 +662,7 @@ export class MonichatApi {
 const Monichat = new MonichatApi();
 
 Monichat.GetAuthToken();
-//Monichat.ListDepartamento();
+Monichat.ListUsers();
+Monichat.ListDepartamento();
 
 // id 1784

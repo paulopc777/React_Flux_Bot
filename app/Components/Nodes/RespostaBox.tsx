@@ -118,7 +118,7 @@ export default function RespostaBox({ id }: BoxProps) {
           <textarea
             ref={textareaRef}
             placeholder="Mensagem"
-            className="shadow-inner p-1  overflow-hidden dark:bg-neutral-800 w-full box-border resize-none h-auto "
+            className="shadow-inner p-1 border-2  overflow-hidden dark:bg-neutral-800 w-full box-border resize-none h-auto border-1 rounded-lg dark:border-zinc-800 "
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);

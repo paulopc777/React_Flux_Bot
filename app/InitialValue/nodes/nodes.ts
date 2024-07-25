@@ -80,58 +80,20 @@ export const initialNodes = [
   },
   {
     id: "5",
-    type: "Resposta",
+    type: "Usuario",
     data: {
       label: "Node 5",
     },
     position: {
-      x: 1561.2413411081143,
-      y: 97.04421957119845,
+      x: 1523.231635712916,
+      y: 111.23427058758605,
     },
     width: 224,
-    height: 187,
-    selected: false,
+    height: 104,
+    selected: true,
     positionAbsolute: {
-      x: 1561.2413411081143,
-      y: 97.04421957119845,
-    },
-    dragging: false,
-  },
-  {
-    id: "6",
-    type: "Departamento",
-    data: {
-      label: "Node 6",
-    },
-    position: {
-      x: 2108.415021618368,
-      y: 47.02557287635531,
-    },
-    width: 224,
-    height: 128,
-    selected: false,
-    positionAbsolute: {
-      x: 2108.415021618368,
-      y: 47.02557287635531,
-    },
-    dragging: false,
-  },
-  {
-    id: "7",
-    type: "PerguntaUnique",
-    data: {
-      label: "Node 7",
-    },
-    position: {
-      x: 1843.1646224790481,
-      y: 86.43420360562564,
-    },
-    width: 224,
-    height: 140,
-    selected: false,
-    positionAbsolute: {
-      x: 1843.1646224790481,
-      y: 86.43420360562564,
+      x: 1523.231635712916,
+      y: 111.23427058758605,
     },
     dragging: false,
   },
