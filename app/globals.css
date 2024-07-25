@@ -2,30 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-.h-call{
+.h-call {
   height: calc(100vh - 56px);
 }
 
-.resize-in{
+.resize-in {
   resize: vertical;
-  
 }
 
-.myblakc{
-  background-color: #3C3C3C;
+.myblakc {
+  background-color: #3c3c3c;
 }
 
-.react-flow__node-Resposta{
-  z-index: -10!important;
+.react-flow__node-Resposta {
+  z-index: -10 !important;
 }
 
-.react-flow__attribution{
-  background-color: #3C3C3C!important;
+.react-flow__attribution {
+  background-color: #3c3c3c !important;
   color: white !important;
 }
-.MuiFormLabel-root{
-  color: white!important;
+.MuiFormLabel-root {
+  color: white !important;
 }
 
+@keyframes startEngranagem {
+  100% { transform: rotate(360deg); } 
+}
+.engrenagem {
+  animation: startEngranagem 2s linear infinite;
+}
+
+@keyframes BotInitial {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.BotInicial {
+  animation: BotInitial 1s infinite ease-in-out;
+}
+
+@keyframes ChaveInital {
+  0% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+  50% {
+    transform: rotate3d(0, 0, 1, 12deg);
+  }
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+.Chave {
+  animation: ChaveInital 1s infinite ease-in-out;
+}
+
+.none {
+  display: none;
+}

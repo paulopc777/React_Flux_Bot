@@ -32,7 +32,7 @@ export const initialNodes = [
       y: 102.5,
     },
     width: 224,
-    height: 148,
+    height: 140,
     selected: false,
     positionAbsolute: {
       x: 560.851301645003,
@@ -70,7 +70,7 @@ export const initialNodes = [
       y: 95.93516117935161,
     },
     width: 224,
-    height: 148,
+    height: 140,
     selected: false,
     positionAbsolute: {
       x: 1178.464486413894,
@@ -80,25 +80,62 @@ export const initialNodes = [
   },
   {
     id: "5",
-    type: "Departamento",
+    type: "Resposta",
     data: {
       label: "Node 5",
     },
     position: {
-      x: 1509.28961265304,
-      y: 104.1468592201067,
+      x: 1561.2413411081143,
+      y: 97.04421957119845,
+    },
+    width: 224,
+    height: 187,
+    selected: false,
+    positionAbsolute: {
+      x: 1561.2413411081143,
+      y: 97.04421957119845,
+    },
+    dragging: false,
+  },
+  {
+    id: "6",
+    type: "Departamento",
+    data: {
+      label: "Node 6",
+    },
+    position: {
+      x: 2108.415021618368,
+      y: 47.02557287635531,
     },
     width: 224,
     height: 128,
     selected: false,
     positionAbsolute: {
-      x: 1509.28961265304,
-      y: 104.1468592201067,
+      x: 2108.415021618368,
+      y: 47.02557287635531,
+    },
+    dragging: false,
+  },
+  {
+    id: "7",
+    type: "PerguntaUnique",
+    data: {
+      label: "Node 7",
+    },
+    position: {
+      x: 1843.1646224790481,
+      y: 86.43420360562564,
+    },
+    width: 224,
+    height: 140,
+    selected: false,
+    positionAbsolute: {
+      x: 1843.1646224790481,
+      y: 86.43420360562564,
     },
     dragging: false,
   },
 ];
-
 /*
 {
     id: '2',

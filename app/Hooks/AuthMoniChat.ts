@@ -258,6 +258,8 @@ export class MonichatApi {
     const data = await axios
       .post(UrlApi, PayloadContexto, Header)
       .then((res) => console.log(res.data));
+
+      return true;
   }
   /**
    *
@@ -347,10 +349,14 @@ export class MonichatApi {
       },
     };
     const UrlApi = "https://api.monitchat.com/api/v1/bot-context";
-
-    axios
-      .post(UrlApi, PayloadContexto, Header)
-      .then((res) => console.log(res.data.data));
+    try {
+      await axios
+        .post(UrlApi, PayloadContexto, Header)
+        .then((res) => console.log(res.data.data));
+    } catch (err) {
+      console.log(err)
+      return true;
+    }
   }
 
   async GetAllContext(NomeDoContexto: string) {
@@ -392,6 +398,7 @@ export class MonichatApi {
     const response = await axios.get(UrlThoGet, Header);
 
     let Contexto: any;
+    console.log(NomeDoContexto);
 
     await response.data.data.map((ContextAll: any) => {
       if (ContextAll.identifier === NomeDoContexto) {
@@ -401,7 +408,7 @@ export class MonichatApi {
 
     let result: any = "";
 
-    console.log(Contexto);
+    // console.log(Contexto);
 
     if (Contexto.intents) {
       result = await replaceReplyWithDescription(Contexto.intents);
@@ -479,10 +486,14 @@ export class MonichatApi {
 
     Initial.context.intents.push(addPayload);
 
+    console.log(Initial.context.intents);
+
     if (Initial) {
       const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${Contexto.id}`;
 
-      await axios.put(UrlUpdate, Initial, Header).catch((err) => console.log(err));
+      await axios
+        .put(UrlUpdate, Initial, Header)
+        .catch((err) => console.log(err));
 
       return true;
     } else {

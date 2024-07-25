@@ -31,4 +31,20 @@ export const initialEdges = [
     targetHandle: null,
     id: "reactflow__edge-5-4",
   },
+  {
+    type: "Padrao",
+    source: "6",
+    sourceHandle: null,
+    target: "7",
+    targetHandle: null,
+    id: "reactflow__edge-6-7",
+  },
+  {
+    type: "Padrao",
+    source: "7",
+    sourceHandle: null,
+    target: "5",
+    targetHandle: null,
+    id: "reactflow__edge-7-5",
+  },
 ];

@@ -1,62 +1,50 @@
-{
-  id: 589612,
-  name: 'com1',
-  identifier: 'com1',
-  inherits: '',
-  trigger: '',
-  buttons: [],
-  button_header: '',
-  button_body: '',
-  button_footer: '',
-  use_button: false,
-  company_id: 478,
-  bot_trigger_id: null,
-  description: 'com1',
-  accounts: [],
-  intents: [
-    {
-      id: 118851,
-      trigger: '@sys.start_topic com1',
-      accounts: [],
-      buttons: [Array],
-      button_header: '',
-      button_body: '',
-      button_footer: '',
-      use_button: false,
-      company_id: 478,
-      final_intent: null,
-      action: [],
-      initial_intent: null,
-      stream: '> topic com1<br>',
-      replies: []
-    },
-    {
-      id: 118852,
-      trigger: 'ticket_finish',
-      accounts: [],
-      buttons: [Array],
-      button_header: '',
-      button_body: '',
-      button_footer: '',
-      use_button: false,
-      company_id: 478,
-      final_intent: 0,
-      action: [],
-      initial_intent: 0,
-      stream: '',
-      replies: []
-    },
-    {
-      description: '@sys.opt @sys.array_must(aaa) @sys.opt',
-      trigger: '@sys.opt @sys.array_must(aaa) @sys.opt',
-      final_intent: false,
-      buttons: [],
-      use_button: false,
-      button_header: '',
-      button_body: '',
-      button_footer: '',
-      action: [Object],
-      replies: [Array]
-    }
-  ]
-}
+[
+  {
+      "type": "Padrao",
+      "source": "2",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": null,
+      "id": "reactflow__edge-2-1"
+  },
+  {
+      "type": "Padrao",
+      "source": "3",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-3-2"
+  },
+  {
+      "type": "Padrao",
+      "source": "4",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": null,
+      "id": "reactflow__edge-4-3"
+  },
+  {
+      "type": "Padrao",
+      "source": "5",
+      "sourceHandle": null,
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-5-4"
+  },
+  {
+      "type": "Padrao",
+      "source": "6",
+      "sourceHandle": null,
+      "target": "7",
+      "targetHandle": null,
+      "id": "reactflow__edge-6-7"
+  },
+  {
+      "type": "Padrao",
+      "source": "7",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": null,
+      "id": "reactflow__edge-7-5"
+  }
+]

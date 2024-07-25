@@ -10,6 +10,8 @@ import DarkMode from "../../Redux/darkMode";
 import { initialNodes } from "../../InitialValue/nodes/nodes";
 import AddMenuMore from "./MoreMenu/AddMenuMore";
 import { ValidThoSend } from "app/Hooks/SendValidy";
+import LinearProgress from "@mui/material/LinearProgress";
+import AnimationCont from "./SendAnimation";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -28,14 +30,25 @@ export default function HeaderNav() {
   const { nodes, edges, formValues } = useStore(useShallow(selector));
   const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
 
+  const [updateLoad, setupdateLoad] = useState(false);
+
   useEffect(() => {
     if (nodes.length != initialNodes.length) {
       setUpdate(true);
     }
   }, [nodes]);
 
+  function execAnimacao() {
+    if (Uptate) {
+    }
+  }
+
   function Send() {
-    ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
+    setupdateLoad(true);
+
+    ValidThoSend({ nodes: nodes, edges: edges, form: formValues }).then((res) =>
+      setupdateLoad(false)
+    );
   }
 
   function setDarkClikc() {
@@ -44,9 +57,22 @@ export default function HeaderNav() {
 
   return (
     <header className="w-64 h-screen fixed p-2 flex justify-center z-50">
+      {updateLoad ? <AnimationCont></AnimationCont> : ""}
       <div className="flex gap-2 w-full justify-center">
         <ButtonBlakc text="Add" icons={"svg/undo.svg"}></ButtonBlakc>
-        {dark ? (<ButtonBlakc text="Add" icons={"svg/ligh.svg"} onclick={setDarkClikc} />) : (<ButtonBlakc text="Add" icons={"svg/dark.svg"} onclick={setDarkClikc} />)} 
+        {dark ? (
+          <ButtonBlakc
+            text="Add"
+            icons={"svg/ligh.svg"}
+            onclick={setDarkClikc}
+          />
+        ) : (
+          <ButtonBlakc
+            text="Add"
+            icons={"svg/dark.svg"}
+            onclick={setDarkClikc}
+          />
+        )}
 
         <div className="flex items-center border-1 border-gray-200 rounded-2xl shadow-inner dark:bg-white h-10 bg-white">
           <ButtonBlakc

@@ -25,6 +25,7 @@ export default function RespostaBox({ id }: BoxProps) {
 
   const [Body, setBody] = useState("");
   const [Footer, setFoorter] = useState("");
+  const [Message, setMessage] = useState("");
 
   function AutoSaveInput() {
     //console.log("Save");
@@ -32,7 +33,7 @@ export default function RespostaBox({ id }: BoxProps) {
     if (Btn) {
       //console.log("Update Butoon");
       deleteValue(id);
-      addValue({ id: id, Body: Body, Footer: Footer });
+      addValue({ id: id, Body: Body, Footer: Footer, desc: Message });
     } else {
       deleteValue(id);
       addValue({ id: id, text: inputValue });
@@ -64,6 +65,22 @@ export default function RespostaBox({ id }: BoxProps) {
           text="Mensagem de Resposta"
         ></TextIcon>
         <hr className="my-2 bg-black text-black dark:border-zinc-500" />
+
+        {Btn ? (
+          <>
+            <InputPad
+              placeholder="Resposta"
+              value={Message}
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
+              onBlur={AutoSaveInput}
+            ></InputPad>
+          </>
+        ) : (
+          ""
+        )}
+
         {Btn ? (
           <InputPad
             placeholder="Mensagem do botão"
