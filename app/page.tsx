@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
+
 import ConteinerBox from "./Components/ConteinerBox";
-import { useShallow } from "zustand/react/shallow";
+
 import DarkMode from "./Redux/darkMode";
-import { useEdges } from "reactflow";
 import { useEffect, useState } from "react";
+import { useShallow } from 'zustand/react/shallow'
 
 const selector2 = (state: any) => ({
   dark: state.dark,

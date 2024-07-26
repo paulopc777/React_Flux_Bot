@@ -1,50 +1,438 @@
-[
-  {
-      "type": "Padrao",
-      "source": "2",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": null,
-      "id": "reactflow__edge-2-1"
-  },
-  {
-      "type": "Padrao",
-      "source": "3",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": null,
-      "id": "reactflow__edge-3-2"
-  },
-  {
-      "type": "Padrao",
-      "source": "4",
-      "sourceHandle": null,
-      "target": "3",
-      "targetHandle": null,
-      "id": "reactflow__edge-4-3"
-  },
-  {
-      "type": "Padrao",
-      "source": "5",
-      "sourceHandle": null,
-      "target": "4",
-      "targetHandle": null,
-      "id": "reactflow__edge-5-4"
-  },
-  {
-      "type": "Padrao",
-      "source": "6",
-      "sourceHandle": null,
-      "target": "7",
-      "targetHandle": null,
-      "id": "reactflow__edge-6-7"
-  },
-  {
-      "type": "Padrao",
-      "source": "7",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": null,
-      "id": "reactflow__edge-7-5"
-  }
-]
+{
+    "nodes": [
+        {
+            "id": "1",
+            "type": "PerguntaUnique",
+            "data": {
+                "label": "Input Node",
+                "start": true,
+                "sourceHandles": [],
+                "targetHandles": []
+            },
+            "position": {
+                "x": 248.851301645003,
+                "y": 123.78805852974502
+            },
+            "width": 224,
+            "height": 126,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 248.851301645003,
+                "y": 123.78805852974502
+            },
+            "dragging": false
+        },
+        {
+            "id": "2",
+            "type": "PerguntaUnique",
+            "data": {
+                "label": "Node 2"
+            },
+            "position": {
+                "x": 560.851301645003,
+                "y": 102.5
+            },
+            "width": 224,
+            "height": 156,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 560.851301645003,
+                "y": 102.5
+            },
+            "dragging": false
+        },
+        {
+            "id": "3",
+            "type": "Resposta",
+            "data": {
+                "label": "Node 3"
+            },
+            "position": {
+                "x": 843.9663671308793,
+                "y": 16.5
+            },
+            "width": 224,
+            "height": 530,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 843.9663671308793,
+                "y": 16.5
+            },
+            "dragging": false
+        },
+        {
+            "id": "4",
+            "type": "PerguntaUnique",
+            "data": {
+                "label": "Node 4"
+            },
+            "position": {
+                "x": 1188.464486413894,
+                "y": 94.93516117935161
+            },
+            "width": 224,
+            "height": 156,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1188.464486413894,
+                "y": 94.93516117935161
+            },
+            "dragging": false
+        },
+        {
+            "id": "5",
+            "type": "Departamento",
+            "data": {
+                "label": "Node 5"
+            },
+            "position": {
+                "x": 1516,
+                "y": 75.5
+            },
+            "width": 224,
+            "height": 128,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1516,
+                "y": 75.5
+            },
+            "dragging": false
+        },
+        {
+            "id": "6",
+            "type": "PerguntaUnique",
+            "data": {
+                "label": "Node 6"
+            },
+            "position": {
+                "x": 1185,
+                "y": 260.5
+            },
+            "width": 224,
+            "height": 156,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1185,
+                "y": 260.5
+            },
+            "dragging": false
+        },
+        {
+            "id": "7",
+            "type": "Departamento",
+            "data": {
+                "label": "Node 7"
+            },
+            "position": {
+                "x": 1522,
+                "y": 266.5
+            },
+            "width": 224,
+            "height": 128,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1522,
+                "y": 266.5
+            },
+            "dragging": false
+        },
+        {
+            "id": "8",
+            "type": "PerguntaUnique",
+            "data": {
+                "label": "Node 8"
+            },
+            "position": {
+                "x": 1188.1536028400478,
+                "y": 520.711950914055
+            },
+            "width": 224,
+            "height": 156,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1188.1536028400478,
+                "y": 520.711950914055
+            },
+            "dragging": false
+        },
+        {
+            "id": "9",
+            "type": "Resposta",
+            "data": {
+                "label": "Node 9"
+            },
+            "position": {
+                "x": 1543.7544611330472,
+                "y": 516.4772189804166
+            },
+            "width": 224,
+            "height": 482,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1543.7544611330472,
+                "y": 516.4772189804166
+            },
+            "dragging": false
+        },
+        {
+            "id": "10",
+            "type": "PerguntaUnique",
+            "data": {
+                "label": "Node 10"
+            },
+            "position": {
+                "x": 1874.5756895420973,
+                "y": 944.484859403485
+            },
+            "width": 224,
+            "height": 156,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1874.5756895420973,
+                "y": 944.484859403485
+            },
+            "dragging": false
+        },
+        {
+            "id": "11",
+            "type": "PerguntaUnique",
+            "data": {
+                "label": "Node 11"
+            },
+            "position": {
+                "x": 1899.8470533520322,
+                "y": 750.354837408986
+            },
+            "width": 224,
+            "height": 156,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1899.8470533520322,
+                "y": 750.354837408986
+            },
+            "dragging": false
+        },
+        {
+            "id": "12",
+            "type": "Departamento",
+            "data": {
+                "label": "Node 12"
+            },
+            "position": {
+                "x": 2211.7226321039243,
+                "y": 970.9092043833723
+            },
+            "width": 224,
+            "height": 128,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 2211.7226321039243,
+                "y": 970.9092043833723
+            },
+            "dragging": false
+        },
+        {
+            "id": "13",
+            "type": "Departamento",
+            "data": {
+                "label": "Node 13"
+            },
+            "position": {
+                "x": 2204.0575032613806,
+                "y": 740.123649352475
+            },
+            "width": 224,
+            "height": 128,
+            "selected": true,
+            "positionAbsolute": {
+                "x": 2204.0575032613806,
+                "y": 740.123649352475
+            },
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "type": "Padrao",
+            "source": "2",
+            "sourceHandle": null,
+            "target": "1",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-1"
+        },
+        {
+            "type": "Padrao",
+            "source": "3",
+            "sourceHandle": null,
+            "target": "2",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-2"
+        },
+        {
+            "type": "Padrao",
+            "source": "4",
+            "sourceHandle": null,
+            "target": "3",
+            "targetHandle": null,
+            "id": "reactflow__edge-4-3"
+        },
+        {
+            "type": "Padrao",
+            "source": "6",
+            "sourceHandle": null,
+            "target": "7",
+            "targetHandle": null,
+            "id": "reactflow__edge-6-7"
+        },
+        {
+            "type": "Padrao",
+            "source": "5",
+            "sourceHandle": null,
+            "target": "4",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-4"
+        },
+        {
+            "type": "Padrao",
+            "source": "6",
+            "sourceHandle": null,
+            "target": "3",
+            "targetHandle": "R-1",
+            "id": "reactflow__edge-6-3R-1"
+        },
+        {
+            "type": "Padrao",
+            "source": "7",
+            "sourceHandle": null,
+            "target": "6",
+            "targetHandle": null,
+            "id": "reactflow__edge-7-6"
+        },
+        {
+            "type": "Padrao",
+            "source": "8",
+            "sourceHandle": null,
+            "target": "3",
+            "targetHandle": "R-2",
+            "id": "reactflow__edge-8-3R-2"
+        },
+        {
+            "type": "Padrao",
+            "source": "9",
+            "sourceHandle": null,
+            "target": "8",
+            "targetHandle": null,
+            "id": "reactflow__edge-9-8"
+        },
+        {
+            "type": "Padrao",
+            "source": "11",
+            "sourceHandle": null,
+            "target": "9",
+            "targetHandle": "R-0",
+            "id": "reactflow__edge-11-9R-0"
+        },
+        {
+            "type": "Padrao",
+            "source": "10",
+            "sourceHandle": null,
+            "target": "9",
+            "targetHandle": "R-1",
+            "id": "reactflow__edge-10-9R-1"
+        },
+        {
+            "type": "Padrao",
+            "source": "12",
+            "sourceHandle": null,
+            "target": "10",
+            "targetHandle": null,
+            "id": "reactflow__edge-12-10"
+        },
+        {
+            "type": "Padrao",
+            "source": "13",
+            "sourceHandle": null,
+            "target": "11",
+            "targetHandle": null,
+            "id": "reactflow__edge-13-11"
+        }
+    ],
+    "form": [
+        {
+            "id": "2",
+            "text": "@sys.input"
+        },
+        {
+            "id": "3",
+            "Body": "Qual o Departamento",
+            "Footer": "ou digite sair",
+            "desc": "Ola aqui e a central de atendimento da vipphone me informe o departamento desejado.",
+            "button": [
+                {
+                    "id": 1,
+                    "text": "Comercial"
+                },
+                {
+                    "id": 2,
+                    "text": "Financeiro"
+                },
+                {
+                    "id": 3,
+                    "text": "Suporte"
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "text": "Comercial"
+        },
+        {
+            "id": "5",
+            "Departamento": "Comercial"
+        },
+        {
+            "id": "7",
+            "Departamento": "Financeiro"
+        },
+        {
+            "id": "6",
+            "text": "Financeiro"
+        },
+        {
+            "id": "8",
+            "text": "Suporte"
+        },
+        {
+            "id": "9",
+            "Body": "Escolha uma opção:",
+            "Footer": "ou digite sair",
+            "desc": "Qual a aplicação ?",
+            "button": [
+                {
+                    "id": 1,
+                    "text": "Monitchat"
+                },
+                {
+                    "id": 2,
+                    "text": "Monitcall"
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "text": "Monitchat"
+        },
+        {
+            "id": "10",
+            "text": "Monitcall"
+        },
+        {
+            "id": "12",
+            "Departamento": "Monitcall"
+        },
+        {
+            "id": "13",
+            "Departamento": "Monitchat"
+        }
+    ]
+}

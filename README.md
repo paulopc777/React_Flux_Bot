@@ -1,3 +1,22 @@
+# Estado atual
+## 🛑 Teste de estresse 
+
+## Finalizado
+
+✅ Migração para Next.js com Typescript
+✅ Criação de componentes e layout  
+✅ Utilização da Biblioteca do Reactflow
+✅ Hooks para o Backend
+✅ Janela de Carregamento
+
+## Em andamento
+
+🚀 Janela de teste de bot.
+🚀 View de erros 
+🚀 Restruturação do layout
+🚀 Criação de inputs dinâmicos
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

@@ -10,6 +10,7 @@ import Close from "./Close/Close";
 import useStore from "app/Redux/store";
 import { useShallow } from "zustand/react/shallow";
 import InputPad from "../inputs/InputPad";
+import { Checkbox } from "@mui/material";
 
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,
@@ -127,8 +128,12 @@ export default function RespostaBox({ id }: BoxProps) {
           />
         )}
 
-        <div>
-          <input type="checkbox" onClick={ChangeBtn} />
+        <div className="-translate-x-3">
+          <Checkbox
+            onClick={ChangeBtn}
+            color="success"
+            className="translate-x-1"
+          />
           <label htmlFor="Btn">Botões</label>
         </div>
       </ConteinerDragg>

@@ -6,8 +6,9 @@ import TextIcon from "./../TextUtility/TextIcon";
 import useStore from "../../../Redux/store";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
-import { useShallow } from "zustand/react/shallow";
 import InputPad from "../../inputs/InputPad";
+import { useShallow } from "zustand/react/shallow";
+import { Checkbox } from "@mui/material";
 
 export interface BoxProps {
   id: string;
@@ -66,7 +67,7 @@ export default function PerguntaBox({ id, data }: DataProps) {
                   AutoSaveInput();
                 }}
                 onChange={(e) => {
-                  setInputValue(e.target.value)
+                  setInputValue(e.target.value);
                 }}
                 value={InputValue}
               ></InputPad>
@@ -76,10 +77,12 @@ export default function PerguntaBox({ id, data }: DataProps) {
 
         {data.start ? (
           <div className=" flex items-center ">
-            <input type="checkbox" name="Message" checked={true} id={id} />
+
+            <Checkbox checked defaultChecked color="success" />
+
             <label
               htmlFor="Message"
-              className="font-light text-gray-600 text-sm ml-1 dark:font-bold"
+              className="font-light text-gray-600 text-sm ml-1 dark:font-bold -translate-x-2"
             >
               Inicio da Conversa
             </label>

@@ -19,7 +19,7 @@ export default function InputPad({
     <input
       type="text"
       placeholder={placeholder}
-      className="p-1 shadow-inner my-3 dark:bg-neutral-800 w-full rounded-xl border-2 border-zinc-200 border-opacity-50 dark:border-0"
+      className="p-1 shadow-inner my-3 dark:bg-neutral-800 w-full rounded-md border-2 border-zinc-200 border-opacity-50 dark:border-0"
       value={value}
       onChange={onChange}
       onBlur={onBlur}

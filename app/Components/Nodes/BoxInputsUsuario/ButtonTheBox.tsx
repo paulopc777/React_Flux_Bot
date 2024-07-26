@@ -45,15 +45,15 @@ export default function RepostaButton({ id }: idGetProps) {
   }, [InputsSetes]);
 
   return (
-    <div className="min-h-16 h-full p-1 bg-white rounded-md border-gray-200  dark:bg-zinc-900 dark:text-white dark:border-zinc-900">
+    <div className="min-h-16 h-full p-1  bg-white border-gray-200 rounded-lg dark:bg-zinc-900 dark:text-white dark:border-zinc-900">
       <div id="Inputs">
         {InputsSetes.map((Identify: any, index) => (
-          <div className="relative" key={index}>
+          <div className="relative " key={index}>
             <input
               type="text"
               placeholder={`Messagem Botão ${Identify.id}`}
               id={`Identify${Identify.id}`}
-              className="shadow-inner p-1 my-2 resize-in overflow-auto dark:bg-neutral-800 dark:text-white w-full"
+              className="shadow-inner p-1 my-2 rounded-md resize-in overflow-auto dark:bg-neutral-800 dark:text-white w-full"
               value={Identify.text}
               onChange={(e: any) => {
                 handleEdit(Identify.id, e.target.value);
