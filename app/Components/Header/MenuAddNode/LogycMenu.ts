@@ -1,12 +1,5 @@
-export function GetScreenCenter() {
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-  const nodeWidth = 100;
-  const nodeHeight = 50;
-  const position = {
-    x: (windowWidth - nodeWidth) / 2,
-    y: (windowHeight - nodeHeight) / 2,
-  };
-
-  return position;
-}
+export const UseMousePosition = (event: any) => {
+  const mouseX = event.clientX;
+  const mouseY = event.clientY;
+  return { x: mouseX, y: mouseY };
+};

@@ -2,6 +2,7 @@
 
 
 import ConteinerBox from "./Components/ConteinerBox";
+import { MonichatApi } from "./Hooks/AuthMoniChat";
 
 import DarkMode from "./Redux/darkMode";
 import { useEffect, useState } from "react";
@@ -11,6 +12,7 @@ const selector2 = (state: any) => ({
   dark: state.dark,
   toggleDarkMode: state.toggleDarkMode,
 });
+
 
 export default function Home() {
   const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
@@ -25,6 +27,8 @@ export default function Home() {
     }
    
   }, [dark]);
+
+
 
   return (
     <main className={`transition-all ${style}`}>

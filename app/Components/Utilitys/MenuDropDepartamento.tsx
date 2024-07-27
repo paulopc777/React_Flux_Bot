@@ -11,7 +11,7 @@ interface MenuRequireProps {
 const LithoMenu = ({ nome, funcModi, close }: MenuRequireProps) => {
   return (
     <li
-      className="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900"
+      className="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 hover:bg-slate-200"
       onClick={() => {
         funcModi(nome ? nome : "");
         close();

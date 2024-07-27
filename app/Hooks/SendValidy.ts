@@ -300,25 +300,27 @@ async function CreateContexContext(props: any) {
 
 export async function ValidThoSend(props: any) {
   console.log(props);
+  try {
+    await CreateIntention(props);
+    console.log("complete 1 ");
+    await CreateContextoText(props);
+    console.log("complete 2");
+    await CreateContextButton(props);
+    console.log("complete 3");
 
-  await CreateIntention(props);
-  console.log("complete 1 ");
-  await CreateContextoText(props);
-  console.log("complete 2");
-  await CreateContextButton(props);
-  console.log("complete 3");
+    setTimeout(async () => {
+      await CreateReply(props);
+      console.log("complete 4");
+    }, 4000);
 
-  setTimeout(async () => {
-    await CreateReply(props);
-    console.log("complete 4");
-  }, 4000);
-
-  setTimeout(async () => {
-    await CreateContexContext(props);
-    console.log("complete 5");
-  }, 6000);
-
-  return true;
+    setTimeout(async () => {
+      await CreateContexContext(props);
+      console.log("complete 5");
+    }, 6000);
+    return true;
+  } catch (Err) {
+    return false;
+  }
 }
 
 /*

@@ -2,7 +2,7 @@ import React from "react";
 import TextIcon from "../../Nodes/TextUtility/TextIcon";
 import { useShallow } from "zustand/react/shallow";
 import useStore from "../../../Redux/store";
-import { GetScreenCenter } from "./LogycMenu";
+import { UseMousePosition } from "./LogycMenu";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -15,14 +15,16 @@ const selector = (state: any) => ({
 
 export default function MenuAddCompo() {
   const { nodes, addNode } = useStore(useShallow(selector));
+  let asd = [];
+  asd.length;
+  const handleAddNode = (type: string, e: any) => {
+    const position = nodes[nodes.length - 1].position;
 
-  const handleAddNode = (type: string) => {
-    // Cria um novo nó com um id único
     const newNode = {
       id: `${nodes.length + 1}`,
       type: type,
       data: { label: `Node ${nodes.length + 1}` },
-      position: GetScreenCenter(), // Posição aleatória
+      position: { x: position.x + 300, y: position.y }, // Posição aleatória
     };
     addNode(newNode); // Função para adicionar o nó ao estado
   };
@@ -36,8 +38,8 @@ export default function MenuAddCompo() {
       <ul className="w-full flex flex-col gap-y-2 text-black dark:text-white">
         <li
           className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer  dark:bg-zinc-800 dark:hover:bg-zinc-700"
-          onClick={() => {
-            handleAddNode("PerguntaUnique");
+          onClick={(e) => {
+            handleAddNode("PerguntaUnique", e);
           }}
         >
           <TextIcon
@@ -48,8 +50,8 @@ export default function MenuAddCompo() {
 
         <li
           className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
-          onClick={() => {
-            handleAddNode("Resposta");
+          onClick={(e) => {
+            handleAddNode("Resposta", e);
           }}
         >
           <TextIcon text="Resposta" icon="svg/messageresponse.svg"></TextIcon>
@@ -57,8 +59,8 @@ export default function MenuAddCompo() {
 
         <li
           className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
-          onClick={() => {
-            handleAddNode("Departamento");
+          onClick={(e) => {
+            handleAddNode("Departamento", e);
           }}
         >
           <TextIcon
@@ -69,25 +71,14 @@ export default function MenuAddCompo() {
 
         <li
           className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0   py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
-          onClick={() => {
-            handleAddNode("Usuario");
+          onClick={(e) => {
+            handleAddNode("Usuario", e);
           }}
         >
           <TextIcon
             text="Transferir para Usuario"
             icon="svg/user.svg"
           ></TextIcon>
-        </li>
-
-
-
-        <li
-          className=" rounded-md bg-white  border-2 border-opacity-45 border-zinc-300 dark:border-0  py-4 px-3 shadow-sm cursor-pointer dark:bg-zinc-800 dark:hover:bg-zinc-700"
-          onClick={() => {
-            handleAddNode("Timmer");
-          }}
-        >
-          <TextIcon text="Aguarda Tempo" icon="svg/Clock.svg"></TextIcon>
         </li>
       </ul>
     </div>

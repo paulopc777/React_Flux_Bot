@@ -1,6 +1,11 @@
+
 # Estado atual
-### 🛑 Teste de estresse 
-### 🛑 Mitigação de erros 
+
+<img src="public/apresentation.gif" >
+
+### 🛑 Teste de estresse
+
+### 🛑 Mitigação de erros
 
 ## Finalizado
 
@@ -18,12 +23,11 @@
 
 🚀 Janela de teste de bot.
 
-🚀 View de erros 
+🚀 View de erros
 
 🚀 Restruturação do layout
 
 🚀 Criação de inputs dinâmicos
-
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

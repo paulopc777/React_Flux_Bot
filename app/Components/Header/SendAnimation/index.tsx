@@ -6,7 +6,7 @@ interface AniamtionProsps {
   update: boolean;
 }
 
-export default function AnimationCont() {
+export default function AnimationCont({ animation }: any) {
   const [Robot, setRobot] = useState("none");
   const [Engre, setEngre] = useState("engrenagem");
   const [Chave, setChave] = useState("none");
@@ -37,10 +37,16 @@ export default function AnimationCont() {
     }
   }
 
+  let style = "hidden";
 
+  if (animation) {
+    style = "flex";
+  }
 
   return (
-    <div className="absolute w-screen h-screen  top-0 left-0 flex justify-center items-center z-40">
+    <div
+      className={`absolute w-screen h-screen  top-0 left-0  justify-center items-center z-40 ${style}`}
+    >
       <div className="w-full h-full bg-black opacity-45 absolute"></div>
       <div className="w-1/4 z-50">
         <p className="text-white">Criando seu Bot</p>

@@ -25,26 +25,28 @@ export class MonichatApi {
   }
 
   async GetAuthToken() {
-    const dataPayload: PayloadAuth = {
-      email: this.Email,
-      password: this.Pass,
-      redirect: false,
-      username: "",
-    };
+    if (this.Token.length <= 0) {
+      const dataPayload: PayloadAuth = {
+        email: this.Email,
+        password: this.Pass,
+        redirect: false,
+        username: "",
+      };
 
-    //console.log(dataPayload);
+      //console.log(dataPayload);
 
-    const data = await axios.post(this.UrlAuth, dataPayload);
+      const data = await axios.post(this.UrlAuth, dataPayload);
 
-    if (data.data.access_token) {
-      this.Token = data.data.access_token;
+      if (data.data.access_token) {
+        this.Token = data.data.access_token;
 
-      return data.data.access_token;
-    } else {
-      // CASSO OCORRA UM ERRO AO PEGAR O TOKEN DA API
-      this.Token = "false";
+        return data.data.access_token;
+      } else {
+        // CASSO OCORRA UM ERRO AO PEGAR O TOKEN DA API
+        this.Token = "";
 
-      return false;
+        return false;
+      }
     }
   }
 
@@ -203,8 +205,9 @@ export class MonichatApi {
 
     // console.log(Usuarios);
 
-    const serializedMonichat = JSON.stringify(Usuarios);
-    localStorage.setItem("Usuarios", serializedMonichat);
+      const serializedMonichat = JSON.stringify(Usuarios);
+      localStorage.setItem("Usuarios", serializedMonichat);
+    
 
     return Usuarios;
   }
@@ -661,8 +664,9 @@ export class MonichatApi {
 
 const Monichat = new MonichatApi();
 
-Monichat.GetAuthToken();
-Monichat.ListUsers();
-Monichat.ListDepartamento();
+Monichat.GetAuthToken().then((res) => {
+  Monichat.ListUsers();
+  Monichat.ListDepartamento();
+});
 
 // id 1784

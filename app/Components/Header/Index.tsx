@@ -30,7 +30,7 @@ export default function HeaderNav() {
   const { nodes, edges, formValues } = useStore(useShallow(selector));
   const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
 
-  const [updateLoad, setupdateLoad] = useState(false);
+  const [animation, setupdateLoad] = useState(false);
 
   useEffect(() => {
     if (nodes.length != initialNodes.length) {
@@ -38,17 +38,18 @@ export default function HeaderNav() {
     }
   }, [nodes]);
 
-  function execAnimacao() {
-    if (Uptate) {
-    }
+  function CheckLoad() {
+    setupdateLoad(!animation);
   }
 
-  function Send() {
+  async function Send() {
     setupdateLoad(true);
 
-    ValidThoSend({ nodes: nodes, edges: edges, form: formValues }).then((res) =>
-      setupdateLoad(false)
-    );
+    ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
+
+    setInterval(() => {
+      setupdateLoad(false);
+    }, 10000);
   }
 
   function setDarkClikc() {
@@ -57,7 +58,10 @@ export default function HeaderNav() {
 
   return (
     <header className="w-64 h-screen fixed p-2 flex justify-center z-50">
-      {updateLoad ? <AnimationCont></AnimationCont> : ""}
+      {/* Loading Send Bot */}
+
+      <AnimationCont animation={animation}></AnimationCont>
+
       <div className="flex gap-2 w-full justify-center">
         <ButtonBlakc text="Add" icons={"svg/undo.svg"}></ButtonBlakc>
         {dark ? (
