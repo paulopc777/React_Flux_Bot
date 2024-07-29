@@ -92,7 +92,7 @@ export default function PerguntaBox({ id, data }: DataProps) {
         )}
       </ConteinerDragg>
 
-      {data.start ? "" : <Handle type="source" position={Position.Left} />}
+      {data.start ? "" : <Handle type="source" position={Position.Left}  />}
 
       <Handle type="target" position={Position.Right} />
     </>
