@@ -93,13 +93,21 @@ async function CreateReply(props: any) {
                         console.log(
                           linhas3.source,
                           TextLInha2.text,
-                          idDepartamento
+                          idDepartamento,
+                          form.description
                         );
+                        
+                        let p2 =
+                          "Estou te emcaminhando para departamemto @topic random";
+
+                        if (form.description) {
+                           p2 = `${form.description} @topic random`;
+                        }
 
                         allForms.push({
                           name: `com${linhas3.source}`,
                           p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
-                          p2: `Estou te emcaminhando para departamemto @topic random`,
+                          p2: p2,
                           p3: idDepartamento,
                         });
                       }

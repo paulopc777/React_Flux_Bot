@@ -43,13 +43,13 @@ export default function HeaderNav() {
   }
 
   async function Send() {
-    setupdateLoad(true);
+    // setupdateLoad(true);
 
     ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
 
-    setInterval(() => {
-      setupdateLoad(false);
-    }, 10000);
+    // setInterval(() => {
+    //   setupdateLoad(false);
+    // }, 10000);
   }
 
   function setDarkClikc() {

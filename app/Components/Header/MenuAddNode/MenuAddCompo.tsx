@@ -15,8 +15,8 @@ const selector = (state: any) => ({
 
 export default function MenuAddCompo() {
   const { nodes, addNode } = useStore(useShallow(selector));
-  let asd = [];
-  asd.length;
+
+  
   const handleAddNode = (type: string, e: any) => {
     const position = nodes[nodes.length - 1].position;
 

@@ -2,8 +2,6 @@ import { create } from "zustand";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { initialNodes } from "../InitialValue/nodes/nodes";
 import { initialEdges } from "../InitialValue/nodes/edges";
-;
-
 interface ValuesInsert {
   id: string;
   text: string;
@@ -79,6 +77,15 @@ const useStore = create((set: any, get: any) => ({
       formValues: state.formValues.map((item: any) => {
         if (item.id === id) {
           return { ...item, button }; // Atualiza o texto
+        }
+        return item; // Retorna o item inalterado
+      }),
+    })),
+  updateValueDep: (id: any, description: any) =>
+    set((state: any) => ({
+      formValues: state.formValues.map((item: any) => {
+        if (item.id === id) {
+          return { ...item, description }; // Adiciona/Atualiza a descrição
         }
         return item; // Retorna o item inalterado
       }),

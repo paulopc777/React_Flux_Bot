@@ -39,6 +39,7 @@ export default function RespostaBox({ id }: BoxProps) {
       deleteValue(id);
       addValue({ id: id, text: inputValue });
     }
+    
   }
 
   function ChangeBtn() {
