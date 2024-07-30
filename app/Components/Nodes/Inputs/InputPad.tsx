@@ -4,7 +4,7 @@ interface InputProsp {
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: () => void;
+  onBlur?: () => void;
   maxLength?: number;
 }
 

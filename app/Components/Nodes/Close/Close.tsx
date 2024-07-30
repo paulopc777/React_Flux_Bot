@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/joy";
 import useStore from "../../../Redux/store";
 
 interface PropsClose {
@@ -13,17 +14,19 @@ export default function Close({ id }: PropsClose) {
   const { removeNode, deleteValue } = useStore(selector);
 
   function handleRemoveNode() {
-    console.log("delete")
+    console.log("delete");
     removeNode(id);
     deleteValue(id);
   }
 
   return (
-    <button
-      className="text absolute -right-2 -top-2 w-5 h-5"
-      onClick={handleRemoveNode}
-    >
-      <img src="/svg/Close.svg" alt="Close" />
-    </button>
+    <Tooltip title="Delete" variant="soft" color="danger" size="sm" placement="top-start">
+      <button
+        className="text absolute -right-2 -top-2 w-5 h-5"
+        onClick={handleRemoveNode}
+      >
+        <img src="/svg/Close.svg" alt="Close" />
+      </button>
+    </Tooltip>
   );
 }

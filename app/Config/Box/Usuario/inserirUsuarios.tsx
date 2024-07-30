@@ -1,8 +1,8 @@
 "use client";
 
 import ConteinerDragg from "app/Components/Conteiners/BoxDragg/ConteinerDragg";
-import TextIcon from "app/Components/Nodes/TextUtility/TextIcon";
-import { DroppSelectsMenu } from "app/Components/Utilitys/MenuDropDepartamento";
+import TextIcon from "app/Components/Nodes/TextIcon/TextIcon";
+import { DroppSelectsMenu } from "app/Components/Utilitys/DropsMenus/MenuDropDepartamento";
 import { MonichatApi } from "app/Hooks/AuthMoniChat";
 import React, { useEffect, useState } from "react";
 import { MenuUsuario } from "./MenuUsuarios";

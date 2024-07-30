@@ -2,15 +2,16 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Handle, Position } from "reactflow";
-import TextIcon from "../Nodes/TextUtility/TextIcon";
-import RepostaButton from "./BoxInputsUsuario/ButtonTheBox";
+import TextIcon from "./TextIcon/TextIcon";
+import RepostaButton from "./User/ButtonTheBox";
 import ConteinerDragg from "../Conteiners/BoxDragg/ConteinerDragg";
-import { BoxProps } from "./BoxInputsUsuario/PerguntaBox";
+import { BoxProps } from "./User/PerguntaBox";
 import Close from "./Close/Close";
 import useStore from "app/Redux/store";
 import { useShallow } from "zustand/react/shallow";
-import InputPad from "../inputs/InputPad";
+import InputPad from "./Inputs/InputPad";
 import { Checkbox } from "@mui/material";
+import TextAreaResize from "./Inputs/TextAreaResize";
 
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,
@@ -21,42 +22,41 @@ const selector = (state: any) => ({
 export default function RespostaBox({ id }: BoxProps) {
   const [Btn, setBtn] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { deleteValue, addValue, updateValue } = useStore(useShallow(selector));
+  const { deleteValue, addValue } = useStore(useShallow(selector));
 
   const [Body, setBody] = useState("");
   const [Footer, setFoorter] = useState("");
   const [Message, setMessage] = useState("");
 
-  function AutoSaveInput() {
-    //console.log("Save");
-
+  function AutoSaveInput(e: any, type?: any) {
     if (Btn) {
-      //console.log("Update Butoon");
-      deleteValue(id);
-      addValue({ id: id, Body: Body, Footer: Footer, desc: Message });
+      switch (type) {
+        case 1:
+          deleteValue(id);
+          addValue({ id: id, Body: e, Footer: Footer, desc: Message });
+          break;
+        case 2:
+          deleteValue(id);
+          addValue({ id: id, Body: Body, Footer: e, desc: Message });
+          break;
+        case 3:
+          deleteValue(id);
+          addValue({ id: id, Body: Body, Footer: Footer, desc: e });
+          break;
+        default:
+          break;
+      }
+      console.log(type)
     } else {
       deleteValue(id);
-      addValue({ id: id, text: inputValue });
+      addValue({ id: id, text: e });
     }
-    
   }
 
   function ChangeBtn() {
     setBtn(!Btn);
     deleteValue(id);
   }
-
-  //useEffect(() => {}, [inputValue]);
-
-  useEffect(() => {
-    const textarea = textareaRef.current;
-
-    if (textarea) {
-      textarea.style.height = "auto"; // Reset height
-      textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on scroll height
-    }
-  }, [inputValue]);
 
   return (
     <>
@@ -75,8 +75,8 @@ export default function RespostaBox({ id }: BoxProps) {
               value={Message}
               onChange={(e) => {
                 setMessage(e.target.value);
+                AutoSaveInput(e.target.value,3);
               }}
-              onBlur={AutoSaveInput}
             ></InputPad>
           </>
         ) : (
@@ -89,8 +89,8 @@ export default function RespostaBox({ id }: BoxProps) {
             value={Body}
             onChange={(e) => {
               setBody(e.target.value);
+              AutoSaveInput(e.target.value,2);
             }}
-            onBlur={AutoSaveInput}
             maxLength={20}
           ></InputPad>
         ) : (
@@ -104,8 +104,8 @@ export default function RespostaBox({ id }: BoxProps) {
               value={Footer}
               onChange={(e) => {
                 setFoorter(e.target.value);
+                AutoSaveInput(e.target.value,1);
               }}
-              onBlur={AutoSaveInput}
             ></InputPad>
 
             <hr className="my-2 bg-black text-black dark:border-zinc-500" />
@@ -117,16 +117,14 @@ export default function RespostaBox({ id }: BoxProps) {
         {Btn ? (
           <RepostaButton id={id} />
         ) : (
-          <textarea
-            ref={textareaRef}
-            placeholder="Mensagem"
-            className="p-1 border-2  overflow-hidden dark:bg-neutral-800 w-full box-border resize-none h-auto border-1 rounded-lg dark:border-zinc-800 "
-            value={inputValue}
-            onChange={(e) => {
+          <TextAreaResize
+            onChange={(e: any) => {
               setInputValue(e.target.value);
+              AutoSaveInput(e.target.value);
             }}
-            onBlur={AutoSaveInput}
-          />
+            placeholder="Mensagem de resposta"
+            value={inputValue}
+          ></TextAreaResize>
         )}
 
         <div className="-translate-x-3">

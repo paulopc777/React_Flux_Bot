@@ -1,5 +1,5 @@
 import React from "react";
-import TextIcon from "../../Nodes/TextUtility/TextIcon";
+import TextIcon from "../../Nodes/TextIcon/TextIcon";
 import { useShallow } from "zustand/react/shallow";
 import useStore from "../../../Redux/store";
 import { UseMousePosition } from "./LogycMenu";

@@ -16,9 +16,10 @@ const selector = (state: any) => ({
 });
 
 export default function RepostaButton({ id }: idGetProps) {
+  //  estado inicial dos buttons
   const [InputsSetes, setInputsSetes] = useState([{ id: 1, text: "" }]);
-  const [ErroMessage, setErroMessage] = useState(false);
-  const { deleteValue, addValue, updateValue } = useStore(useShallow(selector));
+
+  const { updateValue } = useStore(useShallow(selector));
 
   function AddInputButton() {
     if (InputsSetes.length === 3) {
@@ -28,21 +29,19 @@ export default function RepostaButton({ id }: idGetProps) {
     }
   }
 
+  function UpadateValue() {
+
+    updateValue(id, InputsSetes);
+  }
+
   const handleEdit = (id: number, newText: any) => {
     setInputsSetes((prevInputs) =>
       prevInputs.map((input) =>
         input.id === id ? { ...input, text: newText } : input
       )
     );
+    UpadateValue();
   };
-
-  function DispachRedux() {
-    updateValue(id, InputsSetes);
-  }
-
-  useEffect(() => {
-    // console.log(InputsSetes);
-  }, [InputsSetes]);
 
   return (
     <div className="min-h-16 h-full p-1  bg-white  border-gray-200 rounded-lg dark:bg-zinc-900 dark:text-white dark:border-zinc-900">
@@ -58,10 +57,8 @@ export default function RepostaButton({ id }: idGetProps) {
               onChange={(e: any) => {
                 handleEdit(Identify.id, e.target.value);
               }}
-              onBlur={DispachRedux}
             />
 
-           
             <Handle id={`R-${index}`} type="target" position={Position.Right} />
           </div>
         ))}

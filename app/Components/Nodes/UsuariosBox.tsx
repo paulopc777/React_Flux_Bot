@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import ConteinerDragg from "../Conteiners/BoxDragg/ConteinerDragg";
 import useStore from "../../Redux/store";
-import TextIcon from "./TextUtility/TextIcon";
+import TextIcon from "./TextIcon/TextIcon";
 import { Handle, Position } from "reactflow";
-import DroppSelects from "../Utilitys/DropSelectUsuer";
-import { BoxProps } from "./BoxInputsUsuario/PerguntaBox";
+import DroppSelects from "../Utilitys/DropsMenus/DropSelectUsuer";
+import { BoxProps } from "./User/PerguntaBox";
 import Close from "./Close/Close";
 import { useShallow } from "zustand/react/shallow";
 

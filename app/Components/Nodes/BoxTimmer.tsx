@@ -1,10 +1,10 @@
 import React from "react";
 import ConteinerDragg from "../Conteiners/BoxDragg/ConteinerDragg";
-import TextIcon from "./TextUtility/TextIcon";
-import DroppSelects, { PropsDropMenu } from "../Utilitys/DroppSelects";
+import TextIcon from "./TextIcon/TextIcon";
+import DroppSelects, { PropsDropMenu } from "../Utilitys/DropsMenus/DroppSelects";
 import { Handle, Position } from "reactflow";
 import Close from "./Close/Close";
-import { BoxProps } from "./BoxInputsUsuario/PerguntaBox";
+import { BoxProps } from "./User/PerguntaBox";
 
 const Times: PropsDropMenu[] = [
   { nome: "1 min" },

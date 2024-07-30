@@ -9,7 +9,7 @@ import {
 import { ReactFlow } from "reactflow";
 
 import "reactflow/dist/style.css";
-import PerguntaBox from "./Nodes/BoxInputsUsuario/PerguntaBox";
+import PerguntaBox from "./Nodes/User/PerguntaBox";
 import RespostaBox from "./Nodes/RespostaBox";
 import HeaderNav from "./Header/Index";
 import useStore from "../Redux/store";

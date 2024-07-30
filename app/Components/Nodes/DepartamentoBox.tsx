@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import ConteinerDragg from "../Conteiners/BoxDragg/ConteinerDragg";
 import useStore from "../../Redux/store";
-import TextIcon from "./TextUtility/TextIcon";
+import TextIcon from "./TextIcon/TextIcon";
 import { Handle, Position } from "reactflow";
-import DroppSelects, { PropsDropMenu } from "../Utilitys/DroppSelects";
-import { BoxProps } from "./BoxInputsUsuario/PerguntaBox";
+import DroppSelects, { PropsDropMenu } from "../Utilitys/DropsMenus/DroppSelects";
+import { BoxProps } from "./User/PerguntaBox";
 import Close from "./Close/Close";
 import { useShallow } from "zustand/react/shallow";
 import { initialEdges } from "../../InitialValue/nodes/edges";
-import InputPad from "../inputs/InputPad";
+import InputPad from "./Inputs/InputPad";
 import DropDownInput from "./Inputs/DropDownInput";
 
 const OptMenu: PropsDropMenu[] = [
@@ -36,7 +36,7 @@ export default function DepartamentoBox({ id }: BoxProps) {
 
   return (
     <>
-      <ConteinerDragg>
+      <ConteinerDragg w={'w-62'}>
         <Close id={id}></Close>
         <TextIcon
           icon={"/svg/Departament.svg"}

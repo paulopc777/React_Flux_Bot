@@ -90,6 +90,15 @@ const useStore = create((set: any, get: any) => ({
         return item; // Retorna o item inalterado
       }),
     })),
+  updateValueResposta: (id: any, description: any) =>
+    set((state: any) => ({
+      formValues: state.formValues.map((item: any) => {
+        if (item.id === id) {
+          return { ...item, text: description }; // Adiciona/Atualiza a descrição
+        }
+        return item; // Retorna o item inalterado
+      }),
+    })),
 }));
 
 export default useStore;

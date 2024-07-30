@@ -96,20 +96,28 @@ async function CreateReply(props: any) {
                           idDepartamento,
                           form.description
                         );
-                        
+
                         let p2 =
                           "Estou te emcaminhando para departamemto @topic random";
 
                         if (form.description) {
-                           p2 = `${form.description} @topic random`;
+                          p2 = `${form.description} @topic random`;
                         }
-
-                        allForms.push({
-                          name: `com${linhas3.source}`,
-                          p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
-                          p2: p2,
-                          p3: idDepartamento,
-                        });
+                        if (TextLInha2.text === "@sys.input") {
+                          allForms.push({
+                            name: `com${linhas3.source}`,
+                            p1: `${TextLInha2.text}`,
+                            p2: p2,
+                            p3: idDepartamento,
+                          });
+                        } else {
+                          allForms.push({
+                            name: `com${linhas3.source}`,
+                            p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
+                            p2: p2,
+                            p3: idDepartamento,
+                          });
+                        }
                       }
                     }
                   });
@@ -139,13 +147,25 @@ async function CreateReply(props: any) {
                         `reply ${idUsuario}, de contexto ${linhas3.source}`
                       );
 
-                      allForms.push({
-                        name: `com${linhas3.source}`,
-                        p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
-                        p2: `Estou te emcaminhando para o Colaborador. @topic random`,
-                        p3: null,
-                        p4: idUsuario,
-                      });
+                      // console.log(TextLInha2.text);
+
+                      if (TextLInha2.text == "@sys.input") {
+                        allForms.push({
+                          name: `com${linhas3.source}`,
+                          p1: `${TextLInha2.text}`,
+                          p2: `Estou te emcaminhando para o Colaborador. @topic random`,
+                          p3: null,
+                          p4: idUsuario,
+                        });
+                      } else {
+                        allForms.push({
+                          name: `com${linhas3.source}`,
+                          p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
+                          p2: `Estou te emcaminhando para o Colaborador. @topic random`,
+                          p3: null,
+                          p4: idUsuario,
+                        });
+                      }
                     }
                   });
                 }
@@ -192,8 +212,8 @@ async function CreateContextoText(props: any) {
                             monichat.InsertContexto(
                               `com${linha.source}`,
                               form.text,
-                              `@sys.input `,
-                              `> Digite um valor valido @topic com${linha.source} @intent inicio`
+                              `@sys.opt @sys.array_must(sair,exit) @sys.opt`,
+                              `Ok ! so um segundo estou finalizando seu atendimento !`
                             );
                           }
                         }

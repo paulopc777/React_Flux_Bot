@@ -2,13 +2,15 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Handle, Position } from "reactflow";
-import TextIcon from "./../TextUtility/TextIcon";
+import TextIcon from "../TextIcon/TextIcon";
 import useStore from "../../../Redux/store";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
-import InputPad from "../../inputs/InputPad";
+import InputPad from "../Inputs/InputPad";
 import { useShallow } from "zustand/react/shallow";
-import { Checkbox } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
+import IconButton from "@mui/joy/IconButton";
+import { Textarea, Typography } from "@mui/joy";
 
 export interface BoxProps {
   id: string;
@@ -35,6 +37,7 @@ export default function PerguntaBox({ id, data }: DataProps) {
   const [checkBox, setCheckBox] = useState(false);
   const [InputValue, setInputValue] = useState("");
   const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
+  const addEmoji = (emoji: any) => () => setInputValue(`${InputValue}${emoji}`);
 
   function AutoSaveInput() {
     //console.log("Save");
@@ -46,9 +49,15 @@ export default function PerguntaBox({ id, data }: DataProps) {
     setCheckBox(!checkBox);
   }
 
+  useEffect(() => {
+    if(id != '1'){
+      AutoSaveInput();
+    }
+  }, [InputValue]);
+
   return (
     <>
-      <ConteinerDragg>
+      <ConteinerDragg w={"w-62"}>
         {data.start ? "" : <Close id={id} />}
 
         <TextIcon
@@ -61,23 +70,35 @@ export default function PerguntaBox({ id, data }: DataProps) {
         ) : (
           <>
             <div className="text-white mt-4">
-              <InputPad
-                placeholder="Mensagem esoperada"
-                onBlur={() => {
-                  AutoSaveInput();
-                }}
+              <Textarea
+                placeholder="Mensagem de retorno"
+                className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
+                value={InputValue}
                 onChange={(e) => {
                   setInputValue(e.target.value);
                 }}
-                value={InputValue}
-              ></InputPad>
+                minRows={2}
+                maxRows={4}
+                startDecorator={
+                  <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
+                    <IconButton
+                      variant="outlined"
+                      color="neutral"
+                      onClick={addEmoji("@sys.input")}
+                      className="text_button_small dark:!text-white hover:dark:!bg-neutral-600"
+                    >
+                      Qual quer texto
+                    </IconButton>
+                  </Box>
+                }
+                sx={{ minWidth: 150 }}
+              />
             </div>
           </>
         )}
 
         {data.start ? (
           <div className=" flex items-center ">
-
             <Checkbox checked defaultChecked color="success" />
 
             <label
@@ -92,7 +113,7 @@ export default function PerguntaBox({ id, data }: DataProps) {
         )}
       </ConteinerDragg>
 
-      {data.start ? "" : <Handle type="source" position={Position.Left}  />}
+      {data.start ? "" : <Handle type="source" position={Position.Left} />}
 
       <Handle type="target" position={Position.Right} />
     </>

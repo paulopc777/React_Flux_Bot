@@ -72,7 +72,11 @@
 .none {
   display: none;
 }
-.react-flow__handle-right {
+
+.text_button_small {
+  font-size: 0.7rem !important;
+}
+/* .react-flow__handle-right {
   width: 20px !important;
   height: 20px !important;
   background: white !important;
@@ -84,4 +88,4 @@
 
 .react-flow__handle-left::before {
   content: "⬅️";
-}
+} */

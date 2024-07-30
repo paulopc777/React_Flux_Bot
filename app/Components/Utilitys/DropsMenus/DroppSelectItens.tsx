@@ -1,7 +1,6 @@
-import { ListDepartamentos } from "app/Hooks/AuthMoniChat";
-import { MenuRequireProps } from "./DroppSelects";
-import { cache, useEffect, useState } from "react";
-import { revalidateTag } from 'next/cache'
+
+import {  useEffect, useState } from "react";
+
 
 interface NomeProsp {
     nome: string
@@ -36,14 +35,10 @@ function getStoredCartItems() {
 
     return [];
 }
-export const getItem = cache(async () => {
-    const item = await db;
-    return item
-  })
 
 export function DroppSelectsMenu() {
 
-    const [data, setData] = useState(null)
+    const [data, setData] = useState([])
     const [isLoading, setLoading] = useState(true)
    
     useEffect(() => {
@@ -56,7 +51,7 @@ export function DroppSelectsMenu() {
     }, [])
    
     if (isLoading) return <p>Loading...</p>
-    if (!data) return <p>No profile data</p>
+    if (!data) return <p>No profile data</p> 
    
     return (
         <ul
