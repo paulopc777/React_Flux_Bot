@@ -60,14 +60,6 @@ export default function ConteinerBox() {
     useShallow(selector)
   );
 
-  useEffect(() => {
-    if (Error.Visible) {
-      setTimeout(() => {
-        ToggleErrorVisibility();
-      }, 4000);
-    }
-  }, [Error]);
-
   return (
     <>
       <div className="overflow-hidden dark:bg-zinc-900">
@@ -76,6 +68,9 @@ export default function ConteinerBox() {
           Text={Error.Text}
           Visible={Error.Visible}
           onClose={() => {
+            if (!Error.Visible) {
+              return;
+            }
             ToggleErrorVisibility();
           }}
           ErrorImg={Error.ErrorImg}

@@ -2,10 +2,8 @@ import { create } from "zustand";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { initialNodes } from "../InitialValue/nodes/nodes";
 import { initialEdges } from "../InitialValue/nodes/edges";
-interface ValuesInsert {
-  id: string;
-  text: string;
-}
+
+
 interface Value {
   id: string;
   text?: string;

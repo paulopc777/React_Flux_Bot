@@ -14,6 +14,8 @@ import LinearProgress from "@mui/material/LinearProgress";
 import AnimationCont from "./SendAnimation";
 import { motion } from "framer-motion";
 import ButtonIcon from "../Buttons/ButtonIcon";
+import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
+import { verificarConexao } from "app/Hooks/Validators/UsuarioValidator";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -37,7 +39,7 @@ export default function HeaderNav() {
   const { nodes, edges, formValues } = useStore(useShallow(selector));
   const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
   const [isOpen, setIsOpen] = useState(false);
-
+  const { Error, SetNewError } = ErrorView(useShallow(selectError));
   const [animation, setupdateLoad] = useState(false);
 
   useEffect(() => {
@@ -49,6 +51,22 @@ export default function HeaderNav() {
   async function Send() {
     // setupdateLoad(true);
 
+    const data: any[] = verificarConexao({
+      nodes: nodes,
+      edges: edges,
+      form: formValues,
+    });
+
+    if (data.length > 0) {
+      const ErroSend: ErrorState = {
+        Text: "Mensagem de usuario não pode ser subsequente a uma mesma Mensagem de usuario",
+        Visible: true,
+        ErrorImg: "",
+      };
+      if (!Error.Visible) {
+        SetNewError(ErroSend);
+      }
+    }
     ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
 
     // setInterval(() => {
