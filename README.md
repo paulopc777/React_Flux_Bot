@@ -25,14 +25,14 @@
 
 🚀 View de erros
 
-<img src="public/autoErro.gif" width="500" >
+<img src="public/autoErro.gif"  >
 
 🚀 Restruturação do layout
 
 🚀 Criação de inputs dinâmicos
 
 
-<img src="public/auto.gif"  width="500">
+<img src="public/auto.gif"  >
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
