@@ -50,7 +50,7 @@ export default function PerguntaBox({ id, data }: DataProps) {
   }
 
   useEffect(() => {
-    if(id != '1'){
+    if (id != "1") {
       AutoSaveInput();
     }
   }, [InputValue]);
@@ -70,6 +70,19 @@ export default function PerguntaBox({ id, data }: DataProps) {
         ) : (
           <>
             <div className="text-white mt-4">
+              <div className="mb-1">
+                <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("@sys.input")}
+                    className="text_button_small dark:!text-white hover:dark:!bg-neutral-600 dark:!border-neutral-600 "
+                  >
+                    Qual quer texto
+                  </IconButton>
+                </Box>
+              </div>
+
               <Textarea
                 placeholder="Mensagem de retorno"
                 className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
@@ -79,18 +92,6 @@ export default function PerguntaBox({ id, data }: DataProps) {
                 }}
                 minRows={2}
                 maxRows={4}
-                startDecorator={
-                  <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
-                    <IconButton
-                      variant="outlined"
-                      color="neutral"
-                      onClick={addEmoji("@sys.input")}
-                      className="text_button_small dark:!text-white hover:dark:!bg-neutral-600"
-                    >
-                      Qual quer texto
-                    </IconButton>
-                  </Box>
-                }
                 sx={{ minWidth: 150 }}
               />
             </div>

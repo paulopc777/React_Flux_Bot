@@ -10,8 +10,10 @@ import Close from "./Close/Close";
 import useStore from "app/Redux/store";
 import { useShallow } from "zustand/react/shallow";
 import InputPad from "./Inputs/InputPad";
-import { Checkbox } from "@mui/material";
 import TextAreaResize from "./Inputs/TextAreaResize";
+import { Box, Checkbox } from "@mui/material";
+import IconButton from "@mui/joy/IconButton";
+import { Textarea, Typography } from "@mui/joy";
 
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,
@@ -19,11 +21,14 @@ const selector = (state: any) => ({
   updateValue: state.updateValue,
 });
 
+const ButtonOptStyle =
+  "text_button_small dark:!text-white hover:dark:!bg-neutral-600 dark:!border-neutral-600 !min-w-fit";
+
 export default function RespostaBox({ id }: BoxProps) {
   const [Btn, setBtn] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const { deleteValue, addValue } = useStore(useShallow(selector));
-
+  const addEmoji = (emoji: any) => () => setInputValue(`${inputValue}${emoji}`);
   const [Body, setBody] = useState("");
   const [Footer, setFoorter] = useState("");
   const [Message, setMessage] = useState("");
@@ -46,7 +51,7 @@ export default function RespostaBox({ id }: BoxProps) {
         default:
           break;
       }
-      console.log(type)
+      console.log(type);
     } else {
       deleteValue(id);
       addValue({ id: id, text: e });
@@ -75,7 +80,7 @@ export default function RespostaBox({ id }: BoxProps) {
               value={Message}
               onChange={(e) => {
                 setMessage(e.target.value);
-                AutoSaveInput(e.target.value,3);
+                AutoSaveInput(e.target.value, 3);
               }}
             ></InputPad>
           </>
@@ -89,7 +94,7 @@ export default function RespostaBox({ id }: BoxProps) {
             value={Body}
             onChange={(e) => {
               setBody(e.target.value);
-              AutoSaveInput(e.target.value,2);
+              AutoSaveInput(e.target.value, 2);
             }}
             maxLength={20}
           ></InputPad>
@@ -104,7 +109,7 @@ export default function RespostaBox({ id }: BoxProps) {
               value={Footer}
               onChange={(e) => {
                 setFoorter(e.target.value);
-                AutoSaveInput(e.target.value,1);
+                AutoSaveInput(e.target.value, 1);
               }}
             ></InputPad>
 
@@ -117,14 +122,50 @@ export default function RespostaBox({ id }: BoxProps) {
         {Btn ? (
           <RepostaButton id={id} />
         ) : (
-          <TextAreaResize
-            onChange={(e: any) => {
-              setInputValue(e.target.value);
-              AutoSaveInput(e.target.value);
-            }}
-            placeholder="Mensagem de resposta"
-            value={inputValue}
-          ></TextAreaResize>
+          <>
+            <div className="text-white mt-4">
+              <div className="mb-1 overflow-x-scroll">
+                <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("{contact_name}")}
+                    className={ButtonOptStyle}
+                  >
+                    Nome do cliente
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("{ticket_number}")}
+                    className={ButtonOptStyle}
+                  >
+                    número do ticket
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("{my_name}")}
+                    className={ButtonOptStyle}
+                  >
+                    Nome do Usuario
+                  </IconButton>
+                </Box>
+              </div>
+
+              <Textarea
+                placeholder="Mensagem de retorno"
+                className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                }}
+                minRows={2}
+                maxRows={4}
+                sx={{ minWidth: 150 }}
+              />
+            </div>
+          </>
         )}
 
         <div className="-translate-x-3">

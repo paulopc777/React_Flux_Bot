@@ -89,3 +89,42 @@
 .react-flow__handle-left::before {
   content: "⬅️";
 } */
+
+::-webkit-scrollbar {
+  background-color: initial;
+  cursor: pointer;
+}
+::-webkit-scrollbar {
+  width: .375rem !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar {
+  height: .375rem !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #64748b80 !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgba(175, 181, 187, 0.596) !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: .25rem !important;
+  cursor: pointer;
+}
+:is(.dark *)::-webkit-scrollbar-track {
+  background-color: #64748b29 !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-track {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(241 245 249  1) !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-track {
+  border-radius: .25rem !important;
+  cursor: pointer;
+}

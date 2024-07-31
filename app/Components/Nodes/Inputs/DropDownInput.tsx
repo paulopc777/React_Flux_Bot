@@ -13,6 +13,9 @@ const selector = (state: any) => ({
   updateValueDep: state.updateValueDep,
 });
 
+const ButtonOptStyle =
+  "text_button_small dark:!text-white hover:dark:!bg-neutral-600 dark:!border-neutral-600";
+
 export default function DropDownInput({ VisibleDesk, id }: any) {
   const { updateValueDep } = useStore(useShallow(selector));
   const [InputValue, setInputValue] = useState("");
@@ -36,6 +39,34 @@ export default function DropDownInput({ VisibleDesk, id }: any) {
           animate={{ scale: 1 }}
           className=" w-full "
         >
+          <div className="mb-1 max-h-9">
+            <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={addEmoji("{contact_name}")}
+                className={ButtonOptStyle}
+              >
+                Nome do cliente
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={addEmoji("{ticket_number}")}
+                className={ButtonOptStyle}
+              >
+                número do ticket
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={addEmoji("😊")}
+                className={ButtonOptStyle}
+              >
+                😊
+              </IconButton>
+            </Box>
+          </div>
           <Textarea
             placeholder="Mensagem de retorno"
             className="dark:!bg-neutral-800 dark:!text-white dark:!border-0"
@@ -43,34 +74,6 @@ export default function DropDownInput({ VisibleDesk, id }: any) {
             onChange={(event) => handleInputChange(event)}
             minRows={2}
             maxRows={4}
-            startDecorator={
-              <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("{contact_name}")}
-                  className="text_button_small dark:!text-white hover:dark:!bg-neutral-600"
-                >
-                  Nome do cliente
-                </IconButton>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("{ticket_number}")}
-                    className="text_button_small dark:!text-white hover:dark:!bg-neutral-600"
-                >
-                  número do ticket
-                </IconButton>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("😊")}
-                    className="text_button_small dark:!text-white hover:dark:!bg-neutral-600"
-                >
-                  😊
-                </IconButton>
-              </Box>
-            }
             endDecorator={
               <Typography level="body-xs" sx={{ ml: "auto" }}>
                 {InputValue.length} character(s)
