@@ -17,6 +17,9 @@ import { useShallow } from "zustand/react/shallow";
 import DepartamentoBox from "./Nodes/DepartamentoBox";
 import BoxTimmer from "./Nodes/BoxTimmer";
 import UsuarioBox from "./Nodes/UsuariosBox";
+import AlertBox from "./Utilitys/ErrorBox";
+import { useEffect, useState } from "react";
+import ErrorView, { selectError } from "app/Redux/erroStore";
 
 const NodeType = {
   PerguntaUnique: PerguntaBox,
@@ -52,14 +55,31 @@ const selector = (state: any) => ({
 });
 
 export default function ConteinerBox() {
+  const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
     useShallow(selector)
   );
+
+  useEffect(() => {
+    if (Error.Visible) {
+      setTimeout(() => {
+        ToggleErrorVisibility();
+      }, 4000);
+    }
+  }, [Error]);
 
   return (
     <>
       <div className="overflow-hidden dark:bg-zinc-900">
         <HeaderNav></HeaderNav>
+        <AlertBox
+          Text={Error.Text}
+          Visible={Error.Visible}
+          onClose={() => {
+            ToggleErrorVisibility();
+          }}
+          ErrorImg={Error.ErrorImg}
+        ></AlertBox>
 
         <div className="h-screen bg-white dark:bg-zinc-800">
           <ReactFlowProvider>

@@ -12,6 +12,11 @@ import { Box, Checkbox } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
 import { Textarea, Typography } from "@mui/joy";
 import { motion } from "framer-motion";
+import {
+  IncluedeSysInput,
+  validateSysInput,
+} from "app/Hooks/Validators/UsuarioValidator";
+import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
 
 export interface BoxProps {
   id: string;
@@ -39,6 +44,8 @@ export default function PerguntaBox({ id, data }: DataProps) {
   const [InputVisible, setInputVisible] = useState(false);
   const [InputValue, setInputValue] = useState("");
   const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
+  const { Error, SetNewError } = ErrorView(useShallow(selectError));
+
   const addEmoji = (emoji: any) => () => {
     if (InputValue.indexOf("@sys.input") != -1) {
       setInputValue("");
@@ -57,12 +64,8 @@ export default function PerguntaBox({ id, data }: DataProps) {
     addValue({ id: id, text: InputValue });
   }
 
-  function ChangeCheckBox() {
-    setCheckBox(!checkBox);
-  }
-
   const ChangeColor = (text: string) => {
-    console.log(text.indexOf("@sys.input"));
+    // console.log(text.indexOf("@sys.input"));
 
     if (text.indexOf("@sys.input") != -1) {
       setSelectClikc("solid");
@@ -73,6 +76,29 @@ export default function PerguntaBox({ id, data }: DataProps) {
 
   useEffect(() => {
     if (id != "1") {
+      if (SelectClick === "solid") {
+        if (!validateSysInput(InputValue)) {
+          if (!Error.Visible) {
+            const ErroSend: ErrorState = {
+              Text: "O @sys.input e um parametro unico",
+              Visible: true,
+              ErrorImg: "",
+            };
+            SetNewError(ErroSend);
+          }
+          setInputValue("@sys.input");
+        }
+      } else {
+        if (IncluedeSysInput(InputValue)) {
+          const ErroSend: ErrorState = {
+            Text: "O @sys.input e um parametro reservado para o sistema",
+            Visible: true,
+            ErrorImg: "",
+          };
+          SetNewError(ErroSend);
+          setInputValue("");
+        }
+      }
       AutoSaveInput();
     }
   }, [InputValue]);

@@ -12,6 +12,8 @@ import AddMenuMore from "./MoreMenu/AddMenuMore";
 import { ValidThoSend } from "app/Hooks/SendValidy";
 import LinearProgress from "@mui/material/LinearProgress";
 import AnimationCont from "./SendAnimation";
+import { motion } from "framer-motion";
+import ButtonIcon from "../Buttons/ButtonIcon";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -24,11 +26,17 @@ const selector2 = (state: any) => ({
   toggleDarkMode: state.toggleDarkMode,
 });
 
+const variants = {
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: "-100%" },
+};
+
 export default function HeaderNav() {
   const [Uptate, setUpdate] = useState(false);
 
   const { nodes, edges, formValues } = useStore(useShallow(selector));
   const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
+  const [isOpen, setIsOpen] = useState(false);
 
   const [animation, setupdateLoad] = useState(false);
 
@@ -37,10 +45,6 @@ export default function HeaderNav() {
       setUpdate(true);
     }
   }, [nodes]);
-
-  function CheckLoad() {
-    setupdateLoad(!animation);
-  }
 
   async function Send() {
     // setupdateLoad(true);
@@ -57,13 +61,21 @@ export default function HeaderNav() {
   }
 
   return (
-    <header className="w-64 h-screen fixed p-2 flex justify-center z-50">
+    <header className="w-fit h-fit fixed p-2 flex justify-center z-50">
       {/* Loading Send Bot */}
 
       <AnimationCont animation={animation}></AnimationCont>
 
-      <div className="flex gap-2 w-full justify-center">
-        <ButtonBlakc text="Add" icons={"svg/undo.svg"}></ButtonBlakc>
+      <div className="flex gap-2 w-full justify-center h-fit">
+        <ButtonBlakc
+          text="Add"
+          icons={"svg/undo.svg"}
+          onclick={() => {
+            setIsOpen(!isOpen);
+          }}
+        ></ButtonBlakc>
+        <AddMenuMore></AddMenuMore>
+
         {dark ? (
           <ButtonBlakc
             text="Add"
@@ -95,9 +107,13 @@ export default function HeaderNav() {
         </div>
       </div>
 
-      <MenuAddCompo></MenuAddCompo>
-
-      <AddMenuMore></AddMenuMore>
+      <motion.div
+        className="absolute top-16 mx-"
+        animate={isOpen ? "open" : "closed"}
+        variants={variants}
+      >
+        <MenuAddCompo visible={true}></MenuAddCompo>
+      </motion.div>
     </header>
   );
 }

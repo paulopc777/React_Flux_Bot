@@ -28,7 +28,7 @@ export default function InserirUsuario() {
 
   return (
     <ConteinerDragg w={"w-72"}>
-      <TextIcon icon={"/svg/Departament.svg"} text={"Inserir Departamento"} />
+      <TextIcon icon={"/svg/user.svg"} text={"Inserir Usuario"} />
 
       <MenuUsuario
         funcModi={setMenuOpt}

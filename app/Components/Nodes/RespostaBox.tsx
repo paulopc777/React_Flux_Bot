@@ -39,22 +39,22 @@ export default function RespostaBox({ id }: BoxProps) {
       switch (type) {
         case 3:
           deleteValue(id);
-          addValue({ id: id, Body: e, Footer: Footer, desc: Message });
+          addValue({ id: id, Body: Body, Footer: Footer, desc: e });
           break;
         case 2:
           deleteValue(id);
-          addValue({ id: id, Body: Body, Footer: e, desc: Message });
+          addValue({ id: id, Body: e, Footer: Footer, desc: Message });
           break;
         case 1:
           deleteValue(id);
-          addValue({ id: id, Body: Body, Footer: Footer, desc: e });
+          addValue({ id: id, Body: Body, Footer: e, desc: Message });
           break;
         default:
           break;
       }
       console.log(type);
     } else {
-      setInputValue(e)
+      setInputValue(e);
       deleteValue(id);
       addValue({ id: id, text: e });
     }
@@ -75,7 +75,6 @@ export default function RespostaBox({ id }: BoxProps) {
           icon="svg/messageresponse.svg"
           text="Mensagem de Resposta"
         ></TextIcon>
-        <hr className="my-2 bg-black text-black dark:border-zinc-500" />
 
         {Btn ? (
           <>

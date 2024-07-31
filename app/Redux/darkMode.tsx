@@ -5,6 +5,7 @@ const getInitialDarkMode = (): boolean => {
   return savedMode === "true" || false;
 };
 
+
 const DarkMode = create((set: any, get: any) => ({
   dark: getInitialDarkMode(),
   toggleDarkMode: () => {
