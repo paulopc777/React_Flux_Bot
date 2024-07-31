@@ -14,6 +14,7 @@ import TextAreaResize from "./Inputs/TextAreaResize";
 import { Box, Checkbox } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
 import { Textarea, Typography } from "@mui/joy";
+import { motion } from "framer-motion";
 
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,
@@ -36,7 +37,7 @@ export default function RespostaBox({ id }: BoxProps) {
   function AutoSaveInput(e: any, type?: any) {
     if (Btn) {
       switch (type) {
-        case 1:
+        case 3:
           deleteValue(id);
           addValue({ id: id, Body: e, Footer: Footer, desc: Message });
           break;
@@ -44,7 +45,7 @@ export default function RespostaBox({ id }: BoxProps) {
           deleteValue(id);
           addValue({ id: id, Body: Body, Footer: e, desc: Message });
           break;
-        case 3:
+        case 1:
           deleteValue(id);
           addValue({ id: id, Body: Body, Footer: Footer, desc: e });
           break;
@@ -53,6 +54,7 @@ export default function RespostaBox({ id }: BoxProps) {
       }
       console.log(type);
     } else {
+      setInputValue(e)
       deleteValue(id);
       addValue({ id: id, text: e });
     }
@@ -62,6 +64,8 @@ export default function RespostaBox({ id }: BoxProps) {
     setBtn(!Btn);
     deleteValue(id);
   }
+
+  useEffect(() => {}, [inputValue]);
 
   return (
     <>
@@ -123,8 +127,12 @@ export default function RespostaBox({ id }: BoxProps) {
           <RepostaButton id={id} />
         ) : (
           <>
-            <div className="text-white mt-4">
-              <div className="mb-1 overflow-x-scroll">
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              className=" w-full "
+            >
+              <div className="mb-2 overflow-x-scroll">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
                   <IconButton
                     variant="outlined"
@@ -158,13 +166,13 @@ export default function RespostaBox({ id }: BoxProps) {
                 className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
                 value={inputValue}
                 onChange={(e) => {
-                  setInputValue(e.target.value);
+                  AutoSaveInput(e.target.value);
                 }}
                 minRows={2}
                 maxRows={4}
                 sx={{ minWidth: 150 }}
               />
-            </div>
+            </motion.div>
           </>
         )}
 

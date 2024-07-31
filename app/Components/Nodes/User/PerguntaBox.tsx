@@ -11,6 +11,7 @@ import { useShallow } from "zustand/react/shallow";
 import { Box, Checkbox } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
 import { Textarea, Typography } from "@mui/joy";
+import { motion } from "framer-motion";
 
 export interface BoxProps {
   id: string;
@@ -35,9 +36,20 @@ const selector = (state: any) => ({
 
 export default function PerguntaBox({ id, data }: DataProps) {
   const [checkBox, setCheckBox] = useState(false);
+  const [InputVisible, setInputVisible] = useState(false);
   const [InputValue, setInputValue] = useState("");
   const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
-  const addEmoji = (emoji: any) => () => setInputValue(`${InputValue}${emoji}`);
+  const addEmoji = (emoji: any) => () => {
+    if (InputValue.indexOf("@sys.input") != -1) {
+      setInputValue("");
+      ChangeColor("");
+    } else {
+      setInputValue(`${InputValue}${emoji}`);
+      ChangeColor(`${InputValue}${emoji}`);
+    }
+  };
+
+  const [SelectClick, setSelectClikc] = useState("outlined");
 
   function AutoSaveInput() {
     //console.log("Save");
@@ -48,6 +60,16 @@ export default function PerguntaBox({ id, data }: DataProps) {
   function ChangeCheckBox() {
     setCheckBox(!checkBox);
   }
+
+  const ChangeColor = (text: string) => {
+    console.log(text.indexOf("@sys.input"));
+
+    if (text.indexOf("@sys.input") != -1) {
+      setSelectClikc("solid");
+    } else {
+      setSelectClikc("outlined");
+    }
+  };
 
   useEffect(() => {
     if (id != "1") {
@@ -65,6 +87,8 @@ export default function PerguntaBox({ id, data }: DataProps) {
           text="Mensagem do Usuairo"
         ></TextIcon>
 
+        {/* <div className="bg-[#00B30C] h-full w-2 absolute left-0 top-0 rounded-s-full shadow-inner  border-[#24922b] border-r-2"></div> */}
+
         {data.start ? (
           ""
         ) : (
@@ -73,8 +97,8 @@ export default function PerguntaBox({ id, data }: DataProps) {
               <div className="mb-1">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
                   <IconButton
-                    variant="outlined"
-                    color="neutral"
+                    variant={SelectClick}
+                    color="success"
                     onClick={addEmoji("@sys.input")}
                     className="text_button_small dark:!text-white hover:dark:!bg-neutral-600 dark:!border-neutral-600 "
                   >
@@ -82,18 +106,38 @@ export default function PerguntaBox({ id, data }: DataProps) {
                   </IconButton>
                 </Box>
               </div>
-
-              <Textarea
-                placeholder="Mensagem de retorno"
-                className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
-                value={InputValue}
-                onChange={(e) => {
-                  setInputValue(e.target.value);
+              <div
+                className="text-zinc-500 py-1 cursor-pointer"
+                onClick={() => {
+                  setInputVisible(!InputVisible);
                 }}
-                minRows={2}
-                maxRows={4}
-                sx={{ minWidth: 150 }}
-              />
+              >
+                <p className="text-[.7rem] hover:text-zinc-400 ">
+                  Mensagem de Personalizada {InputVisible ? "🔼" : "🔽"}
+                </p>
+              </div>
+
+              {InputVisible ? (
+                <motion.div
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  className=" w-full "
+                >
+                  <Textarea
+                    placeholder="Mensagem de retorno"
+                    className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
+                    value={InputValue}
+                    onChange={(e) => {
+                      setInputValue(e.target.value);
+                    }}
+                    minRows={2}
+                    maxRows={4}
+                    sx={{ minWidth: 150 }}
+                  />
+                </motion.div>
+              ) : (
+                ""
+              )}
             </div>
           </>
         )}

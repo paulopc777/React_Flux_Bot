@@ -18,6 +18,7 @@ export default function ConteinerDragg({ children, w }: any) {
       } min-h-16  transition-all shadow-lg bg-white border-2 border-gray-200 rounded-2xl dark:bg-zinc-900 dark:text-white dark:border-zinc-900`}
     >
       <div className="p-4">{children}</div>
+  
     </motion.div>
   );
 }
