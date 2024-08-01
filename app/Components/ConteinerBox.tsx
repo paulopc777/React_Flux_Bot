@@ -59,7 +59,9 @@ export default function ConteinerBox() {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
     useShallow(selector)
   );
-
+  useEffect(() => {
+    console.log(Error);
+  }, [Error]);
   return (
     <>
       <div className="overflow-hidden dark:bg-zinc-900">
@@ -67,12 +69,7 @@ export default function ConteinerBox() {
         <AlertBox
           Text={Error.Text}
           Visible={Error.Visible}
-          onClose={() => {
-            if (!Error.Visible) {
-              return;
-            }
-            ToggleErrorVisibility();
-          }}
+          Type={Error.Type}
           ErrorImg={Error.ErrorImg}
         ></AlertBox>
 

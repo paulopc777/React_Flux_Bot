@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 import ButtonIcon from "../Buttons/ButtonIcon";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
 import { verificarConexao } from "app/Hooks/Validators/UsuarioValidator";
+import { ValidInitialNode } from "app/Hooks/Validators/InitialValidator";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -49,11 +50,12 @@ export default function HeaderNav() {
   }, [nodes]);
 
   async function Send() {
-    const data: any[] = verificarConexao({
+    const dados = {
       nodes: nodes,
       edges: edges,
       form: formValues,
-    });
+    };
+    let data: any[] = verificarConexao(dados);
 
     if (data.length > 0) {
       const ErroSend: ErrorState = {
@@ -65,7 +67,24 @@ export default function HeaderNav() {
         SetNewError(ErroSend);
       }
     }
-    ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
+
+    data = ValidInitialNode(dados);
+
+    console.log(data);
+
+    if (data.length <= 0) {
+      const ErroSend: ErrorState = {
+        Text: "E nessesario uma espera para Mensagem inicial !",
+        Visible: true,
+        ErrorImg: "/Error/initialnode1.gif",
+        Type:"error"
+      };
+      if (!Error.Visible) {
+        SetNewError(ErroSend);
+      }
+    }
+
+    // ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
 
     // setInterval(() => {
     //   setupdateLoad(false);
@@ -93,7 +112,7 @@ export default function HeaderNav() {
         <AddMenuMore></AddMenuMore>
 
         {/* Dark Mode Button */}
-        
+
         {dark ? (
           <ButtonBlakc
             text="Add"

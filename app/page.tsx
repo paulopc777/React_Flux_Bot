@@ -35,7 +35,7 @@ export default function Home() {
     if (Error.Visible) {
       setTimeout(() => {
         ToggleErrorVisibility();
-      }, 4000);
+      }, 6000);
     }
   }, [Error]);
 

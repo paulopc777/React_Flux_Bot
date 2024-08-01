@@ -36,7 +36,6 @@ export default function RespostaBox({ id }: BoxProps) {
   const [Body, setBody] = useState("");
   const [Footer, setFoorter] = useState("");
   const [Message, setMessage] = useState("");
-  const [selectedText, setSelectedText] = useState("");
 
   function AutoSaveInput(e: any, type?: any) {
     if (Btn) {
@@ -95,7 +94,7 @@ export default function RespostaBox({ id }: BoxProps) {
 
   return (
     <>
-      <ConteinerDragg w={"w-92"}>
+      <ConteinerDragg w={"w-92 max-w-72"}>
         <Close id={id}></Close>
         <TextIcon
           icon="svg/messageresponse.svg"
@@ -155,7 +154,7 @@ export default function RespostaBox({ id }: BoxProps) {
             <motion.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
-              className=" w-full  max-w-72"
+              className=" w-full  "
             >
               <div className="mb-2 overflow-x-scroll">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>

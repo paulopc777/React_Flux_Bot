@@ -5,6 +5,7 @@ export interface ErrorState {
   Text: string;
   Visible: boolean;
   ErrorImg?: string;
+  Type?:string
 }
 
 export const selectError = (state: any) => ({

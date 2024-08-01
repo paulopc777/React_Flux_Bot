@@ -5,18 +5,18 @@ import { motion } from "framer-motion";
 export interface AlertProps {
   Text: string;
   Visible: boolean;
-  onClose: () => void;
+  Type?: string;
   ErrorImg?: string;
 }
 const variants = {
   open: { opacity: 1, x: 0 },
-  closed: { opacity: 0, y: "-100%" },
+  closed: { opacity: 0, y: "-200%" },
 };
 
 export default function AlertBox({
   Text,
   Visible,
-  onClose,
+  Type,
   ErrorImg,
 }: AlertProps) {
   return (
@@ -27,7 +27,7 @@ export default function AlertBox({
     >
       <Alert
         variant="filled"
-        color="warning"
+        color={Type}
         severity="warning"
         className="h-fit break-words"
       >
@@ -40,7 +40,7 @@ export default function AlertBox({
         </div> */}
 
         {ErrorImg ? (
-          <img src="ErrorImg" alt="" />
+          <img src={ErrorImg} alt="" />
         ) : (
           <>
             <br></br>
