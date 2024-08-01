@@ -11,10 +11,13 @@ import useStore from "app/Redux/store";
 import { useShallow } from "zustand/react/shallow";
 import InputPad from "./Inputs/InputPad";
 import TextAreaResize from "./Inputs/TextAreaResize";
-import { Box, Checkbox } from "@mui/material";
+import { Box, Checkbox, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
 import { Textarea, Typography } from "@mui/joy";
 import { motion } from "framer-motion";
+import FormatBoldIcon from "@mui/icons-material/FormatBold";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,
@@ -33,6 +36,7 @@ export default function RespostaBox({ id }: BoxProps) {
   const [Body, setBody] = useState("");
   const [Footer, setFoorter] = useState("");
   const [Message, setMessage] = useState("");
+  const [selectedText, setSelectedText] = useState("");
 
   function AutoSaveInput(e: any, type?: any) {
     if (Btn) {
@@ -66,10 +70,32 @@ export default function RespostaBox({ id }: BoxProps) {
   }
 
   useEffect(() => {}, [inputValue]);
+  const [formats, setFormats] = React.useState(() => ["bold", "italic"]);
+
+  const handleFormat = (event: any, newFormats: any) => {
+    setFormats(newFormats);
+  };
+  const textareaRef: any = useRef(null);
+
+  const handleBoldClick = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selectedText = inputValue.slice(start, end);
+
+      if (selectedText) {
+        const boldText = `<b>${selectedText}</b>`;
+        const newText =
+          inputValue.slice(0, start) + boldText + inputValue.slice(end);
+        setInputValue(newText);
+      }
+    }
+  };
 
   return (
     <>
-      <ConteinerDragg>
+      <ConteinerDragg w={"w-92"}>
         <Close id={id}></Close>
         <TextIcon
           icon="svg/messageresponse.svg"
@@ -129,7 +155,7 @@ export default function RespostaBox({ id }: BoxProps) {
             <motion.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
-              className=" w-full "
+              className=" w-full  max-w-72"
             >
               <div className="mb-2 overflow-x-scroll">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
@@ -160,16 +186,13 @@ export default function RespostaBox({ id }: BoxProps) {
                 </Box>
               </div>
 
-              <Textarea
+              <TextAreaResize
                 placeholder="Mensagem de retorno"
-                className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
                 value={inputValue}
                 onChange={(e) => {
-                  AutoSaveInput(e.target.value);
+                  AutoSaveInput(e);
                 }}
-                minRows={2}
-                maxRows={4}
-                sx={{ minWidth: 150 }}
+                textareaRef={textareaRef}
               />
             </motion.div>
           </>

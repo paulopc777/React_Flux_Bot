@@ -49,8 +49,6 @@ export default function HeaderNav() {
   }, [nodes]);
 
   async function Send() {
-    // setupdateLoad(true);
-
     const data: any[] = verificarConexao({
       nodes: nodes,
       edges: edges,
@@ -87,13 +85,15 @@ export default function HeaderNav() {
       <div className="flex gap-2 w-full justify-center h-fit">
         <ButtonBlakc
           text="Add"
-          icons={"svg/undo.svg"}
+          icons={"svg/add.svg"}
           onclick={() => {
             setIsOpen(!isOpen);
           }}
         ></ButtonBlakc>
         <AddMenuMore></AddMenuMore>
 
+        {/* Dark Mode Button */}
+        
         {dark ? (
           <ButtonBlakc
             text="Add"

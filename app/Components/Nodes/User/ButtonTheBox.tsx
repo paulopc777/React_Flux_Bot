@@ -30,7 +30,6 @@ export default function RepostaButton({ id }: idGetProps) {
   }
 
   function UpadateValue() {
-
     updateValue(id, InputsSetes);
   }
 
@@ -40,8 +39,11 @@ export default function RepostaButton({ id }: idGetProps) {
         input.id === id ? { ...input, text: newText } : input
       )
     );
-    UpadateValue();
   };
+
+  useEffect(() => {
+    UpadateValue();
+  }, [InputsSetes]);
 
   return (
     <div className="min-h-16 h-full p-1  bg-white  border-gray-200 rounded-lg dark:bg-zinc-900 dark:text-white dark:border-zinc-900">

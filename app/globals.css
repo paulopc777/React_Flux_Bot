@@ -142,3 +142,26 @@
     left: -1 !important;
   }
 }
+
+.ql-picker {
+  display: none !important;
+}
+.ql-link {
+  display: none !important;
+}
+
+.ql-active {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(1281%)
+    hue-rotate(93deg) brightness(97%) contrast(102%) !important;
+}
+.break-words {
+  border-radius: 20px;
+}
+
+.ql-container {
+  border-radius: 0px 0px 10px 10px;
+
+}
+.ql-toolbar {
+  border-radius: 10px 10px 0px 0px;
+}

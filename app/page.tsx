@@ -31,7 +31,7 @@ export default function Home() {
   }, [dark]);
 
   useEffect(() => {
-    console.log()
+    console.log(Error.Visible)
     if (Error.Visible) {
       setTimeout(() => {
         ToggleErrorVisibility();
