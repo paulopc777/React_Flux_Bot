@@ -8,6 +8,7 @@ import { useShallow } from "zustand/react/shallow";
 
 interface idGetProps {
   id: string;
+  ButtonInitial: any[];
 }
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,
@@ -15,9 +16,10 @@ const selector = (state: any) => ({
   updateValue: state.updateValue,
 });
 
-export default function RepostaButton({ id }: idGetProps) {
+export default function RepostaButton({ id, ButtonInitial }: idGetProps) {
   //  estado inicial dos buttons
-  const [InputsSetes, setInputsSetes] = useState([{ id: 1, text: "" }]);
+  // 
+  const [InputsSetes, setInputsSetes] = useState([ButtonInitial]);
 
   const { updateValue } = useStore(useShallow(selector));
 

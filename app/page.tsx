@@ -1,19 +1,16 @@
 "use client";
 
-
 import ConteinerBox from "./Components/ConteinerBox";
-import { MonichatApi } from "./Hooks/AuthMoniChat";
-
 import DarkMode from "./Redux/darkMode";
 import { useEffect, useState } from "react";
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from "zustand/react/shallow";
 import ErrorView, { selectError } from "./Redux/erroStore";
+import OptRespostas from "./Components/Nodes/BoxResposta/OptRespostas";
 
 const selector2 = (state: any) => ({
   dark: state.dark,
   toggleDarkMode: state.toggleDarkMode,
 });
-
 
 export default function Home() {
   const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
@@ -27,11 +24,10 @@ export default function Home() {
     } else {
       setStyle("");
     }
-   
   }, [dark]);
 
   useEffect(() => {
-    console.log(Error.Visible)
+    // console.log(Error.Visible);
     if (Error.Visible) {
       setTimeout(() => {
         ToggleErrorVisibility();
@@ -39,9 +35,10 @@ export default function Home() {
     }
   }, [Error]);
 
-
   return (
     <main className={`transition-all ${style}`}>
+
+
       <ConteinerBox></ConteinerBox>
     </main>
   );

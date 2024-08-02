@@ -10,7 +10,7 @@ export interface AlertProps {
 }
 const variants = {
   open: { opacity: 1, x: 0 },
-  closed: { opacity: 0, y: "-200%" },
+  closed: { opacity: 0, y: "-1400px" },
 };
 
 export default function AlertBox({

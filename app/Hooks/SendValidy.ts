@@ -357,12 +357,3 @@ export async function ValidThoSend(props: any) {
     return false;
   }
 }
-
-/*
-monichat.UpdataContext(
-  "com1",
-  "@sys.opt @sys.array_must(ccc) @sys.opt",
-  "ccc ! @topic random"
-);*/
-
-// monichat.ListContext();

@@ -66,25 +66,28 @@ export default function HeaderNav() {
       if (!Error.Visible) {
         SetNewError(ErroSend);
       }
+
+      return;
     }
 
     data = ValidInitialNode(dados);
 
-    console.log(data);
+    // console.log(data);
 
     if (data.length <= 0) {
       const ErroSend: ErrorState = {
         Text: "E nessesario uma espera para Mensagem inicial !",
         Visible: true,
         ErrorImg: "/Error/initialnode1.gif",
-        Type:"error"
+        Type: "error",
       };
       if (!Error.Visible) {
         SetNewError(ErroSend);
       }
+      return;
     }
 
-    // ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
+    ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
 
     // setInterval(() => {
     //   setupdateLoad(false);

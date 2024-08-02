@@ -34,7 +34,7 @@ export default function MenuAddCompo(visible : any) {
   return (
     <div
       className={
-        "w-5/6 h-fit p-2 mx-auto z-20 shadow-lg  rounded-md  dark:bg-zinc-900 top-20 bg-zinc-100 "
+        "w-5/6 h-fit p-2 mx-auto  shadow-lg  rounded-md  dark:bg-zinc-900 top-20 bg-zinc-100   "
       }
     >
       <ul className="w-full flex flex-col gap-y-2 text-black dark:text-white">

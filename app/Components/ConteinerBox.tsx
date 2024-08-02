@@ -10,7 +10,7 @@ import { ReactFlow } from "reactflow";
 
 import "reactflow/dist/style.css";
 import PerguntaBox from "./Nodes/User/PerguntaBox";
-import RespostaBox from "./Nodes/RespostaBox";
+import RespostaBox from "./Nodes/BoxResposta/RespostaBox";
 import HeaderNav from "./Header/Index";
 import useStore from "../Redux/store";
 import { useShallow } from "zustand/react/shallow";
@@ -20,6 +20,9 @@ import UsuarioBox from "./Nodes/UsuariosBox";
 import AlertBox from "./Utilitys/ErrorBox";
 import { useEffect, useState } from "react";
 import ErrorView, { selectError } from "app/Redux/erroStore";
+import OptRespostas from "./Nodes/BoxResposta/OptRespostas";
+import { motion } from "framer-motion";
+import BoxEdit, { selectView } from "app/Redux/EditingStore";
 
 const NodeType = {
   PerguntaUnique: PerguntaBox,
@@ -53,15 +56,23 @@ const selector = (state: any) => ({
   onEdgesChange: state.onEdgesChange,
   onConnect: state.onConnect,
 });
+const variants = {
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: "-100%" },
+};
 
 export default function ConteinerBox() {
   const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
     useShallow(selector)
   );
+
+  const { SelectItem, Visible } = BoxEdit(selectView);
+
   useEffect(() => {
     console.log(Error);
   }, [Error]);
+
   return (
     <>
       <div className="overflow-hidden dark:bg-zinc-900">
@@ -96,6 +107,16 @@ export default function ConteinerBox() {
               />
 
               <MiniMap nodeStrokeWidth={3} nodeColor={nodeColor} />
+
+              <motion.div
+                animate={Visible ? "open" : "closed"}
+                variants={variants}
+                className="absolute left-0 top-10 z-[200] ml-2 mt-6"
+              >
+
+                  <OptRespostas></OptRespostas>
+                
+              </motion.div>
             </ReactFlow>
           </ReactFlowProvider>
         </div>

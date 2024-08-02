@@ -3,7 +3,6 @@ import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { initialNodes } from "../InitialValue/nodes/nodes";
 import { initialEdges } from "../InitialValue/nodes/edges";
 
-
 interface Value {
   id: string;
   text?: string;
@@ -97,6 +96,24 @@ const useStore = create((set: any, get: any) => ({
         return item; // Retorna o item inalterado
       }),
     })),
+  updateFormValues: (newValues: any) => {
+    const currentValues = get().formValues;
+    const index = currentValues.findIndex(
+      (item: any) => item.id === newValues.id
+    );
+
+    if (index !== -1) {
+      // Verifica se o item encontrado é diferente do novo valor
+      if (JSON.stringify(currentValues[index]) !== JSON.stringify(newValues)) {
+        const updatedValues = [...currentValues];
+        updatedValues[index] = newValues;
+        set({ formValues: updatedValues });
+      }
+    } else {
+      // Adiciona o novo item se ele não estiver na lista
+      set({ formValues: [...currentValues, newValues] });
+    }
+  }
 }));
 
 export default useStore;

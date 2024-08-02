@@ -160,8 +160,26 @@
 
 .ql-container {
   border-radius: 0px 0px 10px 10px;
-
 }
 .ql-toolbar {
   border-radius: 10px 10px 0px 0px;
+}
+
+ol {
+  list-style: decimal !important;
+  margin-left: 1.3rem;
+}
+
+.hover_fill:hover {
+  filter: brightness(0) saturate(100%) invert(63%) sepia(27%) saturate(7499%)
+    hue-rotate(72deg) brightness(103%) contrast(119%);
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.BoxMiniRunded {
+  border-radius: 0px 10px 10px 10px;
+}
+.animation_Message {
+  /* animation: InitalMessage 400ms ease-in-out; */
+  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
