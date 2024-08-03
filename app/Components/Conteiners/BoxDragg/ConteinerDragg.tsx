@@ -1,12 +1,7 @@
 import React from "react";
-import { animated, useSpring } from "@react-spring/web";
 import { motion } from "framer-motion";
 
 export default function ConteinerDragg({ children, w }: any) {
-  const springs = useSpring({
-    from: { scale: 0 },
-    to: { scale: 1 },
-  });
 
   return (
     <motion.div

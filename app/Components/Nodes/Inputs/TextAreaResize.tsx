@@ -29,7 +29,7 @@ export default function TextAreaResize({
         onChange={(e) => {
           onChange(e);
         }}
-        className="h-fit dark:filter dark:brightness-[1000] dark:saturate-100 "
+        className="h-fit dark:filter dark:brightness-[1] "
       />
     </div>
   );

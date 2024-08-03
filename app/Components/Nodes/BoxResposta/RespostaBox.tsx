@@ -2,16 +2,16 @@
 
 import React, { useState } from "react";
 import { Handle, Position } from "reactflow";
-import TextIcon from "../TextIcon/TextIcon";
+import TextIcon from "../../Utilitys/TextIcon/TextIcon";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
-import { BoxProps } from "../User/PerguntaBox";
+import { BoxProps } from "../Client/PerguntaBox";
 import Close from "../Close/Close";
 import useStore from "app/Redux/store";
 import { motion } from "framer-motion";
 import OptRespostas from "./OptRespostas";
 import zIndex from "@mui/material/styles/zIndex";
 import RespostaPreview from "./RespostaPreview";
-import BoxEdit, { selectView } from "app/Redux/EditingStore";
+import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
 import MessageCompButton from "app/Components/ZapMessageTemplate/MessageCompButton";
 
 const selector = (state: any) => ({

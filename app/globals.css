@@ -150,10 +150,6 @@
   display: none !important;
 }
 
-.ql-active {
-  filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(1281%)
-    hue-rotate(93deg) brightness(97%) contrast(102%) !important;
-}
 .break-words {
   border-radius: 20px;
 }

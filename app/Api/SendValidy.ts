@@ -1,8 +1,5 @@
 import { resolve } from "path";
 import { MonichatApi } from "./AuthMoniChat";
-import { verificarConexao } from "./Validators/UsuarioValidator";
-import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
-import { useShallow } from "zustand/react/shallow";
 import { FormatText } from "./Validators/SendBackText";
 
 const monichat = new MonichatApi();

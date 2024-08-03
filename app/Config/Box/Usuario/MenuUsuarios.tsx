@@ -1,6 +1,6 @@
 "use client";
 
-import { MonichatApi } from "app/Hooks/AuthMoniChat";
+import { MonichatApi } from "app/Api/AuthMoniChat";
 import { AnyTxtRecord } from "dns";
 import { useState } from "react";
 

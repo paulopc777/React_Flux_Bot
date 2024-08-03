@@ -2,11 +2,10 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Handle, Position } from "reactflow";
-import TextIcon from "../TextIcon/TextIcon";
+import TextIcon from "../../Utilitys/TextIcon/TextIcon";
 import useStore from "../../../Redux/store";
 import ConteinerDragg from "../../Conteiners/BoxDragg/ConteinerDragg";
 import Close from "../Close/Close";
-import InputPad from "../Inputs/InputPad";
 import { useShallow } from "zustand/react/shallow";
 import { Box, Checkbox } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
@@ -15,7 +14,7 @@ import { motion } from "framer-motion";
 import {
   IncluedeSysInput,
   validateSysInput,
-} from "app/Hooks/Validators/UsuarioValidator";
+} from "app/Api/Validators/UsuarioValidator";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
 
 export interface BoxProps {
@@ -40,7 +39,6 @@ const selector = (state: any) => ({
 });
 
 export default function PerguntaBox({ id, data }: DataProps) {
-  const [checkBox, setCheckBox] = useState(false);
   const [InputVisible, setInputVisible] = useState(false);
   const [InputValue, setInputValue] = useState("");
   const { deleteValue, addValue, formValues } = useStore(useShallow(selector));

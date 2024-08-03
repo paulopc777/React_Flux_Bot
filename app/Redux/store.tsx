@@ -113,7 +113,7 @@ const useStore = create((set: any, get: any) => ({
       // Adiciona o novo item se ele não estiver na lista
       set({ formValues: [...currentValues, newValues] });
     }
-  }
+  },
 }));
 
 export default useStore;

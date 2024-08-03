@@ -1,13 +1,7 @@
 import { create } from "zustand";
 
-const getInitialDarkMode = (): boolean => {
-  const savedMode = localStorage.getItem("darkMode");
-  return savedMode === "true" || false;
-};
-
-
 const DarkMode = create((set: any, get: any) => ({
-  dark: getInitialDarkMode(),
+  dark: false,
   toggleDarkMode: () => {
     set((state: any) => {
       const newDarkMode = !state.dark;

@@ -1,6 +1,6 @@
 "use client";
 
-import { MonichatApi } from "app/Hooks/AuthMoniChat";
+import { MonichatApi } from "app/Api/AuthMoniChat";
 
 interface MenuRequireProps {
   nome?: string;
@@ -25,14 +25,14 @@ const LithoMenu = ({ nome, funcModi, close }: MenuRequireProps) => {
 };
 
 export function DroppSelectsMenu({ funcModi, close }: MenuRequireProps) {
-
-  const storedMonichat = localStorage.getItem("monichat");
-  let Monichat;
+  const storedMonichat = localStorage.getItem("Usuarios");
+  let Monichat:any = [];
 
   if (storedMonichat) {
     Monichat = JSON.parse(storedMonichat);
+
   } else {
-    new MonichatApi().ListDepartamento();
+    new MonichatApi().ListUsers();
   }
 
   return (
@@ -46,7 +46,7 @@ export function DroppSelectsMenu({ funcModi, close }: MenuRequireProps) {
       {Monichat.map((opt: any, index: any) => (
         <LithoMenu
           key={index}
-          nome={opt.nome}
+          nome={opt.email}
           funcModi={funcModi}
           close={close}
         />

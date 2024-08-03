@@ -20,13 +20,17 @@ export default function Close({ id }: PropsClose) {
   }
 
   return (
-    <Tooltip title="Delete" variant="soft" color="danger" size="sm" placement="top-start">
+    <Tooltip
+      title="Delete"
+      variant="soft"
+      color="danger"
+      size="sm"
+      placement="top-start"
+    >
       <button
-        className="text absolute -right-2 -top-2 w-5 h-5"
+        className="text absolute right-2 top-2 w-2 h-2 bg-red-600 rounded-full "
         onClick={handleRemoveNode}
-      >
-        <img src="/svg/Close.svg" alt="Close" />
-      </button>
+      ></button>
     </Tooltip>
   );
 }

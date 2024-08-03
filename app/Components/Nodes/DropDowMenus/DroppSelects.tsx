@@ -4,26 +4,17 @@ import React, { useState } from "react";
 import { DroppSelectsMenu } from "./MenuDropDepartamento";
 import useStore from "../../../Redux/store";
 import { useShallow } from "zustand/react/shallow";
+import { StoreSelector } from "app/Redux/Selector/storeSelector";
 
 export interface PropsDropMenu {
   nome: string;
 }
 
-interface OpsMenu {
-  OptsMenu: PropsDropMenu[];
-}
-
-const selector = (state: any) => ({
-  deleteValue: state.deleteValue,
-  addValue: state.addValue,
-  formValues: state.formValues,
-});
-
 export default function DroppSelects({ id }: any) {
   const [dropMenu, setDropMenu] = useState(false);
   const [menuOption, setMenuOption] = useState("Select");
 
-  const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
+  const { deleteValue, addValue } = useStore(useShallow(StoreSelector));
 
   function setMenu() {
     setDropMenu(!dropMenu);

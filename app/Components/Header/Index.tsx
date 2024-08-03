@@ -2,22 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import ButtonBlakc from "../Buttons/ButtonIcon";
-import MenuAddCompo from "./MenuAddNode/MenuAddCompo";
+import MenuAddCompo from "./Menu/MenuAddCompo";
 import CircleInfo from "../Utilitys/Circle";
 import { useShallow } from "zustand/react/shallow";
 import useStore from "../../Redux/store";
 import DarkMode from "../../Redux/darkMode";
 import { initialNodes } from "../../InitialValue/nodes/nodes";
-import AddMenuMore from "./MoreMenu/AddMenuMore";
-import { ValidThoSend } from "app/Hooks/SendValidy";
-import LinearProgress from "@mui/material/LinearProgress";
-import AnimationCont from "./SendAnimation";
+import AddMenuMore from "../Buttons/ButtonAddMenu/AddMenuMore";
+import { ValidThoSend } from "app/Api/SendValidy";
+import AnimationCont from "./LoadBotCreate";
 import { motion } from "framer-motion";
-import ButtonIcon from "../Buttons/ButtonIcon";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
-import { verificarConexao } from "app/Hooks/Validators/UsuarioValidator";
-import { ValidInitialNode } from "app/Hooks/Validators/InitialValidator";
-import BoxEdit, { selectView } from "app/Redux/EditingStore";
+import { verificarConexao } from "app/Api/Validators/UsuarioValidator";
+import { ValidInitialNode } from "app/Api/Validators/InitialValidator";
+import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -36,14 +34,13 @@ const variants = {
 };
 
 export default function HeaderNav() {
-  const { SetVisible, Visible } = BoxEdit(selectView);
-
-  const [Uptate, setUpdate] = useState(false);
-
   const { nodes, edges, formValues } = useStore(useShallow(selector));
   const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
-  const [isOpen, setIsOpen] = useState(false);
   const { Error, SetNewError } = ErrorView(useShallow(selectError));
+  const { SetVisible, Visible } = BoxEdit(useShallow(selectView));
+
+  const [Uptate, setUpdate] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [animation, setupdateLoad] = useState(false);
 
   useEffect(() => {
@@ -58,12 +55,13 @@ export default function HeaderNav() {
     }
   }, [Visible]);
 
-  async function Send() {
+  function Valid() {
     const dados = {
       nodes: nodes,
       edges: edges,
       form: formValues,
     };
+
     let data: any[] = verificarConexao(dados);
 
     if (data.length > 0) {
@@ -81,8 +79,6 @@ export default function HeaderNav() {
 
     data = ValidInitialNode(dados);
 
-    // console.log(data);
-
     if (data.length <= 0) {
       const ErroSend: ErrorState = {
         Text: "E nessesario uma espera para Mensagem inicial !",
@@ -95,17 +91,19 @@ export default function HeaderNav() {
       }
       return;
     }
+  }
 
+  function Send() {
     ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
-
-    // setInterval(() => {
-    //   setupdateLoad(false);
-    // }, 10000);
   }
 
   function setDarkClikc() {
     toggleDarkMode();
   }
+
+  useEffect(() => {
+    Valid();
+  }, [edges]);
 
   return (
     <header className="w-fit h-fit fixed p-2 flex justify-center z-50">
@@ -149,6 +147,7 @@ export default function HeaderNav() {
 
           <CircleInfo Visible={Uptate}></CircleInfo>
 
+          {/* Seve Text Button */}
           {Uptate ? (
             <p className="mx-2 bg-white">Save</p>
           ) : (

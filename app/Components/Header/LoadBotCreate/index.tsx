@@ -1,10 +1,5 @@
 import { LinearProgress } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useEdges } from "reactflow";
-
-interface AniamtionProsps {
-  update: boolean;
-}
+import { useState } from "react";
 
 export default function AnimationCont({ animation }: any) {
   const [Robot, setRobot] = useState("none");

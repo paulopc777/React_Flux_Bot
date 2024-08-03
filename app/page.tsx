@@ -1,19 +1,20 @@
 "use client";
 
-import ConteinerBox from "./Components/ConteinerBox";
+import ConteinerBox from "./Components/MainFlow";
 import DarkMode from "./Redux/darkMode";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import ErrorView, { selectError } from "./Redux/erroStore";
-import OptRespostas from "./Components/Nodes/BoxResposta/OptRespostas";
+
 
 const selector2 = (state: any) => ({
   dark: state.dark,
   toggleDarkMode: state.toggleDarkMode,
+  setDarkMode: state.setDarkMode,
 });
 
 export default function Home() {
-  const { dark, toggleDarkMode } = DarkMode(useShallow(selector2));
+  const { dark, toggleDarkMode, setDarkMode } = DarkMode(useShallow(selector2));
   const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
 
   const [style, setStyle] = useState("");
@@ -27,7 +28,6 @@ export default function Home() {
   }, [dark]);
 
   useEffect(() => {
-    // console.log(Error.Visible);
     if (Error.Visible) {
       setTimeout(() => {
         ToggleErrorVisibility();
@@ -35,10 +35,16 @@ export default function Home() {
     }
   }, [Error]);
 
+  useEffect(() => {
+    const getInitialDarkMode = (): boolean => {
+      const savedMode = localStorage.getItem("darkMode");
+      return savedMode === "true" || false;
+    };
+    setDarkMode(getInitialDarkMode());
+  }, []);
+
   return (
     <main className={`transition-all ${style}`}>
-
-
       <ConteinerBox></ConteinerBox>
     </main>
   );

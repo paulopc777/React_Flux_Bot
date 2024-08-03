@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 import InputPad from "../Inputs/InputPad";
 import { motion } from "framer-motion";
 import TextAreaResize from "../Inputs/TextAreaResize";
-import RepostaButton from "../User/ButtonTheBox";
+import RepostaButton from "../Client/ButtonTheBox";
 import { Box, Tooltip } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
 import Image from "next/image";
 import { useShallow } from "zustand/react/shallow";
-import BoxEdit, { selectView } from "app/Redux/EditingStore";
+import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
 import { Handle, Position } from "reactflow";
 import ButtonBlakc from "../../Buttons/ButtonIcon";
 
@@ -20,7 +20,7 @@ const selector = (state: any) => ({
 });
 
 const ButtonOptStyle =
-  "text_button_small dark:!text-white hover:dark:!bg-neutral-600 dark:!border-neutral-600 !min-w-fit";
+  "text_button_small dark:!text-black hover:dark:!bg-neutral-400 dark:!border-neutral-400 !min-w-fit";
 
 interface optResProps {
   ChangeBtn: () => void;
@@ -55,6 +55,8 @@ export default function OptRespostas() {
   }
 
   const addEmoji = (emoji: any) => () => setInputValue(`${inputValue}${emoji}`);
+  const addEmojiMessage = (emoji: any) => () =>
+    setMessage(`${Message}${emoji}`);
 
   function ChangeBtn() {
     setBtn(!Btn);
@@ -122,24 +124,14 @@ export default function OptRespostas() {
     <div className="bg-white p-2  border-2 border-zinc-200 rounded-2xl w-72 h-full shadow-xl z-20">
       {Btn ? (
         <>
-          {/* <InputPad
-            placeholder="Resposta"
-            value={Message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
-          ></InputPad> */}
-
           <>
-            <motion.div
-              className=" w-full  "
-            >
+            <motion.div className=" w-full  ">
               <div className="mb-2 overflow-x-scroll">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
                   <IconButton
                     variant="outlined"
                     color="neutral"
-                    onClick={addEmoji("{contact_name}")}
+                    onClick={addEmojiMessage("{contact_name}")}
                     className={ButtonOptStyle}
                   >
                     Nome do cliente
@@ -147,7 +139,7 @@ export default function OptRespostas() {
                   <IconButton
                     variant="outlined"
                     color="neutral"
-                    onClick={addEmoji("{ticket_number}")}
+                    onClick={addEmojiMessage("{ticket_number}")}
                     className={ButtonOptStyle}
                   >
                     número do ticket
@@ -155,7 +147,7 @@ export default function OptRespostas() {
                   <IconButton
                     variant="outlined"
                     color="neutral"
-                    onClick={addEmoji("{my_name}")}
+                    onClick={addEmojiMessage("{my_name}")}
                     className={ButtonOptStyle}
                   >
                     Nome do Usuario
@@ -279,7 +271,7 @@ export default function OptRespostas() {
         </>
       )}
 
-      <div className="flex items-center w-full justify-evenly">
+      <div className="flex items-center w-full justify-between">
         <div className="flex justify-start items-center gap-1">
           <button
             onClick={ChangeBtn}

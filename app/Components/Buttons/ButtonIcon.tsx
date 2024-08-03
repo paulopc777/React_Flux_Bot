@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 import React from "react";
 
 interface ButtonProsp {
   icons: string;
   text?: string;
-  onclick?:() => void
+  onclick?: () => void;
   w?: string;
 }
 
@@ -15,7 +16,13 @@ export default function ButtonIcon({ text, w, icons, onclick }: ButtonProsp) {
       onClick={onclick}
       whileTap={{ scale: 0.8 }}
     >
-      <img src={`${icons}`} alt="Add" className="w-full p-1 " />
+      <Image
+        src={`${icons}`}
+        alt="Add"
+        className="w-full p-1 "
+        width={40}
+        height={40}
+      />
     </motion.div>
   );
 }

@@ -32,12 +32,7 @@ export default function AlertBox({
         className="h-fit break-words"
       >
         <b>{Text}</b>
-        {/* <div
-          className="absolute w-5 -right-2 -top-2 hover:bg-red-500 rounded-full transition-all"
-          onClick={onClose}
-        >
-          <img src="/svg/Close.svg" alt="" />
-        </div> */}
+
 
         {ErrorImg ? (
           <img src={ErrorImg} alt="" />
