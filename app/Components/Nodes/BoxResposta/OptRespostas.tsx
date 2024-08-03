@@ -120,26 +120,58 @@ export default function OptRespostas() {
 
   return (
     <div className="bg-white p-2  border-2 border-zinc-200 rounded-2xl w-72 h-full shadow-xl z-20">
-      <Tooltip title="Save" placement="right">
-        <motion.div
-          whileTap={{ scale: 0.9 }}
-          transition={{ duration: 0.2 }}
-          className=" hover_fill p-2 border-2 border-zinc-300 rounded-lg shadow-sm w-fit my-2 "
-          onClick={AutoSaveInput}
-        >
-          <img src="/svg/save.svg" alt="" className="w-5 h-5" />
-        </motion.div>
-      </Tooltip>
-
       {Btn ? (
         <>
-          <InputPad
+          {/* <InputPad
             placeholder="Resposta"
             value={Message}
             onChange={(e) => {
               setMessage(e.target.value);
             }}
-          ></InputPad>
+          ></InputPad> */}
+
+          <>
+            <motion.div
+              className=" w-full  "
+            >
+              <div className="mb-2 overflow-x-scroll">
+                <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("{contact_name}")}
+                    className={ButtonOptStyle}
+                  >
+                    Nome do cliente
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("{ticket_number}")}
+                    className={ButtonOptStyle}
+                  >
+                    número do ticket
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("{my_name}")}
+                    className={ButtonOptStyle}
+                  >
+                    Nome do Usuario
+                  </IconButton>
+                </Box>
+              </div>
+
+              <TextAreaResize
+                placeholder="Mensagem de retorno"
+                value={Message}
+                onChange={(e) => {
+                  setMessage(e);
+                }}
+              />
+            </motion.div>
+          </>
         </>
       ) : (
         ""
@@ -188,12 +220,6 @@ export default function OptRespostas() {
                   onChange={(e: any) => {
                     handleEdit(Identify.id, e.target.value);
                   }}
-                />
-
-                <Handle
-                  id={`R-${index}`}
-                  type="target"
-                  position={Position.Right}
                 />
               </div>
             ))}
@@ -253,9 +279,25 @@ export default function OptRespostas() {
         </>
       )}
 
-      <div className="flex justify-start items-center gap-1">
-        <Checkbox onClick={ChangeBtn} color="success" className="" />
-        <label htmlFor="Btn">Botões</label>
+      <div className="flex items-center w-full justify-evenly">
+        <div className="flex justify-start items-center gap-1">
+          <button
+            onClick={ChangeBtn}
+            color="success"
+            className="p-2 border-2 border-zinc-300 rounded-lg shadow-sm w-fit hover:text-blue-500 hover:border-blue-500 transition-all duration-500"
+          >
+            <label htmlFor="Btn">Usar Botões</label>
+          </button>
+        </div>
+        <motion.div
+          whileTap={{ scale: 0.9 }}
+          transition={{ duration: 0.2 }}
+          className=" hover_fill p-2 border-2 border-zinc-300 rounded-lg shadow-sm w-fit my-2 flex items-center "
+          onClick={AutoSaveInput}
+        >
+          <img src="/svg/save.svg" alt="" className="w-5 h-5" />
+          <p>Salvar</p>
+        </motion.div>
       </div>
     </div>
   );

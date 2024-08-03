@@ -14,6 +14,7 @@
     "@mui/icons-material": "^5.16.6",
     "@mui/joy": "^5.0.0-beta.48",
     "@mui/material": "^5.16.4",
+    "@xyflow/react": "^12.0.4",
     "axios": "^1.7.2",
     "framer-motion": "^11.3.19",
     "html-to-text": "^9.0.5",

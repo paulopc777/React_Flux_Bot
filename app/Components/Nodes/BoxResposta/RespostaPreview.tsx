@@ -42,7 +42,7 @@ export default function RespostaPreview({ id }: props) {
 
   useEffect(() => {
     formValues.map((item: any) => {
-      console.log(item);
+      // console.log(item);
       if (item.id === id) {
         if (item.text) {
           const convertedValue = convertListToParagraph(item.text);

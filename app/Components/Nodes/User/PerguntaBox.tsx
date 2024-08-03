@@ -107,11 +107,14 @@ export default function PerguntaBox({ id, data }: DataProps) {
     <>
       <ConteinerDragg w={"w-62"}>
         {data.start ? "" : <Close id={id} />}
-
-        <TextIcon
-          icon="svg/messagerec.svg"
-          text="Mensagem do Usuairo"
-        ></TextIcon>
+        {data.start ? (
+          ""
+        ) : (
+          <TextIcon
+            icon="svg/messagerec.svg"
+            text="Mensagem cliente"
+          ></TextIcon>
+        )}
 
         {/* <div className="bg-[#00B30C] h-full w-2 absolute left-0 top-0 rounded-s-full shadow-inner  border-[#24922b] border-r-2"></div> */}
 
@@ -170,7 +173,9 @@ export default function PerguntaBox({ id, data }: DataProps) {
 
         {data.start ? (
           <div className=" flex items-center ">
-            <Checkbox checked defaultChecked color="success" />
+            <div className="h-7 w-7 mr-2">
+              <img src="/svg/play.svg" alt="" className="w-full h-full" />
+            </div>
 
             <label
               htmlFor="Message"

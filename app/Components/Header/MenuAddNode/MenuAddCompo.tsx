@@ -14,21 +14,23 @@ const selector = (state: any) => ({
   addNode: state.addNode, // Adicione isso ao estado
 });
 
-
-
-export default function MenuAddCompo(visible : any) {
+export default function MenuAddCompo(visible: any) {
   const { nodes, addNode } = useStore(useShallow(selector));
 
   const handleAddNode = (type: string, e: any) => {
+    const ultimoNode = nodes[nodes.length - 1].id;
     const position = nodes[nodes.length - 1].position;
 
+    const idThoint = parseInt(ultimoNode) + 1;
+
     const newNode = {
-      id: `${nodes.length + 1}`,
+      id: `${idThoint}`,
       type: type,
       data: { label: `Node ${nodes.length + 1}` },
       position: { x: position.x + 300, y: position.y }, // Posição aleatória
     };
     addNode(newNode); // Função para adicionar o nó ao estado
+
   };
 
   return (
@@ -56,7 +58,10 @@ export default function MenuAddCompo(visible : any) {
             handleAddNode("Resposta", e);
           }}
         >
-          <TextIcon text="Resposta" icon="svg/messageresponse.svg"></TextIcon>
+          <TextIcon
+            text="Mensagem de Resposta"
+            icon="svg/messageresponse.svg"
+          ></TextIcon>
         </li>
 
         <li

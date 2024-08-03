@@ -40,7 +40,7 @@ export default function DepartamentoBox({ id }: BoxProps) {
         <Close id={id}></Close>
         <TextIcon
           icon={"/svg/Departament.svg"}
-          text={"Enviar para Departamento"}
+          text={"Transferir para Departamento"}
         />
 
         <div className="">

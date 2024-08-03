@@ -52,11 +52,11 @@ export default function RespostaBox({ id }: BoxProps) {
 
         <motion.div
           whileTap={{ scale: 0.8 }}
-          whileHover={{ background: "#dddf" }}
-          className="w-7 h-7 mt-2 rounded-lg relative right-0"
+
+          className="w-7 h-7 mt-2 rounded-lg relative right-0 dark:bg-zinc-200"
           onClick={VisibleMenu}
         >
-          <button className="p-1 border-zinc-300 border-2 rounded-lg ">
+          <button className="p-1 border-zinc-200 border-2 rounded-lg ">
             <img src="/svg/edit.svg" className="w-full h-full" />
           </button>
         </motion.div>

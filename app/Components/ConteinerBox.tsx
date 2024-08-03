@@ -1,10 +1,15 @@
 import {
   Background,
   BackgroundVariant,
-  MiniMap,
+  ConnectionMode,
   ReactFlowProvider,
   SmoothStepEdge,
+  MiniMap,
+  MarkerType,
+  Controls,
 } from "reactflow";
+
+// import {} from "@xyflow/react";
 
 import { ReactFlow } from "reactflow";
 
@@ -60,6 +65,7 @@ const variants = {
   open: { opacity: 1, x: 0 },
   closed: { opacity: 0, x: "-100%" },
 };
+const nodeClassName = (node: any) => node.type;
 
 export default function ConteinerBox() {
   const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
@@ -69,9 +75,9 @@ export default function ConteinerBox() {
 
   const { SelectItem, Visible } = BoxEdit(selectView);
 
-  useEffect(() => {
-    console.log(Error);
-  }, [Error]);
+  // useEffect(() => {
+  //   console.log(Error);
+  // }, [Error]);
 
   return (
     <>
@@ -96,7 +102,14 @@ export default function ConteinerBox() {
               edgeTypes={edgeTypes}
               defaultEdgeOptions={{
                 type: "Padrao",
+                markerStart: {
+                  type: MarkerType.ArrowClosed,
+                  width: 30,
+                  height: 30,
+                  color: "#8d8d8d",
+                },
               }}
+              connectionMode={ConnectionMode.Loose}
             >
               <Background
                 color="bg-white"
@@ -105,17 +118,19 @@ export default function ConteinerBox() {
                 className="opacity-80"
                 gap={50}
               />
-
-              <MiniMap nodeStrokeWidth={3} nodeColor={nodeColor} />
-
+              <MiniMap
+                zoomable
+                pannable
+                nodeClassName={nodeClassName}
+                nodeColor={nodeColor}
+              />
+              <Controls />
               <motion.div
                 animate={Visible ? "open" : "closed"}
                 variants={variants}
                 className="absolute left-0 top-10 z-[200] ml-2 mt-6"
               >
-
-                  <OptRespostas></OptRespostas>
-                
+                <OptRespostas></OptRespostas>
               </motion.div>
             </ReactFlow>
           </ReactFlowProvider>

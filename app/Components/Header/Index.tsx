@@ -17,6 +17,7 @@ import ButtonIcon from "../Buttons/ButtonIcon";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
 import { verificarConexao } from "app/Hooks/Validators/UsuarioValidator";
 import { ValidInitialNode } from "app/Hooks/Validators/InitialValidator";
+import BoxEdit, { selectView } from "app/Redux/EditingStore";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -35,6 +36,8 @@ const variants = {
 };
 
 export default function HeaderNav() {
+  const { SetVisible, Visible } = BoxEdit(selectView);
+
   const [Uptate, setUpdate] = useState(false);
 
   const { nodes, edges, formValues } = useStore(useShallow(selector));
@@ -48,6 +51,12 @@ export default function HeaderNav() {
       setUpdate(true);
     }
   }, [nodes]);
+
+  useEffect(() => {
+    if (Visible) {
+      setIsOpen(false);
+    }
+  }, [Visible]);
 
   async function Send() {
     const dados = {
@@ -110,6 +119,7 @@ export default function HeaderNav() {
           icons={"svg/add.svg"}
           onclick={() => {
             setIsOpen(!isOpen);
+            SetVisible(false);
           }}
         ></ButtonBlakc>
         <AddMenuMore></AddMenuMore>

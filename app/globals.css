@@ -183,3 +183,11 @@ ol {
   /* animation: InitalMessage 400ms ease-in-out; */
   transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+
+.react-flow__handle {
+  width: 10px !important;
+  height: 10px !important;
+  border-color: #747474 !important;
+  background-color: #747474 !important;
+  opacity: .6;
+}

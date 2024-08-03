@@ -21,7 +21,7 @@ export default function UsuarioBox({ id }: BoxProps) {
         <Close id={id}></Close>
         <TextIcon
           icon={"/svg/user.svg"}
-          text={"Enviar para Usuario"}
+          text={"Transferir para Usuario"}
         />
 
         <div className="">
