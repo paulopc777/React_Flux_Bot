@@ -1,8 +1,8 @@
 import { resolve } from "path";
 import { MonichatApi } from "./AuthMoniChat";
-import { FormatText } from "./Validators/SendBackText";
+import { FormatText } from "./utils/SendBackText";
 import { getIdByNome, GetNodeType } from "./Finders";
-import { CreateContext, LinkContexts } from "./Logic/Context";
+import { CreateContext, LinkContexts } from "./service/ServiceContext";
 
 const monichat = new MonichatApi();
 const NodeList = {

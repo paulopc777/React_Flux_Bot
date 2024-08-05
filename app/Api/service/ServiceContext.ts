@@ -1,4 +1,4 @@
-import { FormatText } from "../Validators/SendBackText";
+import { FormatText } from "../utils/SendBackText";
 
 const NodeList = {
   PerguntaUnique: "PerguntaUnique",

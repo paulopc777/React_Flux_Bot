@@ -20,7 +20,7 @@ const selector = (state: any) => ({
 });
 
 const ButtonOptStyle =
-  "text_button_small dark:!text-black hover:dark:!bg-neutral-400 dark:!border-neutral-400 !min-w-fit";
+  "text_button_small dark:!text-white hover:dark:!bg-neutral-400 dark:!border-neutral-400 !min-w-fit dark:text-black";
 
 interface optResProps {
   ChangeBtn: () => void;
@@ -121,12 +121,12 @@ export default function OptRespostas() {
   }, [SelectItem]);
 
   return (
-    <div className="bg-white p-2  border-2 border-zinc-200 rounded-2xl w-72 h-full shadow-xl z-20">
+    <div className="bg-white p-2  border-2 border-zinc-200 rounded-2xl w-72 h-full shadow-xl z-20 dark:bg-zinc-900 dark:border-neutral-600 dark:text-white">
       {Btn ? (
         <>
           <>
             <motion.div className=" w-full  ">
-              <div className="mb-2 overflow-x-scroll">
+              <div className="mb-2 overflow-x-scroll dark:text-white">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
                   <IconButton
                     variant="outlined"
@@ -199,7 +199,7 @@ export default function OptRespostas() {
       )}
 
       {Btn ? (
-        <div className="min-h-16 h-full p-1  bg-white  border-gray-200 rounded-lg dark:bg-zinc-900 dark:text-white dark:border-zinc-900">
+        <div className="min-h-16 h-full p-2  bg-white  border-gray-200 rounded-lg dark:bg-zinc-900 dark:text-white dark:border-zinc-900 ">
           <div id="Inputs">
             {InputsSetes.map((Identify: any, index: any) => (
               <div className="relative " key={index}>
@@ -284,7 +284,7 @@ export default function OptRespostas() {
         <motion.div
           whileTap={{ scale: 0.9 }}
           transition={{ duration: 0.2 }}
-          className=" hover_fill p-2 border-2 border-zinc-300 rounded-lg shadow-sm w-fit my-2 flex items-center "
+          className=" hover_fill p-2 border-2 border-zinc-300 rounded-lg shadow-sm w-fit my-2 flex items-center"
           onClick={AutoSaveInput}
         >
           <img src="/svg/save.svg" alt="" className="w-5 h-5" />

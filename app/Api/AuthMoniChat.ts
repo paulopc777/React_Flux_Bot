@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { Console } from "console";
-import { replaceReplyWithDescription } from "./Transform/Reply";
+import { replaceReplyWithDescription } from "./helpers/Reply";
 
 interface PayloadAuth {
   username?: "";

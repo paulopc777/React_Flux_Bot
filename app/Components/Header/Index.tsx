@@ -13,8 +13,8 @@ import { ValidThoSend } from "app/Api/SendValidy";
 import AnimationCont from "./LoadBotCreate";
 import { motion } from "framer-motion";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
-import { verificarConexao } from "app/Api/Validators/UsuarioValidator";
-import { ValidInitialNode } from "app/Api/Validators/InitialValidator";
+import { verificarConexao } from "app/Api/utils/UsuarioValidator";
+import { ValidInitialNode } from "app/Api/utils/InitialValidator";
 import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
 
 const selector = (state: any) => ({

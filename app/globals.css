@@ -166,9 +166,14 @@ ol {
   margin-left: 1.3rem;
 }
 
-.hover_fill:hover {
+.hover_fill {
   filter: brightness(0) saturate(100%) invert(63%) sepia(27%) saturate(7499%)
     hue-rotate(72deg) brightness(103%) contrast(119%);
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.hover_fill:hover {
+  filter: brightness(0) saturate(100%) invert(63%) sepia(27%) saturate(7499%)
+    hue-rotate(72deg) brightness(123%) contrast(119%);
   transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
@@ -185,5 +190,5 @@ ol {
   height: 10px !important;
   border-color: #747474 !important;
   background-color: #747474 !important;
-  opacity: .6;
+  opacity: 0.6;
 }

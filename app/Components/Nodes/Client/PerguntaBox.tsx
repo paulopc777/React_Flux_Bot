@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 import {
   IncluedeSysInput,
   validateSysInput,
-} from "app/Api/Validators/UsuarioValidator";
+} from "app/Api/utils/UsuarioValidator";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
 
 export interface BoxProps {
