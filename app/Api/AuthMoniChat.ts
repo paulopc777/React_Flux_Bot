@@ -227,6 +227,9 @@ export class MonichatApi {
     Departamento?: string,
     Status?: string
   ) {
+
+    
+
     const PayloadContexto = {
       context: {
         trigger: "",

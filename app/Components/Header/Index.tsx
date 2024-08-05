@@ -102,7 +102,7 @@ export default function HeaderNav() {
   }
 
   useEffect(() => {
-    Valid();
+    // Valid();
   }, [edges]);
 
   return (

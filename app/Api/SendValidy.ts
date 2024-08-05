@@ -1,52 +1,116 @@
 import { resolve } from "path";
 import { MonichatApi } from "./AuthMoniChat";
 import { FormatText } from "./Validators/SendBackText";
+import { getIdByNome, GetNodeType } from "./Finders";
+import { CreateContext, LinkContexts } from "./Logic/Context";
 
 const monichat = new MonichatApi();
+const NodeList = {
+  PerguntaUnique: "PerguntaUnique",
+  Resposta: "Resposta",
+  Departamento: "Departamento",
+  Timmer: "Timmer",
+  Usuario: "Usuario",
+};
 
-async function CreateIntention(props: any) {
-  props.edges.map((linhas: any) => {
-    if (linhas.target === "1") {
-      // console.log("text.id");
-      props.form.map((text: any) => {
-        if (text.id == linhas.source) {
-          //console.log("text.id");
-          props.edges.map((linahs2: any) => {
-            if (linahs2.target === linhas.source) {
-              //console.log("linahs2");
-              monichat.InsertIntencao(
-                text.text,
-                `@topic com${linahs2.source} @intent inicio`
-              );
-            }
-          });
-        }
-      });
-    }
-  });
-}
+const teste = {
+  nodes: [
+    {
+      id: "1",
+      type: "PerguntaUnique",
+      data: {
+        label: "Input Node",
+        start: true,
+        sourceHandles: [],
+        targetHandles: [],
+      },
+      position: {
+        x: 248.851301645003,
+        y: 123.78805852974502,
+      },
+      width: 202,
+      height: 64,
+      selected: false,
+      positionAbsolute: {
+        x: 248.851301645003,
+        y: 123.78805852974502,
+      },
+      dragging: false,
+    },
+    {
+      id: "2",
+      type: "PerguntaUnique",
+      data: {
+        label: "Node 2",
+      },
+      position: {
+        x: 548.851301645003,
+        y: 123.78805852974502,
+      },
+      width: 220,
+      height: 142,
+    },
+  ],
+  edges: [
+    {
+      type: "Padrao",
+      markerStart: {
+        type: "arrowclosed",
+        width: 30,
+        height: 30,
+        color: "#8d8d8d",
+      },
+      source: "2",
+      sourceHandle: null,
+      target: "1",
+      targetHandle: null,
+      id: "reactflow__edge-2-1",
+    },
+  ],
+  form: [
+    {
+      id: "2",
+      text: "",
+    },
+  ],
+};
+
 interface Usuario {
   id: number;
   email: string;
 }
 
-function getIdByNome(nome: any) {
-  // Ler a lista do localStorage
-  let data = localStorage.getItem("monichat");
-  if (data) {
-    const departments = JSON.parse(data);
+async function CreateIntention(props: any) {
+  props.edges.map((linhas: any) => {
+    if (linhas.target === "1") {
+      props.form.map((text: any) => {
+        if (text.id == linhas.source) {
+          const NodeType = GetNodeType(linhas.source, props);
+          if (NodeType === NodeList.PerguntaUnique) {
+            props.edges.map((linahs2: any) => {
+              if (linahs2.target === linhas.source) {
+                //console.log("linahs2");
 
-    if (departments) {
-      // Encontrar o objeto com o nome fornecido
-      const department = departments.find((dept: any) => dept.nome === nome);
+                monichat.InsertIntencao(
+                  text.text,
+                  `@topic com${linahs2.source} @intent inicio`
+                );
+              }
+            });
+          }
 
-      // Retornar o id se encontrado, caso contrário, retornar null ou outra indicação de não encontrado
-      return department ? department.id : null;
+          if (NodeType === NodeList.Resposta) {
+            monichat.InsertIntencao(
+              "@sys.input",
+              `@topic com${linhas.source} @intent inicio`
+            );
+          }
+        }
+      });
     }
-  }
-  // Retornar null se não houver lista no localStorage
-  return null;
+  });
 }
+
 function obterUsuariosDoLocalStorage(): Usuario[] {
   const usuariosString = localStorage.getItem("Usuarios");
   if (usuariosString) {
@@ -89,13 +153,6 @@ async function CreateReply(props: any) {
                       if (TextLInha2.text) {
                         const idDepartamento: number = getIdByNome(
                           `${form.Departamento}`
-                        );
-
-                        console.log(
-                          linhas3.source,
-                          TextLInha2.text,
-                          idDepartamento,
-                          form.description
                         );
 
                         let p2 =
@@ -186,171 +243,24 @@ async function CreateReply(props: any) {
   }
 }
 
-async function AddDefoltContex() {}
-
-async function CreateContextoText(props: any) {
-  props.edges.map((linha: any) => {
-    if (linha.target != "1") {
-      props.form.map((form: any) => {
-        if (form.id === linha.source) {
-          if (form.text) {
-            props.edges.map((linha2: any) => {
-              if (linha.source === linha2.target) {
-                props.form.map((Dep: any) => {
-                  if (linha2.source === Dep.id) {
-                    if (Dep.text) {
-                      props.nodes.map((nodesType: any) => {
-                        if (nodesType.id === linha.source) {
-                          if (nodesType.type != "PerguntaUnique") {
-                            // console.log(
-                            //   `Um contexto de com${linha.source} texto ${form.text} `
-                            // );
-
-                            setInterval(() => {
-                              return resolve;
-                            }, 3000);
-
-                            const text = FormatText(form.text);
-
-                            monichat.InsertContexto(
-                              `com${linha.source}`,
-                              text,
-                              `@sys.opt @sys.array_must(sair,exit) @sys.opt`,
-                              `Ok ! so um segundo estou finalizando seu atendimento !`
-                            );
-                          }
-                        }
-                      });
-                    } else {
-                      /*
-                      console.log(
-                        `Um contexto de com${linha.target} reply ${linha2.target} text ${form.text} Departamento ${Dep.Departamento} `
-                      );*/
-                      /*
-                      monichat.UpdataContext(
-                        `com${linha.target}`,
-                        `@sys.opt @sys.array_must(${form.text}) @sys.opt `,
-                        "CreateReply @topic random",
-                         getIdByNome(`${Dep.Departamento}`)
-                      );*/
-                    }
-                  }
-                });
-              }
-            });
-          }
-        }
-      });
-    }
-  });
-}
-
-async function CreateContextButton(prosp: any) {
-  prosp.edges.map((linhas: any) => {
-    if (linhas.target != "1") {
-      prosp.form.map((form: any) => {
-        if (form.button) {
-          if (form.id === linhas.source) {
-            // console.log("Buttion check", form);
-
-            let BtnArray: any = [];
-
-            form.button.map((item: any) => {
-              if (item.text) {
-                BtnArray.push(item.text);
-              }
-            });
-
-            // console.log(BtnArray);
-
-            monichat.InsertContextoButton(
-              `com${linhas.source}`,
-              "@sys.input ",
-              `@topic com${linhas.source} @intent inicio`,
-              `${form.desc}`,
-              BtnArray,
-              "",
-              form.Body,
-              form.Footer
-            );
-          }
-        }
-      });
-    }
-  });
-}
-
-async function CreateContexContext(props: any) {
-  props.edges.map((linhas: any) => {
-    if (linhas.target != "1") {
-      props.nodes.map((nodeType: any) => {
-        if (linhas.target === nodeType.id) {
-          if (nodeType.type === "Resposta") {
-            props.nodes.map((nodeType2: any) => {
-              if (nodeType2.id === linhas.source) {
-                if (nodeType2.type === "PerguntaUnique") {
-                  props.edges.map((linhas2: any) => {
-                    if (linhas2.target === linhas.source) {
-                      props.nodes.map((nodeType3: any) => {
-                        if (linhas2.source === nodeType3.id) {
-                          if (
-                            nodeType3.type != "Departamento" &&
-                            nodeType3.type != "Usuario"
-                          ) {
-                            props.form.map((textForm: any) => {
-                              if (textForm.id === linhas.source) {
-                                // console.log(
-                                //   `linhas id ${linhas.target} para ${linhas.source} são ${nodeType.type} espera a ${linhas2.source}`
-                                // );
-
-                                setInterval(() => {
-                                  return resolve;
-                                }, 3000);
-
-                                monichat.UpdataContext(
-                                  `com${linhas.target}`,
-                                  `@sys.opt @sys.array_must(${textForm.text}) @sys.opt`,
-                                  `@topic com${linhas2.source} @intent inicio`
-                                );
-                              }
-                            });
-                          }
-                        }
-                      });
-                    }
-                  });
-                }
-              }
-            });
-          }
-        }
-      });
-    }
-  });
-}
-
 export async function ValidThoSend(props: any) {
   console.log(props);
+  try {
+    await CreateIntention(props);
+    await CreateContext(props, monichat);
 
-  // try {
-  //   await CreateIntention(props);
-  //   console.log("complete 1 ");
-  //   await CreateContextoText(props);
-  //   console.log("complete 2");
-  //   await CreateContextButton(props);
-  //   console.log("complete 3");
+    setTimeout(async () => {
+      await CreateReply(props);
+      console.log("complete 4");
+    }, 4000);
 
-  //   setTimeout(async () => {
-  //     await CreateReply(props);
-  //     console.log("complete 4");
-  //   }, 4000);
+    setTimeout(async () => {
+      await LinkContexts(props, monichat);
+      console.log("complete 5");
+    }, 6000);
 
-  //   setTimeout(async () => {
-  //     await CreateContexContext(props);
-  //     console.log("complete 5");
-  //   }, 6000);
-  //   return true;
-  // } catch (Err) {
-  //   return false;
-  // }
+    return true;
+  } catch (err) {
+    console.log(err);
+  }
 }

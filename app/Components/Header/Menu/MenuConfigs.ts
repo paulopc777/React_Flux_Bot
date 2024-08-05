@@ -1,4 +1,4 @@
-interface NodesTypes {
+export interface NodesTypesList {
   PerguntaUnique: "PerguntaBox";
   Resposta: "RespostaBox";
   Departamento: "DepartamentoBox";
@@ -9,7 +9,7 @@ interface NodesTypes {
 export interface MenuItemProps {
   icon: string;
   Title: string;
-  TypeBox: keyof NodesTypes;
+  TypeBox: keyof NodesTypesList;
   Esplicacao?: string;
 }
 

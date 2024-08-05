@@ -60,7 +60,7 @@ export default function RespostaPreview({ id }: props) {
       return <MessageCompZap formattedText={Value}></MessageCompZap>;
     }
     if (Button) {
-      console.log(Button)
+      // console.log(Button)
       return (
         <MessageCompButton
           Body={Button.Body}
