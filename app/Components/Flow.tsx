@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PerguntaBox from "./Nodes/Client/PerguntaBox";
 import RespostaBox from "./Nodes/BoxResposta/RespostaBox";
 import useStore from "../Redux/store";
@@ -24,8 +24,10 @@ import {
 import { useShallow } from "zustand/react/shallow";
 import MinimapCustom from "./Flow/Minimap";
 import BackgroundFlow from "./Flow/BackGrund";
+import ErrorView, { selectError } from "app/Redux/erroStore";
+import { ErrorState } from "../Redux/erroStore";
 
-export const NodeType = {
+const NodeType = {
   PerguntaUnique: PerguntaBox,
   Resposta: RespostaBox,
   Departamento: DepartamentoBox,
@@ -47,7 +49,7 @@ export default function Flow() {
     useStore(StoreSelector);
 
   const { SelectItem, Visible } = BoxEdit(selectView);
-
+  const { SetNewError, Error } = ErrorView(useShallow(selectError));
   const { screenToFlowPosition } = useReactFlow();
 
   const onDrop = useCallback(
@@ -61,13 +63,14 @@ export default function Flow() {
       }
       const ultimoNode = nodes[nodes.length - 1].id;
 
-      console.log(nodes.length);
+      // console.log(nodes.length);
       const idThoint = parseInt(ultimoNode) + 1;
 
       const position = screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
+
       const newNode = {
         id: `${idThoint}`,
         type,
@@ -90,10 +93,10 @@ export default function Flow() {
       nodes={nodes}
       edges={edges}
       nodeTypes={NodeType}
+      edgeTypes={edgeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
-      edgeTypes={edgeTypes}
       defaultEdgeOptions={{
         type: "Padrao",
         markerStart: {
@@ -109,7 +112,26 @@ export default function Flow() {
     >
       <BackgroundFlow />
       <MinimapCustom />
-      <Controls />
+      <Controls
+        onInteractiveChange={(i) => {
+          if (!Error.Visible) {
+            if (i) {
+              const Edit: ErrorState = {
+                Text: "Mode de edição ativado ! ",
+                Visible: true,
+                Type: "success",
+              };
+              SetNewError(Edit);
+            } else {
+              const Edit: ErrorState = {
+                Text: "Modo de edição desativado ! ",
+                Visible: true,
+              };
+              SetNewError(Edit);
+            }
+          }
+        }}
+      />
 
       <motion.div
         animate={Visible ? "open" : "closed"}

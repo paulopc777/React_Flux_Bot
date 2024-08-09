@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { Console } from "console";
 import { replaceReplyWithDescription } from "./helpers/Reply";
+import { ClearLegacy } from "./utils/clear/clearInitial";
 
 interface PayloadAuth {
   username?: "";
@@ -204,11 +205,10 @@ export class MonichatApi {
     }
 
     // console.log(Usuarios);
-
+    try {
       const serializedMonichat = JSON.stringify(Usuarios);
       localStorage.setItem("Usuarios", serializedMonichat);
-    
-
+    } catch (err) {}
     return Usuarios;
   }
 
@@ -227,9 +227,6 @@ export class MonichatApi {
     Departamento?: string,
     Status?: string
   ) {
-
-    
-
     const PayloadContexto = {
       context: {
         trigger: "",
@@ -432,19 +429,14 @@ export class MonichatApi {
         Authorization: TokenSend,
       },
     };
-
-    if (this.Token.length == 0) {
-      await this.GetAuthToken();
-    }
-
     const UrlThoGet =
       "https://api.monitchat.com/api/v1/bot-context?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D";
 
     const response = await axios.get(UrlThoGet, Header);
 
     let Contexto: any;
-    console.log(NomeDoContexto);
-
+    console.log(response.data.data);
+    // if()
     await response.data.data.map((ContextAll: any) => {
       if (ContextAll.identifier === NomeDoContexto) {
         Contexto = ContextAll;
@@ -453,7 +445,7 @@ export class MonichatApi {
 
     let result: any = "";
 
-    // console.log(Contexto);
+    console.log(Contexto);
 
     if (Contexto.intents) {
       result = await replaceReplyWithDescription(Contexto.intents);
@@ -592,10 +584,10 @@ export class MonichatApi {
       });
     }
 
-    //console.log(Departamento)
-
-    const serializedMonichat = JSON.stringify(Departamento);
-    localStorage.setItem("monichat", serializedMonichat);
+    try {
+      const serializedMonichat = JSON.stringify(Departamento);
+      localStorage.setItem("monichat", serializedMonichat);
+    } catch (err) {}
 
     return Departamento;
   }
@@ -663,6 +655,104 @@ export class MonichatApi {
       return false;
     }
   }
+
+  async ListIntention() {
+    const urlThoGet =
+      "https://api.monitchat.com/api/v1/trigger?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=trigger&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=false&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1723203058059";
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const data = await axios.get(urlThoGet, Header);
+
+    // console.log(data);
+
+    if (data.status === 200) {
+      return data.data;
+    } else {
+      return false;
+    }
+  }
+
+  async ClearDataIntention(id: string) {
+    const UrlClearIntention = `https://api.monitchat.com/api/v1/trigger/${id}`;
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const data = await axios.delete(UrlClearIntention, Header);
+
+    if (data.data.status === "success") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async ListAllContext() {
+    const UrlGetContext =
+      "https://api.monitchat.com/api/v1/bot-context?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1720983019051";
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const data = await axios.get(UrlGetContext, Header);
+
+    if (data.status === 200) {
+      return data;
+    } else {
+      return false;
+    }
+  }
+
+  async ClearContext(id: string) {
+    const UrlClear = `https://api.monitchat.com/api/v1/bot-context/${id}`;
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const res = await axios.delete(UrlClear, Header);
+
+    if (res.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 const Monichat = new MonichatApi();
@@ -671,5 +761,3 @@ Monichat.GetAuthToken().then((res) => {
   Monichat.ListUsers();
   Monichat.ListDepartamento();
 });
-
-// id 1784

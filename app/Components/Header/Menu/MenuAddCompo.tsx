@@ -25,7 +25,7 @@ export default function MenuAddCompo(visible: any) {
     addNode(newNode); // Função para adicionar o nó ao estado
   };
   const onDragStart = (event: any, nodeType: any) => {
-    console.log('DragStarte')
+    // console.log('DragStarte')
     event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";
   };

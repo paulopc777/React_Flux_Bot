@@ -9,15 +9,95 @@ interface Value {
   Departamento?: string;
 }
 
+const data = [
+  {
+    id: "3",
+    text: "Comercial",
+  },
+  {
+    id: "5",
+    text: "Financeiro",
+  },
+  {
+    id: "6",
+    text: "Suporte",
+  },
+  {
+    id: "4",
+    Departamento: "Comercial",
+    description: "{contact_name} oasd 😊",
+  },
+  {
+    id: "7",
+    Departamento: "Financeiro",
+    description: "{contact_name} 😊",
+  },
+  {
+    id: "8",
+    Body: "aplicação ",
+    Footer: "ou digite sair",
+    desc: "<p>Qual a aplicação ?</p>",
+    button: [
+      {
+        id: 1,
+        text: "Monitchat",
+      },
+      {
+        id: 2,
+        text: "Monitcall",
+      },
+    ],
+  },
+  {
+    id: "9",
+    text: "Monitchat",
+  },
+  {
+    id: "10",
+    text: "Monitcall",
+  },
+  {
+    id: "12",
+    Departamento: "Monitchat",
+  },
+  {
+    id: "11",
+    Departamento: "Monitcall",
+  },
+  {
+    id: "2",
+    Body: "Departamentos",
+    Footer: "ou digite sair",
+    desc: "<p>Ola bem vindo ao Suporte da VipPhone !</p>",
+    button: [
+      {
+        id: 1,
+        text: "Comercial ",
+      },
+      {
+        id: 2,
+        text: "Financeiro",
+      },
+      {
+        id: 3,
+        text: "Suporte",
+      },
+    ],
+  },
+];
+
 const useStore = create((set: any, get: any) => ({
   nodes: initialNodes,
   edges: initialEdges,
-  formValues: [],
+  formValues: data,
   // Mudança de Nodes / Movimentação
   onNodesChange: (changes: any) => {
     set({
       nodes: applyNodeChanges(changes, get().nodes),
     });
+  },
+  getFormById: (id: any) => {
+    return get().formValues.find((item: any) => item.id === id);
   },
   onEdgesChange: (changes: any) => {
     set({

@@ -9,13 +9,13 @@ import useStore from "../../Redux/store";
 import DarkMode from "../../Redux/darkMode";
 import { initialNodes } from "../../InitialValue/nodes/nodes";
 import AddMenuMore from "../Buttons/ButtonAddMenu/AddMenuMore";
-import { ValidThoSend } from "app/Api/SendValidy";
 import AnimationCont from "./LoadBotCreate";
 import { motion } from "framer-motion";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
 import { verificarConexao } from "app/Api/utils/UsuarioValidator";
 import { ValidInitialNode } from "app/Api/utils/InitialValidator";
 import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
+import { NewSend } from "app/Api/NewSendValidy";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -94,16 +94,19 @@ export default function HeaderNav() {
   }
 
   function Send() {
-    ValidThoSend({ nodes: nodes, edges: edges, form: formValues });
+    NewSend({ nodes: nodes, edges: edges, form: formValues });
   }
 
   function setDarkClikc() {
     toggleDarkMode();
   }
 
-  useEffect(() => {
-    // Valid();
-  }, [edges]);
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     "Flow",
+  //     JSON.stringify({ nodes: nodes, edges: edges, form: formValues })
+  //   );
+  // }, [edges,nodes,formValues]);
 
   return (
     <header className="w-fit h-fit fixed p-2 flex justify-center z-50">

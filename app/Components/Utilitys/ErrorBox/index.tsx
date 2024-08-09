@@ -23,7 +23,7 @@ export default function AlertBox({
     <motion.div
       animate={Visible ? "open" : "closed"}
       variants={variants}
-      className="w-fit min-w-64 max-w-80 absolute bottom-0 mb-4 ml-4  h-fit z-20"
+      className="w-fit min-w-64 max-w-80 absolute top-10 left-[40%] h-fit z-20 "
     >
       <Alert
         variant="filled"

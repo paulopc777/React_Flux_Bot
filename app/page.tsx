@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import ErrorView, { selectError } from "./Redux/erroStore";
 
-
 const selector2 = (state: any) => ({
   dark: state.dark,
   toggleDarkMode: state.toggleDarkMode,
@@ -36,11 +35,13 @@ export default function Home() {
   }, [Error]);
 
   useEffect(() => {
-    const getInitialDarkMode = (): boolean => {
-      const savedMode = localStorage.getItem("darkMode");
-      return savedMode === "true" || false;
-    };
-    setDarkMode(getInitialDarkMode());
+    if (localStorage) {
+      const getInitialDarkMode = (): boolean => {
+        const savedMode = localStorage.getItem("darkMode");
+        return savedMode === "true" || false;
+      };
+      setDarkMode(getInitialDarkMode());
+    }
   }, []);
 
   return (

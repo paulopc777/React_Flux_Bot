@@ -36,12 +36,26 @@ const selector = (state: any) => ({
   deleteValue: state.deleteValue,
   addValue: state.addValue,
   formValues: state.formValues,
+  getFormById: state.getFormById,
 });
 
 export default function PerguntaBox({ id, data }: DataProps) {
+  const { deleteValue, addValue, formValues, getFormById } = useStore(
+    useShallow(selector)
+  );
+
+  const InitialValue = () => {
+    const data = getFormById(id);
+    if (data) {
+      console.log(data);
+      return data.text;
+    } else {
+      return "";
+    }
+  };
+
   const [InputVisible, setInputVisible] = useState(false);
-  const [InputValue, setInputValue] = useState("");
-  const { deleteValue, addValue, formValues } = useStore(useShallow(selector));
+  const [InputValue, setInputValue] = useState(InitialValue);
   const { Error, SetNewError } = ErrorView(useShallow(selectError));
 
   const addEmoji = (emoji: any) => () => {
@@ -57,7 +71,6 @@ export default function PerguntaBox({ id, data }: DataProps) {
   const [SelectClick, setSelectClikc] = useState("outlined");
 
   function AutoSaveInput() {
-    //console.log("Save");
     deleteValue(id);
     addValue({ id: id, text: InputValue });
   }
@@ -71,6 +84,8 @@ export default function PerguntaBox({ id, data }: DataProps) {
       setSelectClikc("outlined");
     }
   };
+
+  useEffect(() => {}, [InputVisible]);
 
   useEffect(() => {
     if (id != "1") {
@@ -151,7 +166,7 @@ export default function PerguntaBox({ id, data }: DataProps) {
                   className=" w-full "
                 >
                   <Textarea
-                    placeholder="Mensagem de retorno"
+                    placeholder="Mensagem de Esperada"
                     className="dark:!bg-neutral-800 dark:!text-white dark:!border-0 max-h-28"
                     value={InputValue}
                     onChange={(e) => {

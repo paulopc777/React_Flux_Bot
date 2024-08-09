@@ -11,10 +11,21 @@ export interface PropsDropMenu {
 }
 
 export default function DroppSelects({ id }: any) {
-  const [dropMenu, setDropMenu] = useState(false);
-  const [menuOption, setMenuOption] = useState("Select");
+  const { deleteValue, addValue, getFormById } = useStore(
+    useShallow(StoreSelector)
+  );
 
-  const { deleteValue, addValue } = useStore(useShallow(StoreSelector));
+  const InitialValue = () => {
+    const data = getFormById(id);
+    if (data) {
+      return data.Departamento;
+    } else {
+      return "";
+    }
+  };
+
+  const [dropMenu, setDropMenu] = useState(false);
+  const [menuOption, setMenuOption] = useState(InitialValue);
 
   function setMenu() {
     setDropMenu(!dropMenu);
