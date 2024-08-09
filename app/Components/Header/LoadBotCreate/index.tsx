@@ -1,6 +1,6 @@
 import { LinearProgress } from "@mui/material";
 import { useState } from "react";
-
+import "../../../load.css";
 export default function AnimationCont({ animation }: any) {
   const [Robot, setRobot] = useState("none");
   const [Engre, setEngre] = useState("engrenagem");
@@ -40,18 +40,16 @@ export default function AnimationCont({ animation }: any) {
 
   return (
     <div
-      className={`absolute w-screen h-screen  top-0 left-0  justify-center items-center z-40 ${style}`}
+      className={`absolute w-screen h-screen  top-0 left-0  justify-center items-center z-40 ${style} `}
     >
-      <div className="w-full h-full bg-black opacity-45 absolute"></div>
-      <div className="w-1/4 z-50">
-        <p className="text-white">Criando seu Bot</p>
-        <LinearProgress />
-        <div className="text-center text-6xl mt-2">
-          <p className={Engre}>⚙️</p>
-          <p className={Chave}>🔨</p>
-          <p className={Robot}>🤖</p>
+      <div className="bg-black opacity-75 w-screen h-screen absolute top-0"></div>
+      <div className="flex justify-center items-center flex-col">
+        <div className="item">
+          <i className="loader --5"></i>
         </div>
       </div>
+
+      <div className="loader"></div>
     </div>
   );
 }

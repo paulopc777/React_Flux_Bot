@@ -12,7 +12,6 @@ export function validateSysInput(text: string) {
 export function IncluedeSysInput(text: string) {
   try {
     const result = sysInputInclude.safeParse(text);
-    // console.log(result.success);
 
     if (result.success) {
       return true;

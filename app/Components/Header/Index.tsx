@@ -12,7 +12,10 @@ import AddMenuMore from "../Buttons/ButtonAddMenu/AddMenuMore";
 import AnimationCont from "./LoadBotCreate";
 import { motion } from "framer-motion";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
-import { verificarConexao } from "app/Api/utils/UsuarioValidator";
+import {
+  IncluedeSysInput,
+  verificarConexao,
+} from "app/Api/utils/UsuarioValidator";
 import { ValidInitialNode } from "app/Api/utils/InitialValidator";
 import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
 import { NewSend } from "app/Api/NewSendValidy";
@@ -62,7 +65,7 @@ export default function HeaderNav() {
       form: formValues,
     };
 
-    let data: any[] = verificarConexao(dados);
+    let data: any = verificarConexao(dados);
 
     if (data.length > 0) {
       const ErroSend: ErrorState = {
@@ -77,11 +80,11 @@ export default function HeaderNav() {
       return;
     }
 
-    data = ValidInitialNode(dados);
+    data = IncluedeSysInput("@sys");
 
-    if (data.length <= 0) {
+    if (data) {
       const ErroSend: ErrorState = {
-        Text: "E nessesario uma espera para Mensagem inicial !",
+        Text: "O texto @sys e reservado para o sistema removao !",
         Visible: true,
         ErrorImg: "/Error/initialnode1.gif",
         Type: "error",
@@ -91,22 +94,26 @@ export default function HeaderNav() {
       }
       return;
     }
+
+    return;
   }
 
   function Send() {
+    setupdateLoad(true);
     NewSend({ nodes: nodes, edges: edges, form: formValues });
+
+    setTimeout(() => {
+      setupdateLoad(false);
+    }, 20000);
   }
 
   function setDarkClikc() {
     toggleDarkMode();
   }
 
-  // useEffect(() => {
-  //   localStorage.setItem(
-  //     "Flow",
-  //     JSON.stringify({ nodes: nodes, edges: edges, form: formValues })
-  //   );
-  // }, [edges,nodes,formValues]);
+  useEffect(() => {
+    Valid();
+  }, [edges, nodes, formValues]);
 
   return (
     <header className="w-fit h-fit fixed p-2 flex justify-center z-50">
