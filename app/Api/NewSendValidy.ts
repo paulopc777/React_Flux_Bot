@@ -1,4 +1,3 @@
-
 import { MonichatApi } from "./AuthMoniChat";
 import { getIdByNome, GetNodeType } from "./utils/Finders";
 import {
@@ -7,7 +6,8 @@ import {
   LinkContexts,
 } from "./service/ServiceContext";
 import { ClearLegacy } from "./utils/clear/clearInitial";
-import { DataHTMLAttributes } from "react";
+import { ComparaElemento } from "./utils/InitialValidator";
+import { FormatText } from "./utils/SendBackText";
 
 const monichat = new MonichatApi();
 const NodeList = {
@@ -186,6 +186,66 @@ async function CreateReply(props: any) {
   }
 }
 
+export async function UpdateValues(OldProps: any, props: any, Token: string) {
+  const OldParse = JSON.parse(OldProps);
+  console.log(props);
+  const Update = await ComparaElemento(OldParse.form, props.form);
+  console.log(Update);
+  if (Update.length > 0) {
+    await Update.forEach(async (NodeUpdate: any) => {
+      //
+      const NodeType = GetNodeType(NodeUpdate.id, props);
+      console.log(NodeType);
+      //
+      await monichat.SetToken(Token);
+
+      //
+      if (NodeType === "Resposta") {
+        const Text = FormatText(NodeUpdate.desc);
+        try {
+          monichat.UpdataContext(
+            `com${NodeUpdate.id}`,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            NodeUpdate.description
+          );
+          monichat.PutBotFlow(props, "1");
+          return true;
+        } catch (err) {
+          console.log("Err");
+          return false;
+        }
+      }
+      if (NodeType === "Departamento") {
+        console.log("Dentro de deparamtaneto");
+
+        props.edges.forEach((ln1: any) => {
+          if (ln1.source === NodeUpdate.id) {
+            props.form.forEach((fm1: any) => {
+              if (fm1.id === ln1.target) {
+                props.edges.forEach((l2: any) => {
+                  if (l2.source === ln1.target) {
+                    console.log(l2.target);
+                    console.log(fm1.text);
+                    monichat.UpdateReply(
+                      fm1.text,
+                      l2.target,
+                      NodeUpdate.description
+                    );
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+  return false;
+}
+
 export async function NewSend(props: any) {
   console.log(props);
 
@@ -214,5 +274,3 @@ export async function NewSend(props: any) {
     return true;
   }
 }
-
-export async function NewSend2(props: any) {}

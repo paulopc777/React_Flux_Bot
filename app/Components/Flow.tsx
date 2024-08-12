@@ -72,7 +72,35 @@ export default function Flow() {
       if (typeof type === "undefined" || !type) {
         return;
       }
-      const ultimoNode = nodes[nodes.length - 1].id;
+      let ultimoNode: any;
+      if (nodes.length <= 0) {
+        const initial = {
+          id: "1",
+          type: "PerguntaUnique",
+          data: {
+            label: "Input Node",
+            start: true,
+            sourceHandles: [],
+            targetHandles: [],
+          },
+          position: {
+            x: 248.851301645003,
+            y: 123.78805852974502,
+          },
+          width: 196,
+          height: 64,
+          selected: false,
+          positionAbsolute: {
+            x: 248.851301645003,
+            y: 123.78805852974502,
+          },
+          dragging: false,
+        };
+        addNode(initial);
+        ultimoNode = 1;
+      } else {
+        ultimoNode = nodes[nodes.length - 1].id;
+      }
 
       // console.log(nodes.length);
       const idThoint = parseInt(ultimoNode) + 1;
@@ -117,6 +145,9 @@ export default function Flow() {
           updateNodes(dd.nodes);
           updateEdges(dd.edges);
           updateFormValuesA(dd.form);
+          //
+          const Format = JSON.stringify(dd);
+          localStorage.setItem("Flow", Format);
         });
       });
     }

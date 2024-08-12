@@ -141,8 +141,11 @@
     border: none !important;
     background-color: transparent !important;
     border-radius: 0px 10px 10px 0px !important;
-    padding: 40px 3px !important;
+    padding: 30px 3px !important;
     left: -1 !important;
+  }
+  .react-flow__panel {
+    margin-bottom: 60px !important;
   }
 }
 
@@ -191,9 +194,9 @@ ol {
 .react-flow__handle {
   width: 10px !important;
   height: 10px !important;
-  border-color: #747474 !important;
-  background-color: #747474 !important;
-  opacity: 0.6;
+  /* border-color: #747474 !important; */
+  /* background-color: #2e7d32 !important; */
+  opacity: 1;
 }
 
 .filter_grey {

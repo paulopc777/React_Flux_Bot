@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { Console } from "console";
 import { replaceReplyWithDescription } from "./helpers/Reply";
 import { ClearLegacy } from "./utils/clear/clearInitial";
+import { constants } from "buffer";
 
 interface PayloadAuth {
   username?: "";
@@ -23,6 +24,10 @@ export class MonichatApi {
     this.UrlIntencao = "https://api.monitchat.com/api/v1/trigger";
 
     this.Token = "";
+  }
+
+  async SetToken(Token: string) {
+    this.Token = Token;
   }
 
   async GetAuthToken() {
@@ -203,7 +208,6 @@ export class MonichatApi {
         });
       });
     }
-
 
     try {
       const serializedMonichat = JSON.stringify(Usuarios);
@@ -413,10 +417,11 @@ export class MonichatApi {
    */
   async UpdataContext(
     NomeDoContexto: string,
-    Trigger: string,
-    RespostaReplay: string,
+    Trigger?: string,
+    RespostaReplay?: string,
     Departamento?: number,
-    UsuarioMoni?: number
+    UsuarioMoni?: number,
+    Description?: string
   ) {
     if (this.Token.length == 0) {
       await this.GetAuthToken();
@@ -435,17 +440,13 @@ export class MonichatApi {
     const response = await axios.get(UrlThoGet, Header);
 
     let Contexto: any;
-    console.log(response.data.data);
-    // if()
-    await response.data.data.map((ContextAll: any) => {
+    await response.data.data.forEach((ContextAll: any) => {
       if (ContextAll.identifier === NomeDoContexto) {
         Contexto = ContextAll;
       }
     });
 
     let result: any = "";
-
-    console.log(Contexto);
 
     if (Contexto.intents) {
       result = await replaceReplyWithDescription(Contexto.intents);
@@ -471,68 +472,72 @@ export class MonichatApi {
       },
     };
 
-    let Departamentoasd: any = "";
-    let action_type: any = "";
-    let final_intent: any = null;
-    let final_intent1: any = false;
-
-    if (Departamento) {
-      Departamentoasd = Departamento;
-      action_type = 0;
-      final_intent = true;
-      final_intent1 = true;
+    if (Description) {
+      Initial.context.description = Description;
     }
+    //
+    if (Trigger && RespostaReplay) {
+      let Departamentoasd: any = "";
+      let action_type: any = "";
+      let final_intent: any = null;
+      let final_intent1: any = false;
 
-    let UsuerRedirect: any = "";
+      if (Departamento) {
+        Departamentoasd = Departamento;
+        action_type = 0;
+        final_intent = true;
+        final_intent1 = true;
+      }
 
-    if (UsuarioMoni) {
-      UsuerRedirect = UsuarioMoni;
-      action_type = 1;
-      final_intent = true;
-      final_intent1 = true;
-    }
+      let UsuerRedirect: any = "";
 
-    const addPayload = {
-      description: Trigger,
-      trigger: Trigger,
-      final_intent: final_intent1,
-      buttons: [],
-      use_button: false,
-      button_header: "",
-      button_body: "",
-      button_footer: "",
-      action: {
-        action_type: action_type,
-        message: "",
-        user_id: UsuerRedirect,
-        department_id: Departamentoasd,
-        ticket_status_id: "",
-        get_url: "",
-        file_name: "",
-        file_data: "",
-        get_fields: "",
-        get_results: "",
-        post_url: "",
-        auth_url: "",
-        json_data_request: "",
-        token_field_name: "",
-        post_fields: "",
-        headers: "",
-        headers_value: "",
-      },
-      replies: [
-        {
-          description: RespostaReplay,
-          weight: "",
-          final_intent: final_intent,
-          id: null,
+      if (UsuarioMoni) {
+        UsuerRedirect = UsuarioMoni;
+        action_type = 1;
+        final_intent = true;
+        final_intent1 = true;
+      }
+
+      const addPayload = {
+        description: Trigger,
+        trigger: Trigger,
+        final_intent: final_intent1,
+        buttons: [],
+        use_button: false,
+        button_header: "",
+        button_body: "",
+        button_footer: "",
+        action: {
+          action_type: action_type,
+          message: "",
+          user_id: UsuerRedirect,
+          department_id: Departamentoasd,
+          ticket_status_id: "",
+          get_url: "",
+          file_name: "",
+          file_data: "",
+          get_fields: "",
+          get_results: "",
+          post_url: "",
+          auth_url: "",
+          json_data_request: "",
+          token_field_name: "",
+          post_fields: "",
+          headers: "",
+          headers_value: "",
         },
-      ],
-    };
+        replies: [
+          {
+            description: RespostaReplay,
+            weight: "",
+            final_intent: final_intent,
+            id: null,
+          },
+        ],
+      };
 
-    Initial.context.intents.push(addPayload);
-
-    console.log(Initial.context.intents);
+      Initial.context.intents.push(addPayload);
+    }
 
     if (Initial) {
       const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${Contexto.id}`;
@@ -546,6 +551,64 @@ export class MonichatApi {
       console.log("Erro r");
       return false;
     }
+  }
+
+  async UpdateReply(Reply: string, ContextID: string, Description: any) {
+    const UrlThoGet =
+      "https://api.monitchat.com/api/v1/bot-context?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D";
+
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const data = await axios.get(UrlThoGet, Header);
+    console.log(data.data);
+
+    const newData = data.data.data.map((rp1: any) => {
+      if (rp1.name === `com${ContextID}`) {
+        rp1.intents.map((intent: any) => {
+          if (
+            intent.trigger === `@sys.opt @sys.array_must(${Reply}) @sys.opt`
+          ) {
+            return (intent.replies[0].reply = Description);
+          }
+          return intent;
+        });
+      }
+      return rp1;
+    });
+    //
+    console.log(newData);
+    //
+    let dd: any = {
+      context: {},
+    };
+
+    newData.forEach((el: any) => {
+      if (el.name === `com${ContextID}`) {
+        dd.context = el;
+      }
+    });
+
+    console.log(dd);
+
+    try {
+      const UrlUpdate = `https://api.monitchat.com/api/v1/bot-context/${dd.context.id}`;
+      await axios.put(UrlUpdate, dd, Header).catch((err) => console.log(err));
+    } catch (err) {
+      console.log("Error");
+    }
+
+    // console.log(newData);
   }
 
   /**
@@ -586,7 +649,7 @@ export class MonichatApi {
 
     try {
       const serializedMonichat = JSON.stringify(Departamento);
-      return serializedMonichat
+      return serializedMonichat;
     } catch (err) {}
 
     return Departamento;
@@ -818,13 +881,10 @@ export class MonichatApi {
         Authorization: TokenSend,
       },
     };
-
-    // console.log(body);
-
     const res = await axios.put(UrlFlow, body, Header);
 
     if (res.status === 200) {
-      console.log("send !  ");
+      console.log("Put bot context status  = 200 , Send Data ! ");
       return res.data;
     } else {
       return false;

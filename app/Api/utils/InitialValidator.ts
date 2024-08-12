@@ -59,7 +59,7 @@ function areObjectsEqual(obj1: any, obj2: any) {
   return true;
 }
 
-async function ComparaElemento(Oldprosp: any, newProps: any) {
+export async function ComparaElemento(Oldprosp: any, newProps: any) {
   let update: any = [];
 
   const newn = newProps;
@@ -1015,4 +1015,4 @@ const data2 = {
   ],
 };
 
-ComparaElemento(data.nodes, data2.nodes).then((res) => console.log(res));
+

@@ -37,7 +37,7 @@ export default function RespostaBox({ id }: BoxProps) {
             onClick={VisibleMenu}
           >
             <button className="p-1 border-zinc-200 border-2 rounded-lg ">
-              <Image src="/svg/edit.svg" className="w-full h-full" alt="edit" />
+              <img src="/svg/edit.svg" className="w-full h-full" alt="edit" />
             </button>
           </motion.div>
 

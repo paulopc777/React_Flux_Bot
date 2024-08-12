@@ -33,6 +33,7 @@ export default function OptRespostas() {
 
   function AutoSaveInput() {
     if (Btn) {
+      console.log("Btn exec");
       deleteValue(SelectItem);
       addValue({
         id: SelectItem,
@@ -121,11 +122,11 @@ export default function OptRespostas() {
   }, [Update]);
 
   return (
-    <div className="bg-white p-2  border-2 border-zinc-200 rounded-2xl w-72 h-full shadow-xl z-20 dark:bg-zinc-900 dark:border-neutral-600 dark:text-white">
+    <div className="bg-white p-2  border-2 border-zinc-200 rounded-2xl w-72 max-h-[90vh] h-fit mb-2 overflow-auto shadow-xl z-20 dark:bg-zinc-900 dark:border-neutral-600 dark:text-white">
       {Btn ? (
         <>
           <>
-            <motion.div className=" w-full  ">
+            <motion.div className="  ">
               <div className="mb-2 overflow-x-scroll dark:text-white">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
                   <IconButton
@@ -199,7 +200,7 @@ export default function OptRespostas() {
       )}
 
       {Btn ? (
-        <div className="min-h-16 h-full p-2  bg-white  border-gray-200 rounded-lg dark:bg-zinc-900 dark:text-white dark:border-zinc-900 ">
+        <div className="min-h-16  p-2  bg-white  border-gray-200 rounded-lg dark:bg-zinc-900 dark:text-white dark:border-zinc-900 ">
           <div id="Inputs">
             {InputsSetes.map((Identify: any, index: any) => (
               <div className="relative " key={index}>
@@ -287,7 +288,13 @@ export default function OptRespostas() {
           className=" hover_fill p-2 border-2 border-zinc-300 rounded-lg shadow-sm w-fit my-2 flex items-center"
           onClick={AutoSaveInput}
         >
-          <Image src="/svg/save.svg" alt="save" className="w-5 h-5" />
+          <Image
+            src="/svg/save.svg"
+            alt="save"
+            className="w-5 h-5"
+            width={5}
+            height={5}
+          />
           <p>Salvar</p>
         </motion.div>
       </div>

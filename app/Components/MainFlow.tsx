@@ -8,7 +8,7 @@ import { useShallow } from "zustand/react/shallow";
 import AlertBox from "./Utilitys/ErrorBox";
 import ErrorView, { selectError } from "app/Redux/erroStore";
 // import Flow from "./Flow";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import Looad from "./LoadScreen/Looad";
 import AnimationCont from "./Header/LoadBotCreate";
 
@@ -30,7 +30,7 @@ export default function ConteinerBox() {
 
         <div className="h-screen bg-white dark:bg-zinc-800">
           <ReactFlowProvider>
-            <Suspense  fallback={<Looad></Looad>}>
+            <Suspense fallback={<Looad></Looad>}>
               <Flow></Flow>
             </Suspense>
           </ReactFlowProvider>

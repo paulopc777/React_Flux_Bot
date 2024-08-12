@@ -16,9 +16,12 @@ import {
   IncluedeSysInput,
   verificarConexao,
 } from "app/Api/utils/UsuarioValidator";
-import { ValidInitialNode } from "app/Api/utils/InitialValidator";
+import {
+  ComparaElemento,
+  ValidInitialNode,
+} from "app/Api/utils/InitialValidator";
 import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
-import { NewSend } from "app/Api/NewSendValidy";
+import { NewSend, UpdateValues } from "app/Api/NewSendValidy";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -100,12 +103,36 @@ export default function HeaderNav() {
 
   async function Send() {
     setupdateLoad(true);
-    const res = await NewSend({ nodes: nodes, edges: edges, form: formValues });
-    if (res) {
-      setupdateLoad(false);
-    } else {
-      setupdateLoad(false);
-      console.log("Erro ");
+
+    const oldValues = localStorage.getItem("Flow");
+    const Token = localStorage.getItem("token");
+
+    if (oldValues) {
+      if (Token) {
+        const r = await UpdateValues(
+          oldValues,
+          { nodes: nodes, edges: edges, form: formValues },
+          Token
+        );
+        if (!r) {
+          console.log("Send data new ");
+          setupdateLoad(true);
+          const res = await NewSend({
+            nodes: nodes,
+            edges: edges,
+            form: formValues,
+          });
+          if (res) {
+            setupdateLoad(false);
+          } else {
+            setupdateLoad(false);
+            console.log("Erro ");
+          }
+        } else {
+          console.log("Send data Update");
+        }
+        setupdateLoad(false);
+      }
     }
   }
 

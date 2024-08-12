@@ -1,4 +1,4 @@
-import { Position } from "@xyflow/react";
+import { Position } from "reactflow";
 import MessageCompZap from "app/Components/ZapMessageTemplate/MessageComp";
 import MessageCompButton from "app/Components/ZapMessageTemplate/MessageCompButton";
 import useStore from "app/Redux/store";
@@ -38,35 +38,39 @@ const convertListToParagraph = (html: any) => {
 
 export default function RespostaPreview({ id }: props) {
   const { formValues } = useStore(selector);
-  const [Value, setValue] = useState("");
+  const [Value, setValue]: any = useState("");
+  const [Button, setButton]: any = useState({
+    button: [{ Body: "", Footer: "", desc: "" }],
+  });
 
-  const Converted = useCallback(() => {
+  const Converted = () => {
     formValues.forEach((item: any) => {
       if (item.id === id) {
+        console.log("Finde id ");
         if (item.text) {
+          console.log("item.text ");
+
           const convertedValue = convertListToParagraph(item.text);
           setValue(convertedValue);
         }
         if (item.button) {
+          console.log("item.button ");
+          setValue(false);
           setButton(item);
         }
       }
     });
-  }, [formValues, id]);
-
-  const [Button, setButton]: any = useState();
+  };
 
   useEffect(() => {
     Converted();
-  }, [Converted]);
+  }, [formValues]);
 
-  const ChageComponents = () => {
-    if (Value) {
-      return <MessageCompZap formattedText={Value}></MessageCompZap>;
-    }
-    if (Button) {
-      // console.log(Button)
-      return (
+  return (
+    <>
+      {Value ? (
+        <MessageCompZap formattedText={Value}></MessageCompZap>
+      ) : (
         <>
           <div className="flex flex-col animation_Message pl-2 pr-4 pt-4 break-words">
             <div>
@@ -82,7 +86,7 @@ export default function RespostaPreview({ id }: props) {
               return (
                 <>
                   <div className="text-white mt-1 relative">
-                    <div className="my-[2px] px-6 py-2 rounded-xl  bg-[#313C42] ">
+                    <div className=" px-6 py-2 rounded-xl  bg-[#313C42] ">
                       <p className="text-[#36AFEB] text-center">{btn.text}</p>
                     </div>
                     <Handle
@@ -96,13 +100,7 @@ export default function RespostaPreview({ id }: props) {
             })}
           </div>
         </>
-      );
-    }
-  };
-
-  return (
-    <>
-      <ChageComponents></ChageComponents>
+      )}
     </>
   );
   // return <div dangerouslySetInnerHTML={{ __html: Value }} className="!list-disc p-3 w-full border-2 border-zinc-300 mt-2 rounded-md break-words"></div>;

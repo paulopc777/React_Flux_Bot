@@ -1,6 +1,6 @@
 import { FormatText } from "../utils/SendBackText";
 
-const NodeList = {
+export const NodeList = {
   PerguntaUnique: "PerguntaUnique",
   Resposta: "Resposta",
   Departamento: "Departamento",

@@ -1,4 +1,4 @@
-import { Position } from "@xyflow/react";
+import { Position } from "reactflow";
 import React from "react";
 import { Handle } from "reactflow";
 

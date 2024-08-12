@@ -10,6 +10,7 @@ import { MonichatApi } from "./Api/AuthMoniChat";
 import useStore from "./Redux/store";
 import { StoreSelector } from "./Redux/Selector/storeSelector";
 import ConteinerBox from "./Components/MainFlow";
+import { useRouter } from "next/router";
 
 const selector2 = (state: any) => ({
   dark: state.dark,
@@ -21,7 +22,8 @@ export default function Home() {
   const { dark, toggleDarkMode, setDarkMode } = DarkMode(useShallow(selector2));
   const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
   const [style, setStyle] = useState("");
-
+  const router = useRouter();
+  
   useEffect(() => {
     if (dark) {
       setStyle("dark");
@@ -47,6 +49,18 @@ export default function Home() {
       setDarkMode(getInitialDarkMode());
     }
   }, []);
+
+  useEffect(() => {
+    // Verifica se a URL está carregada e se o token está presente
+
+    if (router.isReady) {
+      const token: any = router.query.token;
+
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+    }
+  }, [router.isReady, router.query]);
 
   return (
     <main className={`transition-all ${style}`}>
