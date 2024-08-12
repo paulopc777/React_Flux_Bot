@@ -26,16 +26,16 @@ export function IncluedeSysInput(text: string) {
 
 export function verificarConexao(props: any) {
   let push: any = [];
-  props.edges.map((linhas: any) => {
+  props.edges.forEach((linhas: any) => {
     if (linhas.target != "1") {
       // console.log("Pass 1 ");
-      props.nodes.map((node: any) => {
+      props.nodes.forEach((node: any) => {
         // console.log("Pass 2");
         if (linhas.target === node.id) {
           // console.log("Pass 3");
           if (node.type === "PerguntaUnique") {
             // console.log("Pass 4");
-            props.nodes.map((node2: any) => {
+            props.nodes.forEach((node2: any) => {
               // console.log("Pass 5");
               if (node2.id === linhas.source) {
                 // console.log("Pass 6");

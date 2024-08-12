@@ -2,36 +2,6 @@ import { LinearProgress } from "@mui/material";
 import { useState } from "react";
 import "../../../load.css";
 export default function AnimationCont({ animation }: any) {
-  const [Robot, setRobot] = useState("none");
-  const [Engre, setEngre] = useState("engrenagem");
-  const [Chave, setChave] = useState("none");
-
-  function start() {
-    if (Robot != "none") {
-      setInterval(() => {
-        setEngre("engrenagem");
-        setRobot("none");
-        setChave("none");
-      }, 1000);
-    }
-
-    if (Engre != "none") {
-      setInterval(() => {
-        setEngre("none");
-        setRobot("none");
-        setChave("Chave");
-      }, 1000);
-    }
-
-    if (Chave != "none") {
-      setInterval(() => {
-        setEngre("none");
-        setRobot("BotInicial");
-        setChave("none");
-      }, 1000);
-    }
-  }
-
   let style = "hidden";
 
   if (animation) {

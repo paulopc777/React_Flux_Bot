@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
 .h-call {
   height: calc(100vh - 56px);
 }
@@ -191,4 +194,9 @@ ol {
   border-color: #747474 !important;
   background-color: #747474 !important;
   opacity: 0.6;
+}
+
+.filter_grey {
+  filter: brightness(0) saturate(100%) invert(51%) sepia(12%) saturate(7%)
+    hue-rotate(345deg) brightness(90%) contrast(81%);
 }

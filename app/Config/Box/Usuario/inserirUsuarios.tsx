@@ -18,7 +18,7 @@ export default function InserirUsuario() {
   function AddNewDepartament() {
     if (Nome.length > 0 && Descricao.length > 0) {
       const monichat = new MonichatApi().InsertDepartamento(Nome, Descricao);
-      new MonichatApi().ListUsers();
+      // new MonichatApi().ListUsers();
 
       setNome("");
       setDescricao("");

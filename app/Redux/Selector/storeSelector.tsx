@@ -17,4 +17,7 @@ export const StoreSelector = (state: any) => ({
   updateValueResposta: state.updateValueResposta,
   updateFormValues: state.updateFormValues,
   getFormById: state.getFormById,
+  updateNodes: state.updateNodes,
+  updateEdges: state.updateEdges,
+  updateFormValuesA: state.updateFormValuesA,
 });

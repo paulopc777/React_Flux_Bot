@@ -10,7 +10,7 @@ export default function TextIcon({ text, icon }: TextIconProps) {
   return (
     <p className="flex items-center text-black dark:text-white">
       {" "}
-      <img src={icon} alt="" className="w-5 h-5 mr-1  " /> {text}{" "}
+      <Image src={icon} alt="" className="w-5 h-5 mr-1  " /> {text}{" "}
     </p>
   );
 }

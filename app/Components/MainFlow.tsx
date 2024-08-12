@@ -1,6 +1,4 @@
-import {
-  ReactFlowProvider,
-} from "reactflow";
+import { ReactFlowProvider } from "reactflow";
 
 // import {} from "@xyflow/react";
 
@@ -9,7 +7,12 @@ import HeaderNav from "./Header/Index";
 import { useShallow } from "zustand/react/shallow";
 import AlertBox from "./Utilitys/ErrorBox";
 import ErrorView, { selectError } from "app/Redux/erroStore";
-import Flow from "./Flow";
+// import Flow from "./Flow";
+import React, { Suspense } from "react";
+import Looad from "./LoadScreen/Looad";
+import AnimationCont from "./Header/LoadBotCreate";
+
+const Flow = React.lazy(() => import("./Flow"));
 
 export default function ConteinerBox() {
   const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
@@ -27,7 +30,9 @@ export default function ConteinerBox() {
 
         <div className="h-screen bg-white dark:bg-zinc-800">
           <ReactFlowProvider>
-            <Flow></Flow>
+            <Suspense  fallback={<Looad></Looad>}>
+              <Flow></Flow>
+            </Suspense>
           </ReactFlowProvider>
         </div>
       </div>

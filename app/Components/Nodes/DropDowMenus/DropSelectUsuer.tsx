@@ -9,9 +9,7 @@ export interface PropsDropMenu {
   nome: string;
 }
 
-interface OpsMenu {
-  OptsMenu: PropsDropMenu[];
-}
+
 
 const selector = (state: any) => ({
   deleteValue: state.deleteValue,

@@ -87,9 +87,21 @@ const data = [
 ];
 
 const useStore = create((set: any, get: any) => ({
-  nodes: initialNodes,
-  edges: initialEdges,
-  formValues: data,
+  nodes: [],
+  edges: [],
+  formValues: [],
+
+  //
+  // Função para atualizar os nodes
+  updateNodes: (newNodes: any) => set((state: any) => ({ nodes: newNodes })),
+
+  // Função para atualizar os edges
+  updateEdges: (newEdges: any) => set((state: any) => ({ edges: newEdges })),
+
+  // Função para atualizar os formValues
+  updateFormValuesA: (newFormValues: any) =>
+    set((state: any) => ({ formValues: newFormValues })),
+
   // Mudança de Nodes / Movimentação
   onNodesChange: (changes: any) => {
     set({

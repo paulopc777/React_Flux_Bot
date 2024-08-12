@@ -16,12 +16,12 @@ export class MonichatApi {
   UrlAuth: string;
   Token: string;
   UrlIntencao: string;
-
   constructor() {
     this.Email = "adm@empresa.com.br";
     this.Pass = "123456";
     this.UrlAuth = "https://api.monitchat.com/api/v1/auth/login";
     this.UrlIntencao = "https://api.monitchat.com/api/v1/trigger";
+
     this.Token = "";
   }
 
@@ -204,10 +204,10 @@ export class MonichatApi {
       });
     }
 
-    // console.log(Usuarios);
+
     try {
       const serializedMonichat = JSON.stringify(Usuarios);
-      localStorage.setItem("Usuarios", serializedMonichat);
+      return serializedMonichat;
     } catch (err) {}
     return Usuarios;
   }
@@ -586,7 +586,7 @@ export class MonichatApi {
 
     try {
       const serializedMonichat = JSON.stringify(Departamento);
-      localStorage.setItem("monichat", serializedMonichat);
+      return serializedMonichat
     } catch (err) {}
 
     return Departamento;
@@ -753,11 +753,81 @@ export class MonichatApi {
       return false;
     }
   }
+
+  async GetBotFlow(id: string) {
+    const UrlFlow = `https://api-v2.monitchat.com/api/v1/bot-flow/${id}`;
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    const res = await axios.get(UrlFlow, Header);
+
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      return false;
+    }
+  }
+
+  async CreateBotFlow(json: string, name: string) {
+    const UrlFlow = `https://api-v2.monitchat.com/api/v1/bot-flow`;
+    const TokenSend = `Bearer ${this.Token}`;
+
+    const Header = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    let body = {
+      data: json,
+      name: name,
+    };
+
+    const res = await axios.post(UrlFlow, body, Header);
+
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      return false;
+    }
+  }
+
+  async PutBotFlow(json: string, id: string) {
+    const UrlFlow = `https://api-v2.monitchat.com/api/v1/bot-flow/${id}`;
+    if (this.Token.length == 0) {
+      await this.GetAuthToken();
+    }
+
+    const TokenSend = `Bearer ${this.Token}`;
+
+    let body = {
+      data: json,
+      name: "Fluxo de atendimento inicial",
+    };
+
+    const Header: AxiosRequestConfig = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TokenSend,
+      },
+    };
+
+    // console.log(body);
+
+    const res = await axios.put(UrlFlow, body, Header);
+
+    if (res.status === 200) {
+      console.log("send !  ");
+      return res.data;
+    } else {
+      return false;
+    }
+  }
 }
-
-const Monichat = new MonichatApi();
-
-Monichat.GetAuthToken().then((res) => {
-  Monichat.ListUsers();
-  Monichat.ListDepartamento();
-});

@@ -1,17 +1,14 @@
-import { Checkbox } from "@mui/joy";
 import useStore from "app/Redux/store";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InputPad from "../Inputs/InputPad";
 import { motion } from "framer-motion";
 import TextAreaResize from "../Inputs/TextAreaResize";
-import RepostaButton from "../Client/ButtonTheBox";
 import { Box, Tooltip } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
-import Image from "next/image";
 import { useShallow } from "zustand/react/shallow";
 import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
-import { Handle, Position } from "reactflow";
 import ButtonBlakc from "../../Buttons/ButtonIcon";
+import Image from "next/image";
 
 const selector = (state: any) => ({
   formValues: state.formValues,
@@ -21,10 +18,6 @@ const selector = (state: any) => ({
 
 const ButtonOptStyle =
   "text_button_small dark:!text-white hover:dark:!bg-neutral-400 dark:!border-neutral-400 !min-w-fit dark:text-black";
-
-interface optResProps {
-  ChangeBtn: () => void;
-}
 
 export default function OptRespostas() {
   const { formValues, deleteValue, addValue } = useStore(useShallow(selector));
@@ -55,8 +48,11 @@ export default function OptRespostas() {
   }
 
   const addEmoji = (emoji: any) => () => setInputValue(`${inputValue}${emoji}`);
-  const addEmojiMessage = (emoji: any) => () =>
-    setMessage(`${Message}${emoji}`);
+
+  const addEmojiMessage = useCallback(
+    (emoji: any) => () => setMessage(`${Message}${emoji}`),
+    [Message]
+  );
 
   function ChangeBtn() {
     setBtn(!Btn);
@@ -86,7 +82,7 @@ export default function OptRespostas() {
     );
   };
 
-  useEffect(() => {
+  const Update = useCallback(() => {
     let text = "";
     let B = "";
     let F = "";
@@ -118,7 +114,11 @@ export default function OptRespostas() {
     setBody(B);
     setFoorter(F);
     setMessage(M);
-  }, [SelectItem]);
+  }, [SelectItem, formValues]);
+
+  useEffect(() => {
+    Update();
+  }, [Update]);
 
   return (
     <div className="bg-white p-2  border-2 border-zinc-200 rounded-2xl w-72 h-full shadow-xl z-20 dark:bg-zinc-900 dark:border-neutral-600 dark:text-white">
@@ -287,7 +287,7 @@ export default function OptRespostas() {
           className=" hover_fill p-2 border-2 border-zinc-300 rounded-lg shadow-sm w-fit my-2 flex items-center"
           onClick={AutoSaveInput}
         >
-          <img src="/svg/save.svg" alt="" className="w-5 h-5" />
+          <Image src="/svg/save.svg" alt="save" className="w-5 h-5" />
           <p>Salvar</p>
         </motion.div>
       </div>

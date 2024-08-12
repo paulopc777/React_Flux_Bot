@@ -1,13 +1,13 @@
-import { resolve } from "path";
+
 import { MonichatApi } from "./AuthMoniChat";
-import { FormatText } from "./utils/SendBackText";
-import { getIdByNome, GetNodeType } from "./Finders";
+import { getIdByNome, GetNodeType } from "./utils/Finders";
 import {
   CreateContext,
   LinkContext2,
   LinkContexts,
 } from "./service/ServiceContext";
 import { ClearLegacy } from "./utils/clear/clearInitial";
+import { DataHTMLAttributes } from "react";
 
 const monichat = new MonichatApi();
 const NodeList = {
@@ -18,81 +18,19 @@ const NodeList = {
   Usuario: "Usuario",
 };
 
-const teste = {
-  nodes: [
-    {
-      id: "1",
-      type: "PerguntaUnique",
-      data: {
-        label: "Input Node",
-        start: true,
-        sourceHandles: [],
-        targetHandles: [],
-      },
-      position: {
-        x: 248.851301645003,
-        y: 123.78805852974502,
-      },
-      width: 202,
-      height: 64,
-      selected: false,
-      positionAbsolute: {
-        x: 248.851301645003,
-        y: 123.78805852974502,
-      },
-      dragging: false,
-    },
-    {
-      id: "2",
-      type: "PerguntaUnique",
-      data: {
-        label: "Node 2",
-      },
-      position: {
-        x: 548.851301645003,
-        y: 123.78805852974502,
-      },
-      width: 220,
-      height: 142,
-    },
-  ],
-  edges: [
-    {
-      type: "Padrao",
-      markerStart: {
-        type: "arrowclosed",
-        width: 30,
-        height: 30,
-        color: "#8d8d8d",
-      },
-      source: "2",
-      sourceHandle: null,
-      target: "1",
-      targetHandle: null,
-      id: "reactflow__edge-2-1",
-    },
-  ],
-  form: [
-    {
-      id: "2",
-      text: "",
-    },
-  ],
-};
-
 interface Usuario {
   id: number;
   email: string;
 }
 
 async function CreateIntention(props: any) {
-  props.edges.map((linhas: any) => {
+  props.edges.forEach((linhas: any) => {
     if (linhas.target === "1") {
-      props.form.map((text: any) => {
+      props.form.forEach((text: any) => {
         if (text.id == linhas.source) {
           const NodeType = GetNodeType(linhas.source, props);
           if (NodeType === NodeList.PerguntaUnique) {
-            props.edges.map((linahs2: any) => {
+            props.edges.forEach((linahs2: any) => {
               if (linahs2.target === linhas.source) {
                 //console.log("linahs2");
 
@@ -142,18 +80,18 @@ function encontrarIdPeloNome(usuarios: Usuario[], nome: string): number | null {
 async function CreateReply(props: any) {
   let allForms: any = [];
 
-  await props.form.map((form: any) => {
+  await props.form.forEach((form: any) => {
     if (form.Departamento) {
-      props.edges.map((linhas: any) => {
+      props.edges.forEach((linhas: any) => {
         // linhas.source = id do departamento
         if (form.id === linhas.source) {
-          props.edges.map((linhas2: any) => {
+          props.edges.forEach((linhas2: any) => {
             // linhas2.source = if texto para ir para departamento
             if (linhas2.source === linhas.target) {
-              props.edges.map((linhas3: any) => {
+              props.edges.forEach((linhas3: any) => {
                 if (linhas2.target === linhas3.source) {
                   // linhas3.source = box de botes de resposta
-                  props.form.map((TextLInha2: any) => {
+                  props.form.forEach((TextLInha2: any) => {
                     if (TextLInha2.id === linhas2.source) {
                       if (TextLInha2.text) {
                         const idDepartamento: number = getIdByNome(
@@ -191,13 +129,13 @@ async function CreateReply(props: any) {
         }
       });
     } else if (form.Usuario) {
-      props.edges.map((linhas: any) => {
+      props.edges.forEach((linhas: any) => {
         if (form.id === linhas.source) {
-          props.edges.map((linhas2: any) => {
+          props.edges.forEach((linhas2: any) => {
             if (linhas2.source === linhas.target) {
-              props.edges.map((linhas3: any) => {
+              props.edges.forEach((linhas3: any) => {
                 if (linhas2.target === linhas3.source) {
-                  props.form.map((TextLInha2: any) => {
+                  props.form.forEach((TextLInha2: any) => {
                     if (TextLInha2.id === linhas2.source) {
                       const data = obterUsuariosDoLocalStorage();
 
@@ -250,8 +188,9 @@ async function CreateReply(props: any) {
 
 export async function NewSend(props: any) {
   console.log(props);
-  // await monichat.UpdataContext();
-  // await monichat.UpdataContext();
+
+  await monichat.PutBotFlow(props, "1");
+
   try {
     const dd = await ClearLegacy(monichat);
     setTimeout(async () => {
@@ -265,11 +204,15 @@ export async function NewSend(props: any) {
           const el: any = data[index];
           await monichat.UpdataContext(el.de, el.com, el.para);
         }
-      }, 4000);
+      }, 1000);
     }, 1000);
-
-    return true;
   } catch (err) {
     console.log(err);
+    return false;
+  } finally {
+    console.log("Send Finalizado !");
+    return true;
   }
 }
+
+export async function NewSend2(props: any) {}

@@ -5,7 +5,7 @@ export interface ErrorState {
   Text: string;
   Visible: boolean;
   ErrorImg?: string;
-  Type?:string
+  Type?: string;
 }
 
 export const selectError = (state: any) => ({
@@ -16,7 +16,7 @@ export const selectError = (state: any) => ({
 
 // Criação do estado com Zustand
 const ErrorView = create((set: any, get: any) => ({
-  Error: { Text: "Error", Visible: false, ErrorImg: "" },
+  Error: { Text: "Loading...", Visible: false, ErrorImg: "",Type:"success" },
   SetNewError: (error: ErrorState) => set({ Error: error }),
   // Função para alternar a visibilidade do erro
   ToggleErrorVisibility: () =>

@@ -98,22 +98,24 @@ export default function HeaderNav() {
     return;
   }
 
-  function Send() {
+  async function Send() {
     setupdateLoad(true);
-    NewSend({ nodes: nodes, edges: edges, form: formValues });
-
-    setTimeout(() => {
+    const res = await NewSend({ nodes: nodes, edges: edges, form: formValues });
+    if (res) {
       setupdateLoad(false);
-    }, 20000);
+    } else {
+      setupdateLoad(false);
+      console.log("Erro ");
+    }
   }
 
   function setDarkClikc() {
     toggleDarkMode();
   }
 
-  useEffect(() => {
-    Valid();
-  }, [edges, nodes, formValues]);
+  // useEffect(() => {
+  //   Valid();
+  // }, [edges, nodes, formValues]);
 
   return (
     <header className="w-fit h-fit fixed p-2 flex justify-center z-50">

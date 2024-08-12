@@ -1,4 +1,6 @@
+import { Position } from "@xyflow/react";
 import React from "react";
+import { Handle } from "reactflow";
 
 export default function MessageCompZap({ formattedText }: any) {
   return (
@@ -33,6 +35,7 @@ export default function MessageCompZap({ formattedText }: any) {
           dangerouslySetInnerHTML={{ __html: formattedText }}
         ></p>
       </div>
+      <Handle type="target" position={Position.Right} className="" />
     </div>
   );
 }

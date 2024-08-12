@@ -6,14 +6,9 @@ import { Handle, Position } from "reactflow";
 import DroppSelects from "./DropDowMenus/DropSelectUsuer";
 import { BoxProps } from "./Client/PerguntaBox";
 import Close from "./Close/Close";
-import { useShallow } from "zustand/react/shallow";
+
 
 export default function UsuarioBox({ id }: BoxProps) {
-  const removeNode = useStore((state) => state.removeNode);
-
-  function handleRemoveNode() {
-    removeNode(id);
-  }
 
   return (
     <>

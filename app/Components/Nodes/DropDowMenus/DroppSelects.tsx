@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { DroppSelectsMenu } from "./MenuDropDepartamento";
 import useStore from "../../../Redux/store";
 import { useShallow } from "zustand/react/shallow";
@@ -14,18 +14,18 @@ export default function DroppSelects({ id }: any) {
   const { deleteValue, addValue, getFormById } = useStore(
     useShallow(StoreSelector)
   );
+  const [menuOption, setMenuOption] = useState("");
 
-  const InitialValue = () => {
+  const InitialValue = useCallback(() => {
     const data = getFormById(id);
     if (data) {
-      return data.Departamento;
+      setMenuOption(data.Departamento);
     } else {
-      return "";
+      setMenuOption("");
     }
-  };
+  }, [id, getFormById]);
 
   const [dropMenu, setDropMenu] = useState(false);
-  const [menuOption, setMenuOption] = useState(InitialValue);
 
   function setMenu() {
     setDropMenu(!dropMenu);
@@ -33,11 +33,15 @@ export default function DroppSelects({ id }: any) {
 
   function setMenuOpt(Select: string) {
     setMenuOption(Select);
-    console.log("Save");
+    // console.log("Save");
     deleteValue(id);
     addValue({ id: id, Departamento: Select });
   }
 
+  useEffect(() => {
+    InitialValue();
+  }, [id, InitialValue]);
+  
   return (
     <>
       <div>

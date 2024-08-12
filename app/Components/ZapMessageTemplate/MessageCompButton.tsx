@@ -1,21 +1,21 @@
 import React from "react";
+import { Handle, Position } from "reactflow";
 
 interface buttonProps {
   formattedText: string;
   Body: string;
   Foter: string;
-  buttons: any[];
 }
 
 export default function MessageCompButton({
   formattedText,
   Body,
   Foter,
-  buttons,
 }: buttonProps) {
+  // console.log(buttonss)
   return (
-    <div className="flex animation_Message pl-2 pr-4 pt-4 break-words">
-      <div className="text-[#313C42]">
+    <div className="flex relative">
+      <div className="text-[#313C42] absolute -left-[8px]">
         <svg
           viewBox="0 0 8 13"
           height="13"
@@ -54,19 +54,6 @@ export default function MessageCompButton({
           <div>
             <p className="text-[.8rem] text-zinc-500">{Foter} </p>
           </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="bg-[#313C42] w-full px-6 py-2 rounded-xl text-white mt-1">
-          {buttons.map((btn: any) => {
-            return (
-              <div className="my-1">
-                <p className="text-[#36AFEB] text-center" key={btn.id}>
-                  {btn.text}
-                </p>
-              </div>
-            );
-          })}
         </div>
       </div>
     </div>

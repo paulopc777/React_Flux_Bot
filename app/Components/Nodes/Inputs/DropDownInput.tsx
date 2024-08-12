@@ -8,6 +8,7 @@ import Button from "@mui/joy/Button";
 import IconButton from "@mui/joy/IconButton";
 import Textarea from "@mui/joy/Textarea";
 import Typography from "@mui/joy/Typography";
+import { StoreSelector } from "app/Redux/Selector/storeSelector";
 
 const selector = (state: any) => ({
   updateValueDep: state.updateValueDep,
@@ -15,10 +16,26 @@ const selector = (state: any) => ({
 
 const ButtonOptStyle =
   "text_button_small dark:!text-white hover:dark:!bg-neutral-600 dark:!border-neutral-600";
+  
+// 
 
 export default function DropDownInput({ VisibleDesk, id }: any) {
-  const { updateValueDep } = useStore(useShallow(selector));
-  const [InputValue, setInputValue] = useState("");
+  const { updateValueDep, getFormById } = useStore(useShallow(StoreSelector));
+
+  const InitialInputValue = () => {
+    const data = getFormById(id);
+    if (data) {
+      if (data.description) {
+        return data.description;
+      } else {
+        return "";
+      }
+    } else {
+      return "";
+    }
+  };
+
+  const [InputValue, setInputValue] = useState(InitialInputValue);
   const addEmoji = (emoji: any) => () => setInputValue(`${InputValue}${emoji}`);
 
   const handleInputChange = (e: any) => {
@@ -81,15 +98,6 @@ export default function DropDownInput({ VisibleDesk, id }: any) {
             }
             sx={{ minWidth: 150 }}
           />
-
-          {/* <InputPad
-            placeholder="Mensagem de retorno"
-            onBlur={() => {}}
-            onChange={(e) => {
-              handleInputChange(e);
-            }}
-            value={InputValue}
-          ></InputPad> */}
         </motion.div>
       ) : (
         ""

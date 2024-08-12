@@ -1,14 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tocar Som</title>
-</head>
-<style>
+  </head>
+  <style></style>
+  <style>
+    iframe {
+      width: 90vw;
+      height: 90vh;
+    }
+  </style>
 
-</style>
-<body>
- 
-</body>
+  <body>
+    <iframe
+      id="myIframe"
+      src="https://4a71-2804-d45-965b-2c00-3578-7b07-f643-f296.ngrok-free.app/"
+    ></iframe>
+    <script>
+      // Função para enviar uma mensagem ao iframe
+      function sendMessageToIframe(message) {
+        const iframe = document.getElementById("myIframe");
+
+        // Espera o iframe carregar
+        iframe.onload = function () {
+          // Envia a mensagem ao iframe
+          iframe.contentWindow.postMessage(message, "*"); // O '*' pode ser substituído pelo domínio exato do iframe para maior segurança
+        };
+      }
+
+      // Exemplo de uso: Enviar o token para o iframe
+      const message = {
+        type: "setLocalStorage",
+        key: "authToken",
+        value: "seu-token-aqui",
+      };
+      sendMessageToIframe(message);
+
+      // Captura a resposta do iframe (se necessário)
+      window.addEventListener("message", function (event) {
+        // Verifica a origem da mensagem para garantir segurança
+        if (
+          event.origin ===
+          "https://4a71-2804-d45-965b-2c00-3578-7b07-f643-f296.ngrok-free.app/"
+        ) {
+          console.log("Mensagem recebida do iframe:", event.data);
+        }
+      });
+    </script>
+  </body>
 </html>

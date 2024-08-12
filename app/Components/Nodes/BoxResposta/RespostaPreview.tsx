@@ -1,8 +1,9 @@
+import { Position } from "@xyflow/react";
 import MessageCompZap from "app/Components/ZapMessageTemplate/MessageComp";
 import MessageCompButton from "app/Components/ZapMessageTemplate/MessageCompButton";
 import useStore from "app/Redux/store";
-import { strict } from "assert";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Handle } from "reactflow";
 
 const selector = (state: any) => ({
   formValues: state.formValues,
@@ -38,11 +39,9 @@ const convertListToParagraph = (html: any) => {
 export default function RespostaPreview({ id }: props) {
   const { formValues } = useStore(selector);
   const [Value, setValue] = useState("");
-  const [Button, setButton]: any = useState();
 
-  useEffect(() => {
-    formValues.map((item: any) => {
-      // console.log(item);
+  const Converted = useCallback(() => {
+    formValues.forEach((item: any) => {
       if (item.id === id) {
         if (item.text) {
           const convertedValue = convertListToParagraph(item.text);
@@ -53,7 +52,13 @@ export default function RespostaPreview({ id }: props) {
         }
       }
     });
-  }, [formValues]);
+  }, [formValues, id]);
+
+  const [Button, setButton]: any = useState();
+
+  useEffect(() => {
+    Converted();
+  }, [Converted]);
 
   const ChageComponents = () => {
     if (Value) {
@@ -62,12 +67,35 @@ export default function RespostaPreview({ id }: props) {
     if (Button) {
       // console.log(Button)
       return (
-        <MessageCompButton
-          Body={Button.Body}
-          Foter={Button.Footer}
-          formattedText={Button.desc}
-          buttons={Button.button}
-        ></MessageCompButton>
+        <>
+          <div className="flex flex-col animation_Message pl-2 pr-4 pt-4 break-words">
+            <div>
+              <MessageCompButton
+                Body={Button.Body}
+                Foter={Button.Footer}
+                formattedText={Button.desc}
+              ></MessageCompButton>
+            </div>
+
+            {/* Buttons */}
+            {Button.button.map((btn: any, index: number) => {
+              return (
+                <>
+                  <div className="text-white mt-1 relative">
+                    <div className="my-[2px] px-6 py-2 rounded-xl  bg-[#313C42] ">
+                      <p className="text-[#36AFEB] text-center">{btn.text}</p>
+                    </div>
+                    <Handle
+                      type="target"
+                      position={Position.Right}
+                      id={`id${index}`}
+                    />
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </>
       );
     }
   };
