@@ -21,7 +21,7 @@ const ButtonOptStyle =
 
 export default function OptRespostas() {
   const { formValues, deleteValue, addValue } = useStore(useShallow(selector));
-  const { SelectItem, Visible } = BoxEdit(selectView);
+  const { SelectItem, Visible, SetVisible } = BoxEdit(selectView);
 
   const [Btn, setBtn] = useState(false);
 
@@ -91,20 +91,22 @@ export default function OptRespostas() {
     let button: any = "";
     Clear();
 
-    formValues.forEach((item: any) => {
-      if (item.id === SelectItem) {
-        if (item.text) {
-          text = item.text;
+    if (formValues) {
+      formValues.forEach((item: any) => {
+        if (item.id === SelectItem) {
+          if (item.text) {
+            text = item.text;
+          }
+          if (item.Body) {
+            B = item.Body;
+            F = item.Footer;
+            M = item.desc;
+            button = item.button;
+            setBtn(true);
+          }
         }
-        if (item.Body) {
-          B = item.Body;
-          F = item.Footer;
-          M = item.desc;
-          button = item.button;
-          setBtn(true);
-        }
-      }
-    });
+      });
+    }
 
     if (button.length <= 0) {
       button = [{ id: 1, text: "" }];
@@ -127,6 +129,24 @@ export default function OptRespostas() {
         <>
           <>
             <motion.div className="  ">
+              <div className="w-full flex justify-end">
+                <motion.div
+                  whileTap={{ scale: 0.8 }}
+                  className=" rounded-lg relative right-0 dark:bg-zinc-200 w-fit mb-2"
+                >
+                  <button
+                    className="px-2 border-zinc-200 border-2 rounded-lg hover:border-zinc-400 "
+                    onClick={() => {
+                      SetVisible(false);
+                    }}
+                  >
+                    <p className="text-right text-black dark:text-white font-bold">
+                      x
+                    </p>
+                  </button>
+                </motion.div>
+              </div>
+
               <div className="mb-2 overflow-x-scroll dark:text-white">
                 <Box sx={{ display: "flex", gap: 0.5, flex: 1 }}>
                   <IconButton

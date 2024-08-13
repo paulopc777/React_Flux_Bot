@@ -9,7 +9,14 @@ import { ClearLegacy } from "./utils/clear/clearInitial";
 import { ComparaElemento } from "./utils/InitialValidator";
 import { FormatText } from "./utils/SendBackText";
 
+const token = localStorage.getItem("token");
+// console.log(token);
 const monichat = new MonichatApi();
+if (token) {
+  monichat.SetToken(token);
+} else {
+}
+
 const NodeList = {
   PerguntaUnique: "PerguntaUnique",
   Resposta: "Resposta",
@@ -80,6 +87,8 @@ function encontrarIdPeloNome(usuarios: Usuario[], nome: string): number | null {
 async function CreateReply(props: any) {
   let allForms: any = [];
 
+  const com = localStorage.getItem("company_id");
+
   await props.form.forEach((form: any) => {
     if (form.Departamento) {
       props.edges.forEach((linhas: any) => {
@@ -106,14 +115,14 @@ async function CreateReply(props: any) {
                         }
                         if (TextLInha2.text === "@sys.input") {
                           allForms.push({
-                            name: `com${linhas3.source}`,
+                            name: `${com}-${linhas3.source}`,
                             p1: `${TextLInha2.text}`,
                             p2: p2,
                             p3: idDepartamento,
                           });
                         } else {
                           allForms.push({
-                            name: `com${linhas3.source}`,
+                            name: `${com}-${linhas3.source}`,
                             p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
                             p2: p2,
                             p3: idDepartamento,
@@ -152,7 +161,7 @@ async function CreateReply(props: any) {
 
                       if (TextLInha2.text == "@sys.input") {
                         allForms.push({
-                          name: `com${linhas3.source}`,
+                          name: `${com}-${linhas3.source}`,
                           p1: `${TextLInha2.text}`,
                           p2: `Estou te emcaminhando para o Colaborador. @topic random`,
                           p3: null,
@@ -160,7 +169,7 @@ async function CreateReply(props: any) {
                         });
                       } else {
                         allForms.push({
-                          name: `com${linhas3.source}`,
+                          name: `${com}-${linhas3.source}`,
                           p1: `@sys.opt @sys.array_must(${TextLInha2.text}) @sys.opt`,
                           p2: `Estou te emcaminhando para o Colaborador. @topic random`,
                           p3: null,
@@ -202,9 +211,10 @@ export async function UpdateValues(OldProps: any, props: any, Token: string) {
       //
       if (NodeType === "Resposta") {
         const Text = FormatText(NodeUpdate.desc);
+        const com = localStorage.getItem("company_id");
         try {
           monichat.UpdataContext(
-            `com${NodeUpdate.id}`,
+            `${com}-${NodeUpdate.id}`,
             undefined,
             undefined,
             undefined,

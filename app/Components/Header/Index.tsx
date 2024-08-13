@@ -50,8 +50,10 @@ export default function HeaderNav() {
   const [animation, setupdateLoad] = useState(false);
 
   useEffect(() => {
-    if (nodes.length != initialNodes.length) {
-      setUpdate(true);
+    if (nodes) {
+      if (nodes.length != initialNodes.length) {
+        setUpdate(true);
+      }
     }
   }, [nodes]);
 
@@ -122,12 +124,14 @@ export default function HeaderNav() {
             edges: edges,
             form: formValues,
           });
+          //
           if (res) {
             setupdateLoad(false);
           } else {
             setupdateLoad(false);
             console.log("Erro ");
           }
+          //
         } else {
           console.log("Send data Update");
         }

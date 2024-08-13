@@ -12,14 +12,14 @@ interface PayloadAuth {
 }
 
 export class MonichatApi {
-  Email: string;
-  Pass: string;
+  // Email: string;
+  // Pass: string;
   UrlAuth: string;
   Token: string;
   UrlIntencao: string;
   constructor() {
-    this.Email = "adm@empresa.com.br";
-    this.Pass = "123456";
+    // this.Email = "adm@empresa.com.br";
+    // this.Pass = "123456";
     this.UrlAuth = "https://api.monitchat.com/api/v1/auth/login";
     this.UrlIntencao = "https://api.monitchat.com/api/v1/trigger";
 
@@ -30,31 +30,31 @@ export class MonichatApi {
     this.Token = Token;
   }
 
-  async GetAuthToken() {
-    if (this.Token.length <= 0) {
-      const dataPayload: PayloadAuth = {
-        email: this.Email,
-        password: this.Pass,
-        redirect: false,
-        username: "",
-      };
+  // async GetAuthToken() {
+  //   if (this.Token.length <= 0) {
+  //     const dataPayload: PayloadAuth = {
+  //       email: this.Email,
+  //       password: this.Pass,
+  //       redirect: false,
+  //       username: "",
+  //     };
 
-      //console.log(dataPayload);
+  //     //console.log(dataPayload);
 
-      const data = await axios.post(this.UrlAuth, dataPayload);
+  //     const data = await axios.post(this.UrlAuth, dataPayload);
 
-      if (data.data.access_token) {
-        this.Token = data.data.access_token;
+  //     if (data.data.access_token) {
+  //       this.Token = data.data.access_token;
 
-        return data.data.access_token;
-      } else {
-        // CASSO OCORRA UM ERRO AO PEGAR O TOKEN DA API
-        this.Token = "";
+  //       return data.data.access_token;
+  //     } else {
+  //       // CASSO OCORRA UM ERRO AO PEGAR O TOKEN DA API
+  //       this.Token = "";
 
-        return false;
-      }
-    }
-  }
+  //       return false;
+  //     }
+  //   }
+  // }
 
   /**
    *
@@ -63,7 +63,7 @@ export class MonichatApi {
    */
   async InsertIntencao(Intencao: string, Reply: string, Departamento?: string) {
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -150,7 +150,7 @@ export class MonichatApi {
       "https://api.monitchat.com/api/v1/bot-context?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1720983019051";
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -184,7 +184,7 @@ export class MonichatApi {
       "https://api.monitchat.com/api/v1/user?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=name&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=email&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=phone_number&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=additional_info&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=active&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=false&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false";
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -286,7 +286,7 @@ export class MonichatApi {
     };
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -382,7 +382,7 @@ export class MonichatApi {
     };
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -424,7 +424,7 @@ export class MonichatApi {
     Description?: string
   ) {
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -558,7 +558,7 @@ export class MonichatApi {
       "https://api.monitchat.com/api/v1/bot-context?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D";
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -571,10 +571,10 @@ export class MonichatApi {
     };
 
     const data = await axios.get(UrlThoGet, Header);
-    console.log(data.data);
-
+    // console.log(data.data);
+    const com = localStorage.getItem("company_id");
     const newData = data.data.data.map((rp1: any) => {
-      if (rp1.name === `com${ContextID}`) {
+      if (rp1.name === `${com}-${ContextID}`) {
         rp1.intents.map((intent: any) => {
           if (
             intent.trigger === `@sys.opt @sys.array_must(${Reply}) @sys.opt`
@@ -594,7 +594,7 @@ export class MonichatApi {
     };
 
     newData.forEach((el: any) => {
-      if (el.name === `com${ContextID}`) {
+      if (el.name === `${com}-${ContextID}`) {
         dd.context = el;
       }
     });
@@ -620,7 +620,7 @@ export class MonichatApi {
       "https://api.monitchat.com/api/v1/department?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=name&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=menu&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=description&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=10&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1721080419798";
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -662,7 +662,7 @@ export class MonichatApi {
     const UrlDepartamento = "https://api.monitchat.com/api/v1/department";
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -698,7 +698,7 @@ export class MonichatApi {
     const UrlDelet = `https://api.monitchat.com/api/v1/department/${id}`;
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -724,7 +724,7 @@ export class MonichatApi {
       "https://api.monitchat.com/api/v1/trigger?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=trigger&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=false&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1723203058059";
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -750,7 +750,7 @@ export class MonichatApi {
     const UrlClearIntention = `https://api.monitchat.com/api/v1/trigger/${id}`;
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -775,7 +775,7 @@ export class MonichatApi {
       "https://api.monitchat.com/api/v1/bot-context?draw=1&columns%5B0%5D%5Bdata%5D=id&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=description&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=trigger&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=false&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=100&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1720983019051";
 
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;
@@ -818,7 +818,8 @@ export class MonichatApi {
   }
 
   async GetBotFlow(id: string) {
-    const UrlFlow = `https://api-v2.monitchat.com/api/v1/bot-flow/${id}`;
+    const UrlFlow = `https://api-v2.monitchat.com/api/v1/bot-flow`;
+
     const TokenSend = `Bearer ${this.Token}`;
 
     const Header = {
@@ -831,7 +832,7 @@ export class MonichatApi {
     const res = await axios.get(UrlFlow, Header);
 
     if (res.status === 200) {
-      return res.data;
+      return res.data.data[0], res.data;
     } else {
       return false;
     }
@@ -863,9 +864,16 @@ export class MonichatApi {
   }
 
   async PutBotFlow(json: string, id: string) {
-    const UrlFlow = `https://api-v2.monitchat.com/api/v1/bot-flow/${id}`;
+    const data = await this.GetBotFlow("1");
+    console.log(data);
+
+    if (data.data.length <= 0) {
+      await this.CreateBotFlow(json, "Novo bot");
+      return;
+    }
+    const UrlFlow = `https://api-v2.monitchat.com/api/v1/bot-flow/${data.data[0].id}`;
     if (this.Token.length == 0) {
-      await this.GetAuthToken();
+      console.log("Not Token");
     }
 
     const TokenSend = `Bearer ${this.Token}`;

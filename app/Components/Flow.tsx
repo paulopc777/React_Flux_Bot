@@ -27,7 +27,6 @@ import BackgroundFlow from "./Flow/BackGrund";
 import ErrorView, { selectError } from "app/Redux/erroStore";
 import { ErrorState } from "../Redux/erroStore";
 import { MonichatApi } from "app/Api/AuthMoniChat";
-import Looad from "./LoadScreen/Looad";
 
 const NodeType = {
   PerguntaUnique: PerguntaBox,
@@ -54,6 +53,7 @@ export default function Flow() {
     onEdgesChange,
     onConnect,
     addNode,
+    setNodes,
     updateNodes,
     updateEdges,
     updateFormValuesA,
@@ -73,7 +73,8 @@ export default function Flow() {
         return;
       }
       let ultimoNode: any;
-      if (nodes.length <= 0) {
+
+      if (!nodes || nodes.length <= 0) {
         const initial = {
           id: "1",
           type: "PerguntaUnique",
@@ -96,7 +97,8 @@ export default function Flow() {
           },
           dragging: false,
         };
-        addNode(initial);
+        setNodes([initial]);
+
         ultimoNode = 1;
       } else {
         ultimoNode = nodes[nodes.length - 1].id;
@@ -130,8 +132,10 @@ export default function Flow() {
   useEffect(() => {
     async function fetchData() {
       const Monichat = new MonichatApi();
-
-      Monichat.GetAuthToken().then(async (res) => {
+      const Token = localStorage.getItem("token");
+      if (Token) {
+        await Monichat.SetToken(Token);
+        console.log(Token);
         // ListUser Set Local
         const User = await Monichat.ListUsers();
         localStorage.setItem("Usuarios", User);
@@ -140,16 +144,95 @@ export default function Flow() {
         localStorage.setItem("monichat", Departamento);
 
         Monichat.GetBotFlow("1").then((res) => {
-          const dd = res.data;
-          // console.log(dd);
-          updateNodes(dd.nodes);
-          updateEdges(dd.edges);
-          updateFormValuesA(dd.form);
-          //
-          const Format = JSON.stringify(dd);
-          localStorage.setItem("Flow", Format);
+          if (res) {
+            if (res.data && res.data.length > 0) {
+              const dda = res.data;
+              const dd = dda[0].data;
+              console.log(dda[0].company_id);
+              // console.log(dd);
+              localStorage.setItem("company_id", dda[0].company_id);
+              updateNodes(dd.nodes);
+              updateEdges(dd.edges);
+              updateFormValuesA(dd.form);
+              //
+              const Format = JSON.stringify(dd);
+              localStorage.setItem("Flow", Format);
+            } else {
+              console.log("Executed");
+              const dd = {
+                nodes: [
+                  {
+                    id: "1",
+                    type: "PerguntaUnique",
+                    data: {
+                      label: "Input Node",
+                      start: true,
+                      sourceHandles: [],
+                      targetHandles: [],
+                    },
+                    position: {
+                      x: 248.851301645003,
+                      y: 123.78805852974502,
+                    },
+                    width: 196,
+                    height: 64,
+                    selected: false,
+                    positionAbsolute: {
+                      x: 248.851301645003,
+                      y: 123.78805852974502,
+                    },
+                    dragging: false,
+                  },
+                ],
+                edges: [],
+                form: [],
+              };
+              updateNodes(dd.nodes);
+              updateEdges(dd.edges);
+              updateFormValuesA(dd.form);
+              //
+              const format = JSON.stringify(dd);
+              localStorage.setItem("Flow", format);
+            }
+          } else {
+            console.log("Executed");
+            const dd = {
+              nodes: [
+                {
+                  id: "1",
+                  type: "PerguntaUnique",
+                  data: {
+                    label: "Input Node",
+                    start: true,
+                    sourceHandles: [],
+                    targetHandles: [],
+                  },
+                  position: {
+                    x: 248.851301645003,
+                    y: 123.78805852974502,
+                  },
+                  width: 196,
+                  height: 64,
+                  selected: false,
+                  positionAbsolute: {
+                    x: 248.851301645003,
+                    y: 123.78805852974502,
+                  },
+                  dragging: false,
+                },
+              ],
+              edges: [],
+              form: [],
+            };
+            updateNodes(dd.nodes);
+            updateEdges(dd.edges);
+            updateFormValuesA(dd.form);
+            //
+            const format = JSON.stringify(dd);
+            localStorage.setItem("Flow", format);
+          }
         });
-      });
+      }
     }
     fetchData();
   }, []);

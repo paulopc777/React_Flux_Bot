@@ -65,6 +65,14 @@ export async function ComparaElemento(Oldprosp: any, newProps: any) {
   const newn = newProps;
   const old = Oldprosp;
 
+  if (old) {
+    if (old.length <= 0) {
+      return update;
+    }
+  } else {
+    return update;
+  }
+
   await old.forEach(async (item: any, index: any) => {
     await newn.forEach(async (element: any) => {
       if (item.id === element.id) {
@@ -1014,5 +1022,3 @@ const data2 = {
     },
   ],
 };
-
-

@@ -9,6 +9,7 @@ export const NodeList = {
 };
 
 export async function CreateContext(props: any, monichat: any) {
+  const com = localStorage.getItem("company_id");
   props.nodes.forEach((nd1: any) => {
     if (nd1.type === NodeList.Resposta) {
       props.form.forEach(async (fm1: any) => {
@@ -18,7 +19,7 @@ export async function CreateContext(props: any, monichat: any) {
             const Ftext = FormatText(fm1.text);
 
             await monichat.InsertContexto(
-              `com${nd1.id}`,
+              `${com}-${nd1.id}`,
               Ftext,
               `@sys.opt @sys.array_must(sair,exit) @sys.opt`,
               `Ok ! so um segundo estou finalizando seu atendimento !`
@@ -35,9 +36,9 @@ export async function CreateContext(props: any, monichat: any) {
             });
 
             await monichat.InsertContextoButton(
-              `com${fm1.id}`,
+              `${com}-${fm1.id}`,
               "@sys.input ",
-              `@topic com${fm1.id} @intent inicio`,
+              `@topic ${com}-${fm1.id} @intent inicio`,
               `${Ftext}`,
               BtnArray,
               "",
@@ -53,7 +54,7 @@ export async function CreateContext(props: any, monichat: any) {
 
 export async function LinkContexts(props: any, monichat: any) {
   let data: any = [];
-
+  const com = localStorage.getItem("company_id");
   await props.edges.map((linhas: any) => {
     if (linhas.target != "1") {
       props.nodes.map((nodeType: any) => {
@@ -73,9 +74,9 @@ export async function LinkContexts(props: any, monichat: any) {
                             props.form.map(async (textForm: any) => {
                               if (textForm.id === linhas.source) {
                                 data.push({
-                                  "1": `com${linhas.target}`,
+                                  "1": `${com}-${linhas.target}`,
                                   "2": `@sys.opt @sys.array_must(${textForm.text}) @sys.opt`,
-                                  "3": `@topic com${linhas2.source} @intent inicio`,
+                                  "3": `@topic ${com}-${linhas2.source} @intent inicio`,
                                 });
                               }
                             });
@@ -97,6 +98,7 @@ export async function LinkContexts(props: any, monichat: any) {
 }
 export async function LinkContext2(props: any, monichat: any) {
   let data: any = [];
+  const com = localStorage.getItem("company_id");
   await props.edges.forEach((l1: any) => {
     if (l1.target != "1") {
       props.nodes.forEach((nd1: any) => {
@@ -117,9 +119,9 @@ export async function LinkContext2(props: any, monichat: any) {
                         if (fr1.id === l2.target) {
                           console.log("Pass 4 " + l1.target + ": " + fr1.text);
                           data.push({
-                            "de": `com${l1.target}`,
+                            "de": `${com}-${l1.target}`,
                             "com": `@sys.opt @sys.array_must(${fr1.text}) @sys.opt`,
-                            "para": `@topic com${n3.id} @intent inicio`,
+                            "para": `@topic ${com}-${n3.id} @intent inicio`,
                           });
                         }
                       });

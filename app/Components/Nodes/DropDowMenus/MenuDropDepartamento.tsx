@@ -32,7 +32,7 @@ export function DroppSelectsMenu({ funcModi, close }: MenuRequireProps) {
   if (storedMonichat) {
     Monichat = JSON.parse(storedMonichat);
   } else {
-    new MonichatApi().ListDepartamento();
+    // new MonichatApi().ListDepartamento();
   }
 
   return (

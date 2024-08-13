@@ -8,21 +8,38 @@ import { MenuItemProps } from "./MenuConfigs";
 import { Tooltip } from "@mui/material";
 
 export default function MenuAddCompo(visible: any) {
-  const { nodes, addNode } = useStore(useShallow(StoreSelector));
+  const { nodes, addNode, setNodes } = useStore(useShallow(StoreSelector));
 
   const handleAddNode = (type: string, e: any) => {
-    const ultimoNode = nodes[nodes.length - 1].id;
-    const position = nodes[nodes.length - 1].position;
+    let ultimoNode;
+    let position;
+
+    if (nodes) {
+      ultimoNode = nodes[nodes.length - 1].id;
+      position = nodes[nodes.length - 1].position;
+    } else {
+      ultimoNode = 0;
+      position = 0;
+    }
 
     const idThoint = parseInt(ultimoNode) + 1;
-
-    const newNode = {
-      id: `${idThoint}`,
-      type: type,
-      data: { label: `Node ${nodes.length + 1}` },
-      position: { x: position.x + 300, y: position.y }, // Posição aleatória
-    };
-    addNode(newNode); // Função para adicionar o nó ao estado
+    if (nodes) {
+      const newNode = {
+        id: `${idThoint}`,
+        type: type,
+        data: { label: `Node ${nodes.length + 1}` },
+        position: { x: position.x + 300, y: position.y }, // Posição aleatória
+      };
+      addNode(newNode); // Função para adicionar o nó ao estado
+    } else {
+      const newNode = {
+        id: `${idThoint}`,
+        type: type,
+        data: { label: `Node ${1}` },
+        position: { x: position.x + 300, y: position.y }, // Posição aleatória
+      };
+      setNodes([newNode]); // Função para adicionar o nó ao estado
+    }
   };
   const onDragStart = (event: any, nodeType: any) => {
     // console.log('DragStarte')
@@ -47,7 +64,6 @@ export default function MenuAddCompo(visible: any) {
                 onDragStart={(e) => {
                   onDragStart(e, item.TypeBox);
                 }}
-
                 draggable
               >
                 <TextIcon text={item.Title} icon={item.icon}></TextIcon>

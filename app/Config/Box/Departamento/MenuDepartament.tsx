@@ -42,7 +42,7 @@ export function MenuDepartaement({ funcModi, close }: MenuRequireProps) {
     if (storedMonichat) {
         Monichat = JSON.parse(storedMonichat);
     } else {
-        new MonichatApi().ListDepartamento();
+        // new MonichatApi().ListDepartamento();
     }
 
 
