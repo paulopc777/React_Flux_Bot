@@ -23,7 +23,7 @@ export default function RespostaBox({ id }: BoxProps) {
 
   return (
     <>
-      <div className="min-h-16  transition-all shadow-lg bg-white border-2 border-gray-200 rounded-2xl dark:bg-zinc-900 dark:text-white dark:border-zinc-900 focus:border-green-500">
+      <div className="min-h-16  max-w-80 transition-all shadow-lg bg-white border-2 border-gray-200 rounded-2xl dark:bg-zinc-900 dark:text-white dark:border-zinc-900 focus:border-green-500">
         <div className="p-4">
           <Close id={id}></Close>
           <TextIcon

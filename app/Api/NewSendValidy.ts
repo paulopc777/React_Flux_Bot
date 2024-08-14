@@ -8,6 +8,7 @@ import {
 import { ClearLegacy } from "./utils/clear/clearInitial";
 import { ComparaElemento } from "./utils/InitialValidator";
 import { FormatText } from "./utils/SendBackText";
+import { COMPILER_INDEXES } from "next/dist/shared/lib/constants";
 
 const token = localStorage.getItem("token");
 // console.log(token);
@@ -256,6 +257,81 @@ export async function UpdateValues(OldProps: any, props: any, Token: string) {
   return false;
 }
 
+async function GetButtons(ln: any, props: any) {}
+
+async function BtnActions(props: any) {
+  const com = localStorage.getItem("company_id");
+
+  let Dep: any = [];
+
+  await props.nodes.forEach(async (nd1: any) => {
+    let typeNd1 = GetNodeType(nd1.id, props);
+    if (typeNd1 === "Resposta") {
+      await props.form.forEach(async (fm1: any) => {
+        if (fm1.id === nd1.id) {
+          if (fm1.button) {
+            await fm1.button.forEach(async (btn: any) => {
+              await props.edges.forEach(async (ln1: any) => {
+                if (
+                  ln1.target === nd1.id &&
+                  ln1.targetHandle === (btn.id - 1).toString()
+                ) {
+                  console.log(btn);
+                  //
+                  // Departamento
+                  //
+                  await props.form.forEach(async (fm1: any) => {
+                    if (fm1.id === ln1.source) {
+                      if (fm1.description) {
+                        const idDepartamento: number = getIdByNome(
+                          `${fm1.Departamento}`
+                        );
+
+                        Dep.push({
+                          p1: `${com}-${nd1.id}`,
+                          p2: `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
+                          p3: fm1.description,
+                          p4: idDepartamento,
+                        });
+                        // await monichat.UpdataContext(
+                        //   `${com}-${nd1.id}`,
+                        //   `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
+                        //   fm1.description,
+                        //   idDepartamento
+                        // );
+
+                        // console.log(
+                        //   `${com}-${nd1.id}`,
+                        //   `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
+                        //   fm1.description,
+                        //   idDepartamento
+                        // );
+                      } else if (fm1.Body) {
+                        // await monichat.UpdataContext(
+                        //   `${com}-${nd1.id}`,
+                        //   `@topic ${com}-${fm1.text} @intent inicio`
+                        // );
+
+                        Dep.push({
+                          p1: `${com}-${nd1.id}`,
+                          p2: `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
+                          p3: `@topic ${com}-${fm1.text} @intent inicio`,
+                        });
+                      }
+                    }
+                  });
+                }
+              });
+            });
+          }
+        }
+      });
+    }
+  });
+
+  return Dep;
+}
+
 export async function NewSend(props: any) {
   console.log(props);
 
@@ -273,6 +349,16 @@ export async function NewSend(props: any) {
         for (let index = 0; index < data.length; index++) {
           const el: any = data[index];
           await monichat.UpdataContext(el.de, el.com, el.para);
+        }
+      }, 1000);
+
+      setTimeout(async () => {
+        const data = await BtnActions(props);
+        console.log(data);
+
+        for (let index = 0; index < data.length; index++) {
+          const el: any = data[index];
+          await monichat.UpdataContext(el.p1, el.p2, el.p3, el.p4);
         }
       }, 1000);
     }, 1000);

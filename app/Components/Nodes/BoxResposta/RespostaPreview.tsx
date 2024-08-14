@@ -46,15 +46,15 @@ export default function RespostaPreview({ id }: props) {
   const Converted = () => {
     formValues.forEach((item: any) => {
       if (item.id === id) {
-        console.log("Finde id ");
+      //  
         if (item.text) {
-          console.log("item.text ");
+          // console.log("item.text ");
 
           const convertedValue = convertListToParagraph(item.text);
           setValue(convertedValue);
         }
         if (item.button) {
-          console.log("item.button ");
+          // console.log("item.button ");
           setValue(false);
           setButton(item);
         }
@@ -92,7 +92,7 @@ export default function RespostaPreview({ id }: props) {
                     <Handle
                       type="target"
                       position={Position.Right}
-                      id={`id${index}`}
+                      id={`${index}`}
                     />
                   </div>
                 </>

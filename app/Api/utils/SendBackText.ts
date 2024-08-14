@@ -69,9 +69,12 @@ function formatForWhatsApp(html: any) {
     },
     { decodeEntities: true }
   );
-
-  parser.write(html);
-  parser.end();
+  if (html) {
+    parser.write(html);
+    parser.end();
+  }else{
+    
+  }
 
   return markdown;
 }
