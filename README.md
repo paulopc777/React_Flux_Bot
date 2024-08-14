@@ -8,6 +8,8 @@
 
 ## Finalizado
 
+✅ Integração com monitchat
+
 ✅ Migração para Next.js com Typescript
 
 ✅ Criação de componentes e layout
@@ -18,21 +20,21 @@
 
 ✅ Janela de Carregamento
 
+✅ View de erros
+
+✅ Criação de inputs dinâmicos
+
+✅ Formatar mensagens de Resposta
+
 ## Em andamento
 
 🚀 Janela de teste de bot.
 
-🚀 View de erros
+🚀 Restruturação do layout
 
 <img src="public/autoErro.gif"  />
 
-🚀 Restruturação do layout
-
-🚀 Criação de inputs dinâmicos
-
 <img src="public/auto.gif"  />
-
-🚀 Formatar mensagens de Resposta
 
 <img src="public/Input.gif" />
 
