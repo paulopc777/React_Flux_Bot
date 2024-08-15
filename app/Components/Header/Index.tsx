@@ -22,6 +22,7 @@ import {
 } from "app/Api/utils/InitialValidator";
 import BoxEdit, { selectView } from "app/Redux/EditMenuStore";
 import { NewSend, UpdateValues } from "app/Api/NewSendValidy";
+import { MonichatApi } from "app/Api/AuthMoniChat";
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -48,6 +49,7 @@ export default function HeaderNav() {
   const [Uptate, setUpdate] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [animation, setupdateLoad] = useState(false);
+  let monichat: MonichatApi = new MonichatApi();
 
   useEffect(() => {
     if (nodes) {
@@ -62,6 +64,14 @@ export default function HeaderNav() {
       setIsOpen(false);
     }
   }, [Visible]);
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      monichat.SetToken(token);
+    } else {
+    }
+  }, [nodes]);
 
   function Valid() {
     const dados = {
@@ -114,16 +124,20 @@ export default function HeaderNav() {
         const r = await UpdateValues(
           oldValues,
           { nodes: nodes, edges: edges, form: formValues },
-          Token
+          Token,
+          monichat
         );
         if (!r) {
           console.log("Send data new ");
           setupdateLoad(true);
-          const res = await NewSend({
-            nodes: nodes,
-            edges: edges,
-            form: formValues,
-          });
+          const res = await NewSend(
+            {
+              nodes: nodes,
+              edges: edges,
+              form: formValues,
+            },
+            monichat
+          );
           //
           if (res) {
             setupdateLoad(false);

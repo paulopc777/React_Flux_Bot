@@ -10,13 +10,7 @@ import { ComparaElemento } from "./utils/InitialValidator";
 import { FormatText } from "./utils/SendBackText";
 import { COMPILER_INDEXES } from "next/dist/shared/lib/constants";
 
-const token = localStorage.getItem("token");
 // console.log(token);
-const monichat = new MonichatApi();
-if (token) {
-  monichat.SetToken(token);
-} else {
-}
 
 const NodeList = {
   PerguntaUnique: "PerguntaUnique",
@@ -31,7 +25,7 @@ interface Usuario {
   email: string;
 }
 
-async function CreateIntention(props: any) {
+async function CreateIntention(props: any,monitchat:MonichatApi) {
   props.edges.forEach((linhas: any) => {
     if (linhas.target === "1") {
       props.form.forEach((text: any) => {
@@ -42,7 +36,7 @@ async function CreateIntention(props: any) {
               if (linahs2.target === linhas.source) {
                 //console.log("linahs2");
 
-                monichat.InsertIntencao(
+                monitchat.InsertIntencao(
                   text.text,
                   `@topic com${linahs2.source} @intent inicio`
                 );
@@ -51,7 +45,7 @@ async function CreateIntention(props: any) {
           }
 
           if (NodeType === NodeList.Resposta) {
-            monichat.InsertIntencao(
+            monitchat.InsertIntencao(
               "@sys.input",
               `@topic com${linhas.source} @intent inicio`
             );
@@ -85,7 +79,7 @@ function encontrarIdPeloNome(usuarios: Usuario[], nome: string): number | null {
   return usuarioEncontrado ? usuarioEncontrado.id : null;
 }
 
-async function CreateReply(props: any) {
+async function CreateReply(props: any,monitchat:MonichatApi) {
   let allForms: any = [];
 
   const com = localStorage.getItem("company_id");
@@ -192,11 +186,11 @@ async function CreateReply(props: any) {
     const data = allForms[index];
     console.log(data);
 
-    await monichat.UpdataContext(data.name, data.p1, data.p2, data.p3, data.p4);
+    await monitchat.UpdataContext(data.name, data.p1, data.p2, data.p3, data.p4);
   }
 }
 
-export async function UpdateValues(OldProps: any, props: any, Token: string) {
+export async function UpdateValues(OldProps: any, props: any, Token: string,monitchat:MonichatApi) {
   const OldParse = JSON.parse(OldProps);
   console.log(props);
   const Update = await ComparaElemento(OldParse.form, props.form);
@@ -207,14 +201,14 @@ export async function UpdateValues(OldProps: any, props: any, Token: string) {
       const NodeType = GetNodeType(NodeUpdate.id, props);
       console.log(NodeType);
       //
-      await monichat.SetToken(Token);
+      await monitchat.SetToken(Token);
 
       //
       if (NodeType === "Resposta") {
         const Text = FormatText(NodeUpdate.desc);
         const com = localStorage.getItem("company_id");
         try {
-          monichat.UpdataContext(
+          monitchat.UpdataContext(
             `${com}-${NodeUpdate.id}`,
             undefined,
             undefined,
@@ -222,7 +216,7 @@ export async function UpdateValues(OldProps: any, props: any, Token: string) {
             undefined,
             NodeUpdate.description
           );
-          monichat.PutBotFlow(props, "1");
+          monitchat.PutBotFlow(props, "1");
           return true;
         } catch (err) {
           console.log("Err");
@@ -240,7 +234,7 @@ export async function UpdateValues(OldProps: any, props: any, Token: string) {
                   if (l2.source === ln1.target) {
                     console.log(l2.target);
                     console.log(fm1.text);
-                    monichat.UpdateReply(
+                    monitchat.UpdateReply(
                       fm1.text,
                       l2.target,
                       NodeUpdate.description
@@ -320,20 +314,21 @@ async function BtnActions(props: any) {
   return Dep;
 }
 
-export async function NewSend(props: any) {
+export async function NewSend(props: any, monitchat: MonichatApi) {
   console.log(props);
-  await ClearLegacy(monichat);
+
+  await ClearLegacy(monitchat);
 
   try {
-    await monichat.PutBotFlow(props, "1");
+    await monitchat.PutBotFlow(props, "1");
     //
-    await CreateIntention(props);
-    await CreateContext(props, monichat);
+    await CreateIntention(props,monitchat);
+    await CreateContext(props, monitchat);
     //
-    const data1: any = await LinkContext2(props, monichat);
+    const data1: any = await LinkContext2(props, monitchat);
     for (let index = 0; index < data1.length; index++) {
       const el: any = data1[index];
-      await monichat.UpdataContext(el.de, el.com, el.para);
+      await monitchat.UpdataContext(el.de, el.com, el.para);
     }
     //
     const data2 = await BtnActions(props);
@@ -341,10 +336,10 @@ export async function NewSend(props: any) {
     //
     for (let index = 0; index < data2.length; index++) {
       const el: any = data2[index];
-      await monichat.UpdataContext(el.p1, el.p2, el.p3, el.p4);
+      await monitchat.UpdataContext(el.p1, el.p2, el.p3, el.p4);
     }
     //
-    await CreateReply(props);
+    await CreateReply(props,monitchat);
     //
   } catch (err) {
     console.log(err);
@@ -355,41 +350,43 @@ export async function NewSend(props: any) {
   }
 }
 
-export async function PldNewSend(props: any) {
-  console.log(props);
+// export async function PldNewSend(props: any, monitchat: any) {
+//   console.log(props);
 
-  await monichat.PutBotFlow(props, "1");
+//   let token;
 
-  try {
-    const dd = await ClearLegacy(monichat);
-    setTimeout(async () => {
-      await CreateIntention(props);
-      await CreateContext(props, monichat);
+//   await monitchat.PutBotFlow(props, "1");
 
-      setTimeout(async () => {
-        await CreateReply(props);
-        const data: any = await LinkContext2(props, monichat);
-        for (let index = 0; index < data.length; index++) {
-          const el: any = data[index];
-          await monichat.UpdataContext(el.de, el.com, el.para);
-        }
-      }, 1000);
+//   try {
+//     const dd = await ClearLegacy(monichat);
+//     setTimeout(async () => {
+//       await CreateIntention(props);
+//       await CreateContext(props, monichat);
 
-      setTimeout(async () => {
-        const data = await BtnActions(props);
-        console.log(data);
+//       setTimeout(async () => {
+//         await CreateReply(props);
+//         const data: any = await LinkContext2(props, monichat);
+//         for (let index = 0; index < data.length; index++) {
+//           const el: any = data[index];
+//           await monichat.UpdataContext(el.de, el.com, el.para);
+//         }
+//       }, 1000);
 
-        for (let index = 0; index < data.length; index++) {
-          const el: any = data[index];
-          await monichat.UpdataContext(el.p1, el.p2, el.p3, el.p4);
-        }
-      }, 1000);
-    }, 1000);
-  } catch (err) {
-    console.log(err);
-    return false;
-  } finally {
-    console.log("Send Finalizado !");
-    return true;
-  }
-}
+//       setTimeout(async () => {
+//         const data = await BtnActions(props);
+//         console.log(data);
+
+//         for (let index = 0; index < data.length; index++) {
+//           const el: any = data[index];
+//           await monichat.UpdataContext(el.p1, el.p2, el.p3, el.p4);
+//         }
+//       }, 1000);
+//     }, 1000);
+//   } catch (err) {
+//     console.log(err);
+//     return false;
+//   } finally {
+//     console.log("Send Finalizado !");
+//     return true;
+//   }
+// }

@@ -1,12 +1,12 @@
 "use client";
 
 // import ConteinerBox from "./Components/MainFlow";
-import React from "react";
+import React, { Suspense } from "react";
 import DarkMode from "./Redux/darkMode";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import ErrorView, { selectError } from "./Redux/erroStore";
-import ConteinerBox from "./Components/MainFlow";
+// import ConteinerBox from "./Components/MainFlow";
 import { useSearchParams } from "next/navigation";
 
 const selector2 = (state: any) => ({
@@ -15,12 +15,14 @@ const selector2 = (state: any) => ({
   setDarkMode: state.setDarkMode,
 });
 
+const ConteinerBox = React.lazy(() => import("./Components/MainFlow"));
+
 export default function Home() {
   const { dark, toggleDarkMode, setDarkMode } = DarkMode(useShallow(selector2));
   const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
   const [style, setStyle] = useState("");
-  const searchParams = useSearchParams();
-  
+
+
   useEffect(() => {
     if (dark) {
       setStyle("dark");
@@ -47,17 +49,11 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-
-    const search = searchParams.get("token");
-    if (search) {
-      localStorage.setItem("token", search);
-    }
-  }, []);
-
   return (
     <main className={`transition-all ${style}`}>
-      <ConteinerBox></ConteinerBox>
+      <Suspense >
+        <ConteinerBox></ConteinerBox>
+      </Suspense>
     </main>
   );
 }

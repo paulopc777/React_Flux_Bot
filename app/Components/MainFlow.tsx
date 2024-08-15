@@ -11,12 +11,21 @@ import ErrorView, { selectError } from "app/Redux/erroStore";
 import React, { Suspense, useEffect } from "react";
 import Looad from "./LoadScreen/Looad";
 import AnimationCont from "./Header/LoadBotCreate";
+import { useSearchParams } from "next/navigation";
 
 const Flow = React.lazy(() => import("./Flow"));
 
 export default function ConteinerBox() {
   const { Error, ToggleErrorVisibility } = ErrorView(useShallow(selectError));
+  const searchParams = useSearchParams();
 
+  useEffect(() => {
+    const search = searchParams.get("token");
+    if (search) {
+      localStorage.setItem("token", search);
+    }
+  }, []);
+  
   return (
     <>
       <div className="overflow-hidden dark:bg-zinc-900">
