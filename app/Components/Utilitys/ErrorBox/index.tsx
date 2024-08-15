@@ -1,11 +1,11 @@
 import React from "react";
-import Alert from "@mui/material/Alert";
+import Alert, { AlertColor } from "@mui/material/Alert";
 import { motion } from "framer-motion";
 
 export interface AlertProps {
   Text: string;
   Visible: boolean;
-  Type?: string;
+  Type?: AlertColor;
   ErrorImg?: string;
 }
 const variants = {

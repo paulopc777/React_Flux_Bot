@@ -16,6 +16,7 @@ import {
   validateSysInput,
 } from "app/Api/utils/UsuarioValidator";
 import ErrorView, { ErrorState, selectError } from "app/Redux/erroStore";
+import { DefaultVariantProp } from "@mui/joy/styles/types";
 
 export interface BoxProps {
   id: string;
@@ -68,7 +69,8 @@ export default function PerguntaBox({ id, data }: DataProps) {
     }
   };
 
-  const [SelectClick, setSelectClikc] = useState("outlined");
+  const [SelectClick, setSelectClikc] =
+    useState<DefaultVariantProp>("outlined");
 
   function AutoSaveInput() {
     deleteValue(id);
