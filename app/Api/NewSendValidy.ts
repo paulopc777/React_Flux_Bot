@@ -293,29 +293,17 @@ async function BtnActions(props: any) {
                           p3: fm1.description,
                           p4: idDepartamento,
                         });
-                        // await monichat.UpdataContext(
-                        //   `${com}-${nd1.id}`,
-                        //   `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
-                        //   fm1.description,
-                        //   idDepartamento
-                        // );
-
-                        // console.log(
-                        //   `${com}-${nd1.id}`,
-                        //   `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
-                        //   fm1.description,
-                        //   idDepartamento
-                        // );
                       } else if (fm1.Body) {
-                        // await monichat.UpdataContext(
-                        //   `${com}-${nd1.id}`,
-                        //   `@topic ${com}-${fm1.text} @intent inicio`
-                        // );
-
                         Dep.push({
                           p1: `${com}-${nd1.id}`,
                           p2: `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
-                          p3: `@topic ${com}-${fm1.text} @intent inicio`,
+                          p3: `@topic ${com}-${fm1.id} @intent inicio`,
+                        });
+                      } else if (fm1.text) {
+                        Dep.push({
+                          p1: `${com}-${nd1.id}`,
+                          p2: `@sys.opt @sys.array_must(${btn.text}) @sys.opt`,
+                          p3: `@topic ${com}-${fm1.id} @intent inicio`,
                         });
                       }
                     }
@@ -333,6 +321,41 @@ async function BtnActions(props: any) {
 }
 
 export async function NewSend(props: any) {
+  console.log(props);
+  await ClearLegacy(monichat);
+
+  try {
+    await monichat.PutBotFlow(props, "1");
+    //
+    await CreateIntention(props);
+    await CreateContext(props, monichat);
+    //
+    const data1: any = await LinkContext2(props, monichat);
+    for (let index = 0; index < data1.length; index++) {
+      const el: any = data1[index];
+      await monichat.UpdataContext(el.de, el.com, el.para);
+    }
+    //
+    const data2 = await BtnActions(props);
+    console.log(data2);
+    //
+    for (let index = 0; index < data2.length; index++) {
+      const el: any = data2[index];
+      await monichat.UpdataContext(el.p1, el.p2, el.p3, el.p4);
+    }
+    //
+    await CreateReply(props);
+    //
+  } catch (err) {
+    console.log(err);
+    return false;
+  } finally {
+    console.log("Send Finalizado !");
+    return true;
+  }
+}
+
+export async function PldNewSend(props: any) {
   console.log(props);
 
   await monichat.PutBotFlow(props, "1");
